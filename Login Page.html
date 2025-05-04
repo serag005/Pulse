@@ -1,0 +1,1073 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - PULSE</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(to right, #e0f7fa, #ffffff);
+            margin: 0;
+            padding: 0;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .login-container {
+            width: 90%;
+            max-width: 420px;
+            background-color: #ffffff;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+
+        h1 {
+            color: #005b66;
+            text-align: center;
+            margin-top: 10px;
+            margin-bottom: 30px;
+            font-size: 2.2em;
+        }
+
+        .input-label {
+            font-size: 1.1em;
+            font-weight: bold;
+            display: block;
+            margin: 15px 0 8px;
+            color: #333;
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 12px;
+            font-size: 1em;
+            border: 2px solid #b2ebf2;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            transition: border-color 0.3s;
+        }
+
+        .input-field:focus {
+            border-color: #00bcd4;
+            outline: none;
+        }
+
+        .input-field.error {
+            border-color: #ff5252;
+        }
+
+        .error-message {
+            color: #ff5252;
+            font-size: 0.9em;
+            margin-top: -15px;
+            margin-bottom: 15px;
+            display: none;
+        }
+
+        .forgot-password {
+            text-align: right;
+            margin-top: -15px;
+            margin-bottom: 20px;
+        }
+
+        .forgot-password a {
+            color: #00bcd4;
+            text-decoration: none;
+            font-size: 0.9em;
+            transition: color 0.3s;
+        }
+
+        .forgot-password a:hover {
+            color: #007f84;
+            text-decoration: underline;
+        }
+
+        .phone-input-container {
+            display: flex;
+            align-items: center;
+        }
+
+        /* Modified country code to be a proper dropdown */
+        .country-code-container {
+            position: relative;
+            width: 120px;
+            margin-bottom: 20px;
+        }
+
+        .country-code-select {
+            width: 100%;
+            padding: 12px 30px 12px 12px;
+            font-size: 1em;
+            border: 2px solid #b2ebf2;
+            border-radius: 10px 0 0 10px;
+            background-color: #f5f5f5;
+            appearance: none;
+            cursor: pointer;
+            transition: border-color 0.3s;
+        }
+
+        .country-code-select:focus {
+            border-color: #00bcd4;
+            outline: none;
+        }
+
+        .country-code-container::after {
+            content: "▼";
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 0.8em;
+            color: #666;
+            pointer-events: none;
+        }
+
+        .phone-input {
+            flex: 1;
+            padding: 12px;
+            font-size: 1em;
+            border: 2px solid #b2ebf2;
+            border-left: none;
+            border-radius: 0 10px 10px 0;
+            margin-bottom: 20px;
+            transition: border-color 0.3s;
+        }
+
+        .phone-input:focus {
+            border-color: #00bcd4;
+            outline: none;
+        }
+
+        .sign-in-btn {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #fff;
+            background-color: #ff7043;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-top: 10px;
+            margin-bottom: 20px;
+        }
+
+        .sign-in-btn:hover {
+            background-color: #f4511e;
+        }
+
+        .sign-in-btn:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+        }
+
+        .toggle-options {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 30px;
+        }
+
+        .toggle-option {
+            color: #00bcd4;
+            text-decoration: none;
+            font-size: 1em;
+            transition: color 0.3s;
+        }
+
+        .toggle-option:hover {
+            color: #007f84;
+            text-decoration: underline;
+        }
+
+        .divider {
+            display: flex;
+            align-items: center;
+            margin: 30px 0;
+        }
+
+        .divider hr {
+            flex: 1;
+            border: none;
+            height: 1px;
+            background-color: #ddd;
+        }
+
+        .divider span {
+            padding: 0 15px;
+            color: #666;
+            font-size: 0.9em;
+        }
+
+        .other-options {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .other-options p {
+            color: #666;
+            font-size: 0.9em;
+            margin-bottom: 15px;
+        }
+
+        .other-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .other-link {
+            color: #00bcd4;
+            text-decoration: none;
+            font-size: 0.9em;
+            transition: color 0.3s;
+        }
+
+        .other-link:hover {
+            color: #007f84;
+            text-decoration: underline;
+        }
+
+        .form-section {
+            display: none;
+        }
+
+        .form-section.active {
+            display: block;
+        }
+
+        /* Password visibility toggle */
+        .password-container {
+            position: relative;
+        }
+
+        .password-toggle {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-100%);
+            cursor: pointer;
+            color: #666;
+            font-size: 1.2em;
+            user-select: none;
+        }
+
+        .password-toggle:hover {
+            color: #00bcd4;
+        }
+
+        /* Password strength indicator - Hidden for login form */
+        .password-strength {
+            height: 5px;
+            margin-top: -15px;
+            margin-bottom: 20px;
+            border-radius: 3px;
+            transition: all 0.3s ease;
+            display: none;
+        }
+
+        .weak {
+            background-color: #ff5252;
+            width: 33%;
+        }
+
+        .medium {
+            background-color: #ffab40;
+            width: 66%;
+        }
+
+        .strong {
+            background-color: #69f0ae;
+            width: 100%;
+        }
+
+        .password-requirements {
+            font-size: 0.9em;
+            color: #666;
+            margin-top: -15px;
+            margin-bottom: 15px;
+            display: none;
+        }
+
+        .requirement {
+            display: inline-block;
+            margin-right: 15px;
+            position: relative;
+            padding-left: 20px;
+        }
+
+        .requirement.met:before {
+            content: "✓";
+            color: #69f0ae;
+            position: absolute;
+            left: 0;
+        }
+
+        .requirement.unmet:before {
+            content: "✗";
+            color: #ff5252;
+            position: absolute;
+            left: 0;
+        }
+
+        /* Modal style for forgot password */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            overflow: auto;
+        }
+
+        .modal-content {
+            background-color: #fff;
+            margin: 10% auto;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+            width: 90%;
+            max-width: 500px;
+            position: relative;
+        }
+
+        .close-modal {
+            position: absolute;
+            right: 20px;
+            top: 15px;
+            color: #666;
+            font-size: 1.8em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .close-modal:hover {
+            color: #007f84;
+        }
+
+        .modal-title {
+            color: #005b66;
+            margin-top: 0;
+            margin-bottom: 20px;
+            font-size: 1.8em;
+        }
+
+        .modal-message {
+            color: #69f0ae;
+            padding: 15px;
+            border-radius: 10px;
+            background-color: rgba(105, 240, 174, 0.1);
+            font-weight: bold;
+            margin: 20px 0;
+            text-align: center;
+            display: none;
+        }
+
+        /* New styles for login success modal */
+        .success-modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            overflow: auto;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .success-content {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+            width: 90%;
+            max-width: 400px;
+            position: relative;
+            text-align: center;
+            animation: fadeInUp 0.5s;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .success-icon {
+            font-size: 70px;
+            color: #69f0ae;
+            margin-bottom: 20px;
+        }
+
+        .success-title {
+            color: #005b66;
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 1.8em;
+        }
+
+        .success-message {
+            color: #333;
+            margin-bottom: 25px;
+            font-size: 1.1em;
+        }
+
+        .continue-btn {
+            display: inline-block;
+            padding: 12px 25px;
+            font-size: 1.1em;
+            font-weight: bold;
+            color: #fff;
+            background-color: #00bcd4;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .continue-btn:hover {
+            background-color: #007f84;
+        }
+
+        @media (max-width: 768px) {
+            .login-container {
+                padding: 30px;
+            }
+
+            h1 {
+                font-size: 1.8em;
+            }
+
+            .modal-content, .success-content {
+                margin: 20% auto;
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="login-container">
+    <h1>Welcome to PULSE</h1>
+
+    <!-- Email Login Form -->
+    <div id="email-form" class="form-section active">
+        <form id="email-login-form">
+            <div class="input-group">
+                <label for="email" class="input-label">Email Address:</label>
+                <input type="email" id="email" class="input-field" placeholder="Enter your email address" required>
+                <div id="email-error" class="error-message">Please enter a valid email address</div>
+            </div>
+
+            <div class="input-group">
+                <label for="email-password" class="input-label">Password:</label>
+                <div class="password-container">
+                    <input type="password" id="email-password" class="input-field" placeholder="Enter password" required minlength="8">
+                    <span class="password-toggle" id="email-password-toggle">👁️</span>
+                </div>
+                <div id="password-error" class="error-message">Password must meet the requirements</div>
+            </div>
+
+            <div class="forgot-password">
+                <a href="#" id="email-forgot-password">Forgot password?</a>
+            </div>
+
+            <button type="submit" class="sign-in-btn" id="email-sign-in-btn">Sign in</button>
+
+            <div class="toggle-options">
+                <a href="#" class="toggle-option" id="switch-to-phone">Mobile number sign in</a>
+                <a href="registration.html" class="toggle-option" id="email-create-account">Create account</a>
+            </div>
+        </form>
+    </div>
+
+    <!-- Phone Login Form -->
+    <div id="phone-form" class="form-section">
+        <form id="phone-login-form">
+            <div class="input-group">
+                <label for="phone" class="input-label">Mobile Phone Number:</label>
+                <div class="phone-input-container">
+                    <div class="country-code-container">
+                        <select id="country-code" class="country-code-select">
+                            <option value="+54" data-short="AR">+54 Argentina</option>
+                            <option value="+61" data-short="AU">+61 Australia</option>
+                            <option value="+55" data-short="BR">+55 Brazil</option>
+                            <option value="+1" data-short="CA">+1 Canada</option>
+                            <option value="+86" data-short="CN">+86 China</option>
+                            <option value="+20" data-short="EG" selected>+20 Egypt</option>
+                            <option value="+33" data-short="FR">+33 France</option>
+                            <option value="+49" data-short="DE">+49 Germany</option>
+                            <option value="+39" data-short="IT">+39 Italy</option>
+                            <option value="+81" data-short="JP">+81 Japan</option>
+                            <option value="+52" data-short="MX">+52 Mexico</option>
+                            <option value="+82" data-short="KR">+82 South Korea</option>
+                            <option value="+44" data-short="GB">+44 United Kingdom</option>
+                            <option value="+1" data-short="US">+1 United States</option>
+                        </select>
+                    </div>
+                    <input type="tel" id="phone" class="phone-input" placeholder="Please enter mobile number" required pattern="[0-9]{11}" title="Phone number must be 11 digits">
+                </div>
+                <div id="phone-error" class="error-message">Please enter a valid phone number</div>
+            </div>
+
+            <div class="input-group">
+                <label for="phone-password" class="input-label">Password:</label>
+                <div class="password-container">
+                    <input type="password" id="phone-password" class="input-field" placeholder="Enter password" required minlength="8">
+                    <span class="password-toggle" id="phone-password-toggle">👁️</span>
+                </div>
+                <div id="phone-password-error" class="error-message">Password must meet the requirements</div>
+            </div>
+
+            <div class="forgot-password">
+                <a href="#" id="phone-forgot-password">Forgot password?</a>
+            </div>
+
+            <button type="submit" class="sign-in-btn" id="phone-sign-in-btn">Sign in</button>
+
+            <div class="toggle-options">
+                <a href="#" class="toggle-option" id="switch-to-email">Sign in with Email</a>
+                <a href="registration.html" class="toggle-option" id="phone-create-account">Create account</a>
+            </div>
+        </form>
+    </div>
+
+    <!-- Alternative Login Options -->
+    <div class="divider">
+        <hr>
+        <span>Other options</span>
+        <hr>
+    </div>
+
+    <div class="other-options">
+        <p>Need assistance or more options?</p>
+        <div class="other-links">
+            <a href="help.html" class="other-link">Help Center</a>
+            <a href="contact.html" class="other-link">Contact Support</a>
+            <a href="about.html" class="other-link">About PULSE</a>
+        </div>
+    </div>
+</div>
+
+<!-- Forgot Password Modal -->
+<div id="forgot-password-modal" class="modal">
+    <div class="modal-content">
+        <span class="close-modal" id="close-forgot-modal">&times;</span>
+        <h2 class="modal-title">Reset Your Password</h2>
+        <p>Please enter your email address. We'll send you a verification code to reset your password.</p>
+
+        <form id="reset-password-form">
+            <div class="input-group">
+                <label for="reset-email" class="input-label">Email Address:</label>
+                <input type="email" id="reset-email" class="input-field" placeholder="Enter your email address" required>
+                <div id="reset-email-error" class="error-message">Please enter a valid email address</div>
+            </div>
+
+            <div id="verification-sent" class="modal-message">
+                Verification code has been sent successfully! You can now return to the login page.
+            </div>
+
+            <button type="submit" class="sign-in-btn">Send Verification Code</button>
+        </form>
+    </div>
+</div>
+
+<!-- Login Success Modal -->
+<div id="login-success-modal" class="success-modal">
+    <div class="success-content">
+        <div class="success-icon">✓</div>
+        <h2 class="success-title">Login Successful!</h2>
+        <p class="success-message">Welcome back to PULSE. You are now signed in to your account.</p>
+        <button id="continue-btn" class="continue-btn">Continue</button>
+    </div>
+</div>
+
+<!-- Login Error Modal -->
+<div id="login-error-modal" class="success-modal">
+    <div class="success-content" style="border-top: 5px solid #ff5252;">
+        <div class="success-icon" style="color: #ff5252;">✗</div>
+        <h2 class="success-title" style="color: #ff5252;">Login Failed</h2>
+        <p class="success-message" id="error-message-text">Unable to log in. Please check your credentials and try again.</p>
+        <button id="try-again-btn" class="continue-btn" style="background-color: #ff5252;">Try Again</button>
+    </div>
+</div>
+
+<script>
+    // DOM elements for forms
+    const emailForm = document.getElementById('email-form');
+    const phoneForm = document.getElementById('phone-form');
+    const switchToPhone = document.getElementById('switch-to-phone');
+    const switchToEmail = document.getElementById('switch-to-email');
+
+    // DOM elements for password fields
+    const emailPassword = document.getElementById('email-password');
+    const phonePassword = document.getElementById('phone-password');
+    const passwordStrength = document.getElementById('password-strength');
+    const phonePasswordStrength = document.getElementById('phone-password-strength');
+    const passwordRequirements = document.querySelector('.password-requirements');
+    const phonePasswordRequirements = document.getElementById('phone-password-requirements');
+    const passwordError = document.getElementById('password-error');
+    const phonePasswordError = document.getElementById('phone-password-error');
+
+    // DOM elements for buttons
+    const emailSignInBtn = document.getElementById('email-sign-in-btn');
+    const phoneSignInBtn = document.getElementById('phone-sign-in-btn');
+
+    // DOM elements for email validation
+    const emailInput = document.getElementById('email');
+    const emailError = document.getElementById('email-error');
+
+    // DOM elements for phone validation
+    const phoneInput = document.getElementById('phone');
+    const phoneError = document.getElementById('phone-error');
+    const countryCodeSelect = document.getElementById('country-code');
+
+    // DOM elements for password requirements (email form)
+    const reqLength = document.getElementById('req-length');
+    const reqUppercase = document.getElementById('req-uppercase');
+    const reqLowercase = document.getElementById('req-lowercase');
+    const reqNumber = document.getElementById('req-number');
+    const reqSpecial = document.getElementById('req-special');
+
+    // DOM elements for password requirements (phone form)
+    const phoneReqLength = document.getElementById('phone-req-length');
+    const phoneReqUppercase = document.getElementById('phone-req-uppercase');
+    const phoneReqLowercase = document.getElementById('phone-req-lowercase');
+    const phoneReqNumber = document.getElementById('phone-req-number');
+    const phoneReqSpecial = document.getElementById('phone-req-special');
+
+    // DOM elements for forgot password modal
+    const forgotPasswordModal = document.getElementById('forgot-password-modal');
+    const closeForgotModal = document.getElementById('close-forgot-modal');
+    const emailForgotPassword = document.getElementById('email-forgot-password');
+    const phoneForgotPassword = document.getElementById('phone-forgot-password');
+    const resetPasswordForm = document.getElementById('reset-password-form');
+    const resetEmail = document.getElementById('reset-email');
+    const resetEmailError = document.getElementById('reset-email-error');
+    const verificationSent = document.getElementById('verification-sent');
+
+    // DOM elements for login success modal
+    const loginSuccessModal = document.getElementById('login-success-modal');
+    const continueBtn = document.getElementById('continue-btn');
+    const tryAgainBtn = document.getElementById('try-again-btn');
+    const errorMessageText = document.getElementById('error-message-text');
+
+    // Toggle between email and phone forms
+    switchToPhone.addEventListener('click', function(e) {
+        e.preventDefault();
+        emailForm.classList.remove('active');
+        phoneForm.classList.add('active');
+    });
+
+    switchToEmail.addEventListener('click', function(e) {
+        e.preventDefault();
+        phoneForm.classList.remove('active');
+        emailForm.classList.add('active');
+    });
+
+    // Password visibility toggle for email form
+    const emailPasswordToggle = document.getElementById('email-password-toggle');
+    emailPasswordToggle.addEventListener('click', function() {
+        if (emailPassword.type === 'password') {
+            emailPassword.type = 'text';
+            this.textContent = '🔒';
+        } else {
+            emailPassword.type = 'password';
+            this.textContent = '👁️';
+        }
+    });
+
+    // Password visibility toggle for phone form
+    const phonePasswordToggle = document.getElementById('phone-password-toggle');
+    phonePasswordToggle.addEventListener('click', function() {
+        if (phonePassword.type === 'password') {
+            phonePassword.type = 'text';
+            this.textContent = '🔒';
+        } else {
+            phonePassword.type = 'password';
+            this.textContent = '👁️';
+        }
+    });
+
+    // Email validation
+    emailInput.addEventListener('input', function() {
+        const email = this.value;
+        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+        if (!emailPattern.test(email) && email.length > 0) {
+            emailInput.classList.add('error');
+            emailError.style.display = 'block';
+        } else {
+            emailInput.classList.remove('error');
+            emailError.style.display = 'none';
+        }
+
+        // Check if we can enable the submit button
+        updateEmailSignInButton();
+    });
+
+    // Phone validation
+    phoneInput.addEventListener('input', function() {
+        const phone = this.value;
+        const phonePattern = /^[0-9]{11}$/;
+
+        if (!phonePattern.test(phone) && phone.length > 0) {
+            phoneInput.classList.add('error');
+            phoneError.style.display = 'block';
+        } else {
+            phoneInput.classList.remove('error');
+            phoneError.style.display = 'none';
+        }
+
+        // Check if we can enable the submit button
+        updatePhoneSignInButton();
+    });
+
+    // Store original country names
+    const countryOptions = {};
+    for (let i = 0; i < countryCodeSelect.options.length; i++) {
+        const option = countryCodeSelect.options[i];
+        const value = option.value;
+        countryOptions[value] = option.text;
+    }
+
+    // Change country code display format when selected
+    function updateCountryCodeDisplay() {
+        const selected = countryCodeSelect.options[countryCodeSelect.selectedIndex];
+        const code = selected.value;
+        const shortName = selected.getAttribute('data-short');
+
+        // Update the display text to show code + short name
+        selected.text = `${code} ${shortName}`;
+    }
+
+    // Restore full country names when opening the dropdown
+    countryCodeSelect.addEventListener('mousedown', function() {
+        // Restore all full country names before the dropdown opens
+        for (let i = 0; i < this.options.length; i++) {
+            const option = this.options[i];
+            const value = option.value;
+            if (countryOptions[value]) {
+                option.text = countryOptions[value];
+            }
+        }
+    });
+
+    // Update to short format when dropdown is closed
+    countryCodeSelect.addEventListener('change', function() {
+        // After selection, show the abbreviated version
+        updateCountryCodeDisplay();
+    });
+
+    // Also update on blur
+    countryCodeSelect.addEventListener('blur', function() {
+        updateCountryCodeDisplay();
+    });
+
+    // Check password complexity (without showing the requirements)
+    function checkPasswordComplexity(password, formType) {
+        // Check each requirement
+        const hasLength = password.length >= 8;
+        const hasUppercase = /[A-Z]/.test(password);
+        const hasLowercase = /[a-z]/.test(password);
+        const hasNumber = /[0-9]/.test(password);
+        const hasSpecial = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(password);
+
+        // Calculate strength score
+        let score = 0;
+        if (hasLength) score++;
+        if (hasUppercase) score++;
+        if (hasLowercase) score++;
+        if (hasNumber) score++;
+        if (hasSpecial) score++;
+
+        return score;
+    }
+
+    // Update email sign-in button state
+    function updateEmailSignInButton() {
+        const email = emailInput.value;
+        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        const password = emailPassword.value;
+        const passwordScore = checkPasswordComplexity(password, 'email');
+
+        if (emailPattern.test(email) && passwordScore >= 3) {
+            emailSignInBtn.disabled = false;
+        } else {
+            emailSignInBtn.disabled = true;
+        }
+    }
+
+    // Update phone sign-in button state
+    function updatePhoneSignInButton() {
+        const phone = phoneInput.value;
+        const phonePattern = /^[0-9]{11}$/;
+        const password = phonePassword.value;
+        const passwordScore = checkPasswordComplexity(password, 'phone');
+
+        if (phonePattern.test(phone) && passwordScore >= 3) {
+            phoneSignInBtn.disabled = false;
+        } else {
+            phoneSignInBtn.disabled = true;
+        }
+    }
+
+    // Password validation for email form
+    emailPassword.addEventListener('input', function() {
+        const score = checkPasswordComplexity(this.value, 'email');
+        updateEmailSignInButton();
+    });
+
+    // Password validation for phone form
+    phonePassword.addEventListener('input', function() {
+        const score = checkPasswordComplexity(this.value, 'phone');
+        updatePhoneSignInButton();
+    });
+
+    // Forgot password modal functionality
+    emailForgotPassword.addEventListener('click', function(e) {
+        e.preventDefault();
+        forgotPasswordModal.style.display = 'block';
+        resetEmail.value = emailInput.value; // Pre-fill with current email if available
+    });
+
+    phoneForgotPassword.addEventListener('click', function(e) {
+        e.preventDefault();
+        forgotPasswordModal.style.display = 'block';
+    });
+
+    closeForgotModal.addEventListener('click', function() {
+        forgotPasswordModal.style.display = 'none';
+        verificationSent.style.display = 'none';
+        resetEmail.value = '';
+        resetEmailError.style.display = 'none';
+    });
+
+    // Close modal when clicking outside of it
+    window.addEventListener('click', function(e) {
+        if (e.target === forgotPasswordModal) {
+            forgotPasswordModal.style.display = 'none';
+            verificationSent.style.display = 'none';
+            resetEmail.value = '';
+            resetEmailError.style.display = 'none';
+        }
+
+        if (e.target === loginSuccessModal) {
+            loginSuccessModal.style.display = 'none';
+        }
+
+        if (e.target === loginErrorModal) {
+            loginErrorModal.style.display = 'none';
+        }
+    });
+
+    // Event handlers for modal buttons
+    continueBtn.addEventListener('click', function() {
+        window.location.href = 'index.html';
+    });
+
+    tryAgainBtn.addEventListener('click', function() {
+        loginErrorModal.style.display = 'none';
+    });
+
+    // Reset password form submission
+    resetPasswordForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        const email = resetEmail.value;
+        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+        if (!emailPattern.test(email)) {
+            resetEmail.classList.add('error');
+            resetEmailError.style.display = 'block';
+            return;
+        }
+
+        // Simulate sending verification code
+        setTimeout(function() {
+            verificationSent.style.display = 'block';
+
+            // Close modal after a few seconds
+            setTimeout(function() {
+                forgotPasswordModal.style.display = 'none';
+                resetEmailError.style.display = 'none';
+                verificationSent.style.display = 'none';
+
+                // Optional: Redirect to a password reset page
+                // window.location.href = 'reset-password.html';
+            }, 3000);
+        }, 1500);
+    });
+
+    // Phone Login Handler
+    phoneForm.addEventListener('submit', function (e) {
+        e.preventDefault();
+
+        const phone = phoneInput.value;
+        const password = phonePassword.value;
+
+        phoneError.style.display = 'none';
+        phonePasswordError.style.display = 'none';
+
+        if (!phone) {
+            phoneError.style.display = 'block';
+            return;
+        }
+
+        if (!password) {
+            phonePasswordError.style.display = 'block';
+            return;
+        }
+
+        // Show loading state
+        phoneSignInBtn.disabled = true;
+        phoneSignInBtn.textContent = "Signing in...";
+
+        const loginData = {
+            phone,
+            password
+        };
+
+        fetch('/api/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(loginData)
+        })
+            .then(response => {
+                if (!response.ok) {
+                    return Promise.reject(`Error: ${response.status} - ${response.statusText}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                // Reset button
+                phoneSignInBtn.disabled = false;
+                phoneSignInBtn.textContent = "Sign in";
+                
+                if (data.success) {
+                    // Store token in localStorage for auth.js
+                    if (data.user && data.user.token) {
+                        localStorage.setItem('token', data.user.token);
+                        localStorage.setItem('user', JSON.stringify(data.user));
+                    }
+                    
+                    // Show success modal
+                    loginSuccessModal.style.display = 'flex';
+                } else {
+                    // Show error modal with message
+                    errorMessageText.textContent = data.error || "Login failed. Please check your credentials.";
+                    loginErrorModal.style.display = 'flex';
+                }
+            })
+            .catch(error => {
+                // Reset button
+                phoneSignInBtn.disabled = false;
+                phoneSignInBtn.textContent = "Sign in";
+                
+                // Show error modal
+                errorMessageText.textContent = error || "Network error. Please try again.";
+                loginErrorModal.style.display = 'flex';
+            });
+    });
+
+    // Email Login Handler
+    emailForm.addEventListener('submit', function (e) {
+        e.preventDefault();
+
+        const email = emailInput.value;
+        const password = emailPassword.value;
+
+        emailError.style.display = 'none';
+        passwordError.style.display = 'none';
+
+        if (!email) {
+            emailError.style.display = 'block';
+            return;
+        }
+
+        if (!password) {
+            passwordError.style.display = 'block';
+            return;
+        }
+
+        // Show loading state
+        emailSignInBtn.disabled = true;
+        emailSignInBtn.textContent = "Signing in...";
+
+        const loginData = {
+            email,
+            password
+        };
+
+        fetch('/api/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(loginData)
+        })
+            .then(response => {
+                if (!response.ok) {
+                    return Promise.reject(`Error: ${response.status} - ${response.statusText}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                // Reset button
+                emailSignInBtn.disabled = false;
+                emailSignInBtn.textContent = "Sign in";
+                
+                if (data.success) {
+                    // Store token in localStorage for auth.js
+                    if (data.user && data.user.token) {
+                        localStorage.setItem('token', data.user.token);
+                        localStorage.setItem('user', JSON.stringify(data.user));
+                    }
+                    
+                    // Show success modal
+                    loginSuccessModal.style.display = 'flex';
+                } else {
+                    // Show error modal with message
+                    errorMessageText.textContent = data.error || "Login failed. Please check your credentials.";
+                    loginErrorModal.style.display = 'flex';
+                }
+            })
+            .catch(error => {
+                // Reset button
+                emailSignInBtn.disabled = false;
+                emailSignInBtn.textContent = "Sign in";
+                
+                // Show error modal
+                errorMessageText.textContent = error || "Network error. Please try again.";
+                loginErrorModal.style.display = 'flex';
+            });
+    });
+
+</script>
+<script src="JS/auth.js"></script>
+</body>
+</html>

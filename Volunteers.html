@@ -1,0 +1,814 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Volunteers - PULSE</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(to right, #e0f7fa, #ffffff);
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+
+        h1 {
+            color: #005b66;
+            text-align: center;
+            margin-top: 30px;
+            font-size: 2.5em;
+        }
+
+        .form-container {
+            width: 90%;
+            max-width: 800px;
+            margin: 40px auto;
+            background-color: #ffffff;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-container label {
+            font-size: 1.1em;
+            font-weight: bold;
+            display: block;
+            margin: 15px 0 8px;
+        }
+
+        .form-container input,
+        .form-container select,
+        .form-container textarea {
+            width: 100%;
+            padding: 12px;
+            font-size: 1em;
+            border: 2px solid #b2ebf2;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            transition: border-color 0.3s;
+        }
+
+        .form-container input:focus,
+        .form-container select:focus,
+        .form-container textarea:focus {
+            border-color: #00bcd4;
+            outline: none;
+        }
+
+        .form-container button {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #fff;
+            background-color: #00bcd4;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-top: 40px;
+            /* Added more space before the button */
+        }
+
+        .form-container button:hover {
+            background-color: #008ba3;
+        }
+
+        .section-title {
+            font-size: 1.3em;
+            font-weight: bold;
+            margin-top: 30px;
+            color: #007f84;
+        }
+
+        /* Password strength indicator */
+        .password-strength {
+            height: 5px;
+            margin-top: -15px;
+            margin-bottom: 20px;
+            border-radius: 3px;
+            transition: all 0.3s ease;
+        }
+
+        .weak {
+            background-color: #ff5252;
+            width: 33%;
+        }
+
+        .medium {
+            background-color: #ffab40;
+            width: 66%;
+        }
+
+        .strong {
+            background-color: #69f0ae;
+            width: 100%;
+        }
+
+        .password-requirements {
+            font-size: 0.9em;
+            color: #666;
+            margin-top: -15px;
+            margin-bottom: 15px;
+        }
+
+        .requirement {
+            display: inline-block;
+            margin-right: 15px;
+            position: relative;
+            padding-left: 20px;
+        }
+
+        .requirement.met:before {
+            content: "✓";
+            color: #69f0ae;
+            position: absolute;
+            left: 0;
+        }
+
+        .requirement.unmet:before {
+            content: "✗";
+            color: #ff5252;
+            position: absolute;
+            left: 0;
+        }
+
+        /* Password visibility toggle */
+        .password-container {
+            position: relative;
+        }
+
+        .password-toggle {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-100%);
+            cursor: pointer;
+            color: #666;
+            font-size: 1.2em;
+            user-select: none;
+        }
+
+        .password-toggle:hover {
+            color: #00bcd4;
+        }
+
+        .tag-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 10px;
+            margin-bottom: 20px;
+            /* Added more space after tag containers */
+        }
+
+        .tag {
+            padding: 10px 16px;
+            border-radius: 20px;
+            background-color: #007f84;
+            color: #fff;
+            font-size: 1em;
+            cursor: pointer;
+            user-select: none;
+            transition: background-color 0.3s;
+        }
+
+        .tag:hover {
+            background-color: #005f63;
+        }
+
+        .tag.selected {
+            background-color: #00bcd4;
+        }
+
+        .other-section {
+            margin-top: 15px;
+            display: none;
+            margin-bottom: 20px;
+        }
+
+        .confirmation-page {
+            display: none;
+            text-align: center;
+            padding: 40px;
+        }
+
+        .confirmation-page h2 {
+            font-size: 2.2em;
+            color: #00bcd4;
+        }
+
+        .confirmation-page p {
+            font-size: 1.2em;
+            margin-top: 20px;
+        }
+
+        /* Success Modal Styles */
+        .success-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .success-modal.active {
+            display: flex;
+        }
+
+        .success-modal-content {
+            background-color: white;
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+            max-width: 500px;
+            box-shadow: 0 5px 30px rgba(0, 0, 0, 0.3);
+            animation: modalFadeIn 0.4s ease-out;
+        }
+
+        @keyframes modalFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .success-modal-content h2 {
+            color: #00bcd4;
+            margin-bottom: 20px;
+        }
+
+        .success-modal-content p {
+            margin-bottom: 30px;
+            font-size: 1.1em;
+        }
+
+        .countdown {
+            font-size: 3em;
+            font-weight: bold;
+            color: #00bcd4;
+            margin: 20px 0;
+        }
+
+        .redirect-text {
+            font-size: 0.9em;
+            color: #666;
+        }
+
+        .progress-bar {
+            width: 100%;
+            background-color: #f0f0f0;
+            height: 6px;
+            border-radius: 3px;
+            margin: 20px 0;
+        }
+        
+        .progress {
+            width: 100%;
+            background-color: #00bcd4;
+            height: 6px;
+            border-radius: 3px;
+            transition: width 1s linear;
+        }
+        
+        .redirect-button {
+            background-color: #00bcd4;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+        
+        .redirect-button:hover {
+            background-color: #008ba3;
+        }
+
+        @media (max-width: 768px) {
+            .form-container {
+                padding: 20px;
+            }
+
+            h1 {
+                font-size: 2em;
+            }
+            
+            .success-modal-content {
+                width: 90%;
+                padding: 20px;
+            }
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+
+<body>
+<div class="form-container" id="form-section">
+    <h1>Volunteers</h1>
+
+    <form id="volunteer-form">
+        <div class="section-title">Basic Information</div>
+
+        <!-- Full Name -->
+        <label for="fullName">Full Name</label>
+        <input type="text" id="fullName" name="fullName" required>
+
+        <!-- Age -->
+        <label for="age">Age</label>
+        <input type="number" id="age" name="age" min="18" max="80" required>
+
+        <!-- Email -->
+        <label for="email">Email Address</label>
+        <input type="email" id="email" name="email" required>
+
+        <!-- Phone Number -->
+        <label for="phone">Phone Number</label>
+        <input type="tel" id="phone" name="phone" required pattern="^\+?\d{10,}$"
+               title="Phone number must be at least 10 digits and contain only numbers.">
+
+        <!-- Location / Country -->
+        <label for="location">Location / Country</label>
+        <select id="location" name="location" required>
+            <option value="" disabled selected>Select Location / Country</option>
+            <option value="+54">🇦🇷 Argentina</option>
+            <option value="+61">🇦🇺 Australia</option>
+            <option value="+55">🇧🇷 Brazil</option>
+            <option value="+1">🇨🇦 Canada</option>
+            <option value="+86">🇨🇳 China</option>
+            <option value="+20">🇪🇬 Egypt</option>
+            <option value="+33">🇫🇷 France</option>
+            <option value="+49">🇩🇪 Germany</option>
+            <option value="+91">🇮🇳 India</option>
+            <option value="+39">🇮🇹 Italy</option>
+            <option value="+81">🇯🇵 Japan</option>
+            <option value="+52">🇲🇽 Mexico</option>
+            <option value="+82">🇰🇷 South Korea</option>
+            <option value="+44">🇬🇧 United Kingdom</option>
+            <option value="+1">🇺🇸 United States</option>
+        </select>
+
+        <div class="section-title">Account Information</div>
+
+        <!-- New Password with enhanced requirements and visibility toggle -->
+        <label for="password">Create a New Password</label>
+        <div class="password-container">
+            <input type="password" id="password" name="password" placeholder="Enter your new password" minlength="8"
+                   required>
+            <span class="password-toggle" id="password-toggle">👁️</span>
+        </div>
+        <div id="password-strength" class="password-strength"></div>
+        <div class="password-requirements">
+            <div id="req-length" class="requirement unmet">At least 8 characters</div>
+            <div id="req-uppercase" class="requirement unmet">Uppercase letter</div>
+            <div id="req-lowercase" class="requirement unmet">Lowercase letter</div>
+            <div id="req-number" class="requirement unmet">Number</div>
+            <div id="req-special" class="requirement unmet">Special character</div>
+        </div>
+
+        <!-- Re-enter Password with visibility toggle -->
+        <label for="confirm-password">Re-enter Your Password</label>
+        <div class="password-container">
+            <input type="password" id="confirm-password" name="confirmPassword" placeholder="Re-enter your password"
+                   minlength="8" required>
+            <span class="password-toggle" id="confirm-password-toggle">👁️</span>
+        </div>
+
+        <!-- Volunteering Availability -->
+        <div class="section-title">Volunteering Details</div>
+        <label for="availability">Volunteering Availability</label>
+        <select id="availability" name="availability" required>
+            <option value="" disabled selected>Select Availability</option>
+            <option value="Full-time">Full-time</option>
+            <option value="Part-time">Part-time</option>
+            <option value="On a Project Basis">On a Project Basis</option>
+            <option value="Weekends Only">Weekends Only</option>
+        </select>
+
+        <!-- Area of Volunteering -->
+        <label>Area of Volunteering</label>
+        <div id="volunteeringAreas" class="tag-container">
+            <div class="tag" data-value="Medical Consultant">Medical Consultant</div>
+            <div class="tag" data-value="Technical Support">Technical Support</div>
+            <div class="tag" data-value="Community Outreach">Community Outreach</div>
+            <div class="tag" data-value="Content Creator">Content Creator</div>
+            <div class="tag" data-value="Other">Other</div>
+        </div>
+
+        <div id="otherVolunteering" class="other-section">
+            <label for="other-volunteering-input">Please Specify the Area of Volunteering</label>
+            <input type="text" id="other-volunteering-input" name="otherVolunteering">
+        </div>
+
+        <!-- Previous Volunteering Experience -->
+        <label for="previousExperience">Previous Volunteering Experience</label>
+        <select id="previousExperience" name="previousExperience" required>
+            <option value="" disabled selected>Select</option>
+            <option value="Yes">Yes</option>
+            <option value="No">No</option>
+        </select>
+
+        <div id="experienceDetails" class="other-section">
+            <label for="experience-details">Please describe your previous experience:</label>
+            <textarea id="experience-details" name="experienceDetails" rows="4"></textarea>
+        </div>
+
+        <!-- Languages Spoken -->
+        <div class="section-title">Languages Spoken</div>
+        <div id="languages-area" class="tag-container">
+            <div class="tag" data-value="English">English</div>
+            <div class="tag" data-value="Spanish">Spanish</div>
+            <div class="tag" data-value="French">French</div>
+            <div class="tag" data-value="Arabic">Arabic</div>
+            <div class="tag" data-value="Other">Other</div>
+        </div>
+
+        <div id="other-language-container" class="other-section">
+            <label for="other-language-input">Please Specify Other Language</label>
+            <input type="text" id="other-language-input" name="other-language-input">
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit">Submit</button>
+    </form>
+</div>
+
+<!-- Confirmation Page -->
+<div id="confirmation-page" class="confirmation-page form-container">
+    <h2>✅ Submission Successful!</h2>
+    <p>Thank you for applying as a Volunteer with PULSE! Your form has been submitted successfully.</p>
+    <p>Our team will review your application and contact you soon.</p>
+</div>
+
+<!-- Success Modal -->
+<div id="success-modal" class="success-modal">
+    <div class="success-modal-content">
+        <h2>⏳ Processing Submission...</h2>
+        <div style="margin: 20px auto; width: 60px; height: 60px; border: 5px solid #f3f3f3; border-top: 5px solid #00bcd4; border-radius: 50%; animation: spin 2s linear infinite;"></div>
+        <p>Thank you for applying as a Volunteer with PULSE! Your form is being processed.</p>
+        <p>Redirecting to home page in <span id="countdown">3</span> seconds...</p>
+        <div class="progress-bar">
+            <div class="progress" id="progress-bar"></div>
+        </div>
+        <button class="redirect-button" id="redirect-button">Go to Home Page</button>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Handle tag selections for Area of Volunteering
+        const volunteeringAreaContainer = document.getElementById('volunteeringAreas');
+        const otherVolunteeringContainer = document.getElementById('otherVolunteering');
+        const otherVolunteeringInput = document.getElementById('other-volunteering-input');
+        const selectedVolunteeringAreas = [];
+
+        volunteeringAreaContainer.addEventListener('click', (event) => {
+            if (event.target.classList.contains('tag')) {
+                event.target.classList.toggle('selected');
+
+                const value = event.target.getAttribute('data-value');
+
+                if (event.target.classList.contains('selected')) {
+                    selectedVolunteeringAreas.push(value);
+                } else {
+                    const index = selectedVolunteeringAreas.indexOf(value);
+                    if (index > -1) {
+                        selectedVolunteeringAreas.splice(index, 1);
+                    }
+                }
+
+                if (value === 'Other') {
+                    otherVolunteeringContainer.style.display = event.target.classList.contains('selected') ? 'block' : 'none';
+                    otherVolunteeringInput.required = event.target.classList.contains('selected');
+                }
+            }
+        });
+
+        // Handle tag selections for Languages
+        const languagesAreaContainer = document.getElementById('languages-area');
+        const otherLanguageContainer = document.getElementById('other-language-container');
+        const otherLanguageInput = document.getElementById('other-language-input');
+        const selectedLanguages = [];
+
+        languagesAreaContainer.addEventListener('click', (event) => {
+            if (event.target.classList.contains('tag')) {
+                event.target.classList.toggle('selected');
+
+                const value = event.target.getAttribute('data-value');
+
+                if (event.target.classList.contains('selected')) {
+                    selectedLanguages.push(value);
+                } else {
+                    const index = selectedLanguages.indexOf(value);
+                    if (index > -1) {
+                        selectedLanguages.splice(index, 1);
+                    }
+                }
+
+                if (value === 'Other') {
+                    otherLanguageContainer.style.display = event.target.classList.contains('selected') ? 'block' : 'none';
+                    otherLanguageInput.required = event.target.classList.contains('selected');
+                }
+            }
+        });
+
+        // Show the experience details section if 'Yes' is selected
+        const previousExperienceSelect = document.getElementById('previousExperience');
+        const experienceDetailsSection = document.getElementById('experienceDetails');
+        const experienceDetails = document.getElementById('experience-details');
+
+        previousExperienceSelect.addEventListener('change', function () {
+            if (this.value === 'Yes') {
+                experienceDetailsSection.style.display = 'block';
+                experienceDetails.required = true;
+            } else {
+                experienceDetailsSection.style.display = 'none';
+                experienceDetails.required = false;
+            }
+        });
+
+        // Phone number and location connection
+        const locationSelect = document.getElementById('location');
+        const phoneInput = document.getElementById('phone');
+
+        locationSelect.addEventListener('change', () => {
+            const countryCode = locationSelect.value;
+            phoneInput.value = countryCode;
+        });
+
+        // Password visibility toggle
+        const passwordToggle = document.getElementById('password-toggle');
+        const confirmPasswordToggle = document.getElementById('confirm-password-toggle');
+
+        passwordToggle.addEventListener('click', function () {
+            const passwordField = document.getElementById('password');
+            if (passwordField.type === 'password') {
+                passwordField.type = 'text';
+                this.textContent = '🔒';
+            } else {
+                passwordField.type = 'password';
+                this.textContent = '👁️';
+            }
+        });
+
+        confirmPasswordToggle.addEventListener('click', function () {
+            const passwordField = document.getElementById('confirm-password');
+            if (passwordField.type === 'password') {
+                passwordField.type = 'text';
+                this.textContent = '🔒';
+            } else {
+                passwordField.type = 'password';
+                this.textContent = '👁️';
+            }
+        });
+
+        // Password strength indicator and validation
+        const passwordInput = document.getElementById('password');
+        const confirmPassword = document.getElementById('confirm-password');
+        const passwordStrength = document.getElementById('password-strength');
+
+        const reqLength = document.getElementById('req-length');
+        const reqUppercase = document.getElementById('req-uppercase');
+        const reqLowercase = document.getElementById('req-lowercase');
+        const reqNumber = document.getElementById('req-number');
+        const reqSpecial = document.getElementById('req-special');
+
+        function checkPasswordComplexity(password) {
+            const hasLength = password.length >= 8;
+            const hasUppercase = /[A-Z]/.test(password);
+            const hasLowercase = /[a-z]/.test(password);
+            const hasNumber = /[0-9]/.test(password);
+            const hasSpecial = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(password);
+
+            reqLength.className = hasLength ? 'requirement met' : 'requirement unmet';
+            reqUppercase.className = hasUppercase ? 'requirement met' : 'requirement unmet';
+            reqLowercase.className = hasLowercase ? 'requirement met' : 'requirement unmet';
+            reqNumber.className = hasNumber ? 'requirement met' : 'requirement unmet';
+            reqSpecial.className = hasSpecial ? 'requirement met' : 'requirement unmet';
+
+            const requirementsMet = [hasUppercase, hasLowercase, hasNumber, hasSpecial].filter(Boolean).length;
+            const isComplex = hasLength && requirementsMet >= 3;
+
+            return {
+                isComplex,
+                hasLength,
+                requirementsMet
+            };
+        }
+
+        passwordInput.addEventListener('input', function () {
+            const password = this.value;
+            const complexity = checkPasswordComplexity(password);
+
+            passwordStrength.classList.remove('weak', 'medium', 'strong');
+
+            if (password.length === 0) {
+                passwordStrength.style.display = 'none';
+                return;
+            }
+
+            passwordStrength.style.display = 'block';
+
+            if (!complexity.hasLength) {
+                passwordStrength.classList.add('weak');
+            } else if (complexity.requirementsMet < 3) {
+                passwordStrength.classList.add('medium');
+            } else {
+                passwordStrength.classList.add('strong');
+            }
+
+            if (!complexity.isComplex) {
+                this.setCustomValidity('Password must be at least 8 characters and meet at least 3 of the complexity requirements (uppercase, lowercase, number, special character)');
+            } else {
+                this.setCustomValidity('');
+            }
+
+            if (confirmPassword.value && confirmPassword.value !== password) {
+                confirmPassword.setCustomValidity('Passwords do not match');
+            } else {
+                confirmPassword.setCustomValidity('');
+            }
+        });
+
+        confirmPassword.addEventListener('input', function () {
+            if (this.value !== passwordInput.value) {
+                this.setCustomValidity('Passwords do not match');
+            } else {
+                this.setCustomValidity('');
+            }
+        });
+
+        // Final form submission with validation and backend connection
+        const form = document.getElementById('volunteer-form');
+        const formSection = document.getElementById('form-section');
+        const confirmationPage = document.getElementById('confirmation-page');
+
+        form.addEventListener('submit', async function (event) {
+            event.preventDefault();
+            console.log('Form submitted!');
+
+            // Verify selections
+            const selectedVolunteeringTags = volunteeringAreaContainer.querySelectorAll('.tag.selected');
+            const selectedLanguageTags = languagesAreaContainer.querySelectorAll('.tag.selected');
+
+            console.log('Selected volunteering tags:', selectedVolunteeringTags.length);
+            console.log('Selected language tags:', selectedLanguageTags.length);
+
+            if (selectedVolunteeringTags.length === 0) {
+                alert('Please select at least one Area of Volunteering');
+                return;
+            }
+
+            if (selectedLanguageTags.length === 0) {
+                alert('Please select at least one Language');
+                return;
+            }
+
+            // Validate form
+            if (!form.checkValidity()) {
+                form.reportValidity();
+                return;
+            }
+
+            // Collect data
+            const volunteeringAreas = [];
+            selectedVolunteeringTags.forEach(tag => {
+                console.log('Volunteering tag:', tag.getAttribute('data-value'));
+                volunteeringAreas.push(tag.getAttribute('data-value'));
+            });
+
+            const languages = [];
+            selectedLanguageTags.forEach(tag => {
+                console.log('Language tag:', tag.getAttribute('data-value'));
+                languages.push(tag.getAttribute('data-value'));
+            });
+
+            // Create data object
+            const data = {
+                fullName: document.getElementById('fullName').value,
+                age: parseInt(document.getElementById('age').value),
+                email: document.getElementById('email').value,
+                phone: document.getElementById('phone').value,
+                location: document.getElementById('location').value,
+                password: document.getElementById('password').value,
+                availability: document.getElementById('availability').value,
+                volunteeringAreas: volunteeringAreas,
+                previousExperience: document.getElementById('previousExperience').value,
+                languages: languages
+            };
+
+            // Add optional data
+            if (document.getElementById('previousExperience').value === 'Yes') {
+                data.experienceDetails = document.getElementById('experience-details').value;
+            }
+
+            if (volunteeringAreas.includes('Other')) {
+                data.otherVolunteering = document.getElementById('other-volunteering-input').value;
+            }
+
+            if (languages.includes('Other')) {
+                data.otherLanguage = document.getElementById('other-language-input').value;
+            }
+
+            console.log('Data to be sent:', data);
+
+            try {
+                // Send data to server
+                console.log('Sending data to: http://localhost:3019/api/volunteers');
+                const response = await fetch('http://localhost:3019/api/volunteers', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                });
+
+                // Check if response is ok
+                if (response.ok) {
+                    console.log('Form submission successful!');
+                    // Show success modal instead of redirecting immediately
+                    showSuccessModal();
+                } else {
+                    // Handle error response
+                    let errorMessage = `Server error: ${response.status}. Please try again.`;
+                    
+                    // Try to get more details from the response if possible
+                    try {
+                        const contentType = response.headers.get("content-type");
+                        if (contentType && contentType.includes("application/json")) {
+                            const errorData = await response.json();
+                            errorMessage = `Server error: ${errorData.error || errorData.details || response.status}. Please try again.`;
+                        } else {
+                            // If not JSON, just get the text
+                            const textResponse = await response.text();
+                            console.error('Non-JSON error response:', textResponse);
+                        }
+                    } catch (parseError) {
+                        console.error('Error parsing response:', parseError);
+                    }
+                    
+                    console.error('Server returned error');
+                    alert(errorMessage);
+                }
+            } catch (error) {
+                console.error('Submission error:', error);
+                alert('Error: ' + error.message);
+            }
+        });
+        
+        // Function to show success modal and handle countdown
+        function showSuccessModal() {
+            const modal = document.getElementById('success-modal');
+            const countdownEl = document.getElementById('countdown');
+            const progressBar = document.getElementById('progress-bar');
+            const redirectButton = document.getElementById('redirect-button');
+            
+            // Show the modal
+            modal.classList.add('active');
+            
+            // Start with 3 seconds
+            let seconds = 3;
+            
+            // Redirect immediately if button is clicked
+            redirectButton.addEventListener('click', function() {
+                window.location.href = '/index.html';
+            });
+            
+            // Update the countdown every second
+            const timer = setInterval(() => {
+                seconds--;
+                countdownEl.textContent = seconds;
+                progressBar.style.width = (seconds / 3 * 100) + '%';
+                
+                if (seconds <= 0) {
+                    clearInterval(timer);
+                    window.location.href = '/index.html';
+                }
+            }, 1000);
+        }
+    });
+</script>
+</body>
+
+</html>

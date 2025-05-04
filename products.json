@@ -1,0 +1,309 @@
+[
+  {
+    "id": 0,
+    "img": "images/Image 1.jpg",
+    "name": "System Electric Hand DMC (Aluminum )",
+    "price": 800,
+    "old_price": 1500,
+    "Category": "upper_Limb"
+  },
+  {
+    "id": 1,
+    "img": "images/Image 2.jpg",
+    "name": "Modular Transtibial Kit ( Aluminum )",
+    "price": 75,
+    "Category": "Accessories"
+  },
+  {
+    "id": 2,
+    "img": "images/Image 3.jpg",
+    "name": "Polycentric Knee Joint for Knee Disarticulation (Titanium )",
+    "price": 250,
+    "Category": "Lower_Limb"
+  },
+  {
+    "id": 3,
+    "img": "images/Image 4.jpg",
+    "name": "Shuttle Lock,Pyramid (Titanium )",
+    "price": 50,
+    "type": "Used",
+    "Category": "Used Items"
+  },
+  {
+    "id": 4,
+    "img": "images/Image 5.jpg",
+    "name": "Sach foot (combination of a fiberglass-reinforced plastic core and functional foam)",
+    "price": 250,
+    "Category": "Lower_Limb"
+  },
+  {
+    "id": 5,
+    "img": "images/Image 6.jpg",
+    "name": " ball shoulder joint (Aluminum )",
+    "price": 280,
+    "Category": "upper_Limb"
+  },
+  {
+    "id": 6,
+    "img": "images/Image 7.jpg",
+    "name": "Runway foot (carbon fiber)",
+    "price": 450,
+    "old_price": 700,
+    "Category": "Lower_Limb"
+  },
+  {
+    "id": 7,
+    "img": "images/Image 8.jpg",
+    "name": "Runner foot (carbon fiber)",
+    "price": 649.99,
+    "Category": "Lower_Limb"
+  },
+  {
+    "id": 8,
+    "img": "images/Image 9.jpg",
+    "name": "Locking unit (stainless/ Aluminum )",
+    "price": 320,
+    "Category": "Accessories"
+  },
+  {
+    "id": 9,
+    "img": "images/Image 10.jpg",
+    "name": "foot cover ( polyurethane )",
+    "price": 80,
+    "old_price": 100,
+    "Category": "Accessories"
+  },
+  {
+    "id": 10,
+    "img": "images/Image 11.jpg",
+    "name": "Covered System Electric Hand DMC",
+    "price": 900,
+    "old_price": 1250,
+    "Category": "upper_Limb"
+  },
+  {
+    "id": 11,
+    "img": "images/Image 12.jpg",
+    "name": " Arm liner (Silicone)",
+    "price": 260,
+    "old_price": 300,
+    "Category": "Accessories"
+  },
+  {
+    "id": 12,
+    "img": "images/Image 13.jpg",
+    "name": "Bionic hand (Carbon fiber )",
+    "price": 12000,
+    "old_price": 17200,
+    "Category": "upper_Limb"
+  },
+  {
+    "id": 13,
+    "img": "images/Image 14.jpg",
+    "name": "ALPS Medical liner (Silicone Gel Liner )",
+    "price": 490,
+    "type": "Used",
+    "Category": "Used Items"
+  },
+  {
+    "id": 14,
+    "img": "images/Image 15.jpg",
+    "name": "Single Axis Knee Joint (Stainless Steel)",
+    "price": 340,
+    "type": "Used",
+    "Category": "Used Items"
+  },
+  {
+    "id": 15,
+    "img": "images/Image 16.jpg",
+    "name": "Energy Storing and Hydraulic ROM foot Carbon Fiber ",
+    "price": 240,
+    "old_price": 300,
+    "Category": "Lower_Limb"
+  },
+  {
+    "id": 16,
+    "img": "images/Image 17.jpg",
+    "name": "Mechanical Knee Joint (Aluminum )",
+    "price": 600,
+    "old_price": 700,
+    "catetory": "Lower_Limb"
+  },
+  {
+    "id": 17,
+    "img": "images/Image 18.jpg",
+    "name": "Caleo 3D liner (Copolymer (TPE))",
+    "price": 185,
+    "catetory": "Accessories"
+  },
+  {
+    "id": 18,
+    "img": "images/Image 19.jpg",
+    "name": "Nylon Prosthetic sock (Nylon)",
+    "price": 225,
+    "catetory": "Accessories"
+  },
+  {
+    "id": 19,
+    "img": "images/Image 20.jpg",
+    "name": "pre-shaped Above knee cover (Foam) ",
+    "price": 140,
+    "catetory": "Accessories"
+  },
+  {
+    "id": 20,
+    "img": "images/Image 21.jpg",
+    "name": "Triton foot (70% Carbon Fiber)",
+    "price": 280,
+    "old_price": 330,
+    "type": "Used",
+    "catetory": "Lower_Limb"
+  },
+  {
+    "id": 21,
+    "img": "images/Image 22.jpg",
+    "name": "3R80 hydraulic knee (Aluminum)",
+    "price": 2000,
+    "type": "Used",
+    "catetory": "Lower_Limb"
+  },
+  {
+    "id": 22,
+    "img": "images/Image 23.jpg",
+    "name": "Elbow set-up (plastic and aluminum joint with 13 locking position ) ",
+    "price": 580,
+    "type": "Used",
+    "catetory": "Used Items"
+  },
+  {
+    "id": 23,
+    "img": "images/Image 24.jpg",
+    "name": "Myoskin hand (silicone and PVC)",
+    "price": 200,
+    "catetory": "upper_Limb"
+  },
+  {
+    "id": 24,
+    "img": "images/Image 25.jpg",
+    "name": "MyolinoWrist 2000 (stainless/ Aluminum)",
+    "price": 300,
+    "old_price": 380,
+    "catetory": "Accessories"
+  },
+  {
+    "id": 25,
+    "img": "images/Image 26.jpg",
+    "name": "Triton Vertical Shock (80% Carbon Fiber)",
+    "price": 400,
+    "type": "Used",
+    "catetory": "Used Items"
+  },
+  {
+    "id": 26,
+    "img": "images/Image 27.jpg",
+    "name": "Ossur Rheo XC (Aluminum)",
+    "price": 300,
+    "old_price": 600,
+    "type": "Used",
+    "catetory": "Used Items"
+  },
+  {
+    "id": 27,
+    "img": "images/Image 28.jpg",
+    "name": "MovoShulder Swing( Aluminum)",
+    "price": 190,
+    "catetory": "Accessories"
+  },
+  {
+    "id": 28,
+    "img": "images/Image 29.jpg",
+    "name": " Microprocessor C leg (Carbon)",
+    "price": 620,
+    "type": "Used",
+    "catetory": "USed Items"
+  },
+  {
+  "id": 29,
+  "img": "images/Image 30.jpg",
+  "name": "Genium X3 knee (Carbon)",
+  "price": 1300,
+    "type": "Used",
+    "catetory": "USed Items"
+  },
+  {
+  "id": 30,
+  "img": "images/Image 31.jpg",
+  "name": "O.B. Friction Wrist Unit (stainless/ Aluminum)",
+  "price": 300,
+  "catetory": "Accessories"
+  },
+  {
+    "id": 31,
+    "img": "images/Image 32.jpg",
+    "name": "Empower ankle (carbon fiber)",
+    "price": 1150,
+    "catetory": "Lower_Limb"
+  },
+  {
+    "id": 32,
+    "img": "images/Image 33.jpg",
+    "name": "Wrist Unit - Ractchet Type Rotation (stainless/ Aluminum)",
+    "price": 100,
+    "catetory": "Accessories"
+  },
+  {
+    "id": 33,
+    "img": "images/Image 34.jpg",
+    "name": "Suspension valve  (Aluminum)",
+    "price": 300,
+    "type": "Used",
+    "catetory": "USed Items"
+  },
+  {
+    "id": 34,
+    "img": "images/Image 35.jpg",
+    "name": "Suspension sleeve (TPE-Thermoplastic elastomers)",
+    "price": 80,
+    "catetory": "Accessories"
+  },
+  {
+    "id": 35,
+    "img": "images/Image 36.jpg",
+    "name": "Sport knee joint 3S80 (Aluminum)",
+    "price": 3000,
+    "catetory": "Lower_Limb"
+  },
+  {
+    "id": 36,
+    "img": "images/Image 37.jpg",
+    "name": "Dynion knee joint 3R85 (Aluminum)",
+    "price": 2100,
+    "old_price": 3800,
+    "type": "Used",
+    "catetory": "USed Items"
+  },
+  {
+    "id": 37,
+    "img": "images/Image 38.jpg",
+    "name": "System Electric Hand 8E33 (Aluminum)",
+    "price": 800,
+    "catetory": "upper_Limb"
+  },
+  {
+    "id": 38,
+    "img": "images/Image 39.jpg",
+    "name": "movido knee 3R68 (Aluminum)",
+    "price": 300,
+    "old_price": 980,
+    "type": "Used",
+    "catetory": "USed Items"
+  },
+  {
+    "id": 39,
+    "img": "images/Image 40.jpg",
+    "name": "System Electric Hand 8E38=7 (Aluminum)",
+    "price": 680,
+    "old_price": 980,
+    "catetory": "upper_Limb"
+  }
+]

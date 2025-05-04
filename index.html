@@ -1,0 +1,1363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="x-ua-compatible" content="IE=edge">
+    <meta name="description" content="PULSE - Empowering Mobility with Innovation">
+    <meta name="keywords" content="prosthetics, mobility, medical devices, e-commerce">
+    <title>PULSE | Online Store</title>
+
+
+    <link rel="icon" href="images/Screenshot%202025-04-10%20211403%20-%20Copy.png">
+
+
+
+
+    <!-- Link Swiper's CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+
+    <!-- File CSS -->
+    <link rel="stylesheet" href="CSS/style.css">
+
+</head>
+<body>
+
+
+<div class="cart">
+    <div class="top_cart">
+        <h3>Cart Items : <span class="count-item-cart">0</span></h3>
+        <span onclick="open_close_cart()" class="close_cart"><i class="fa-regular fa-circle-xmark"></i></span>
+    </div>
+
+
+    <div class="items_in_cart" id="cart_items">
+
+
+
+    </div>
+
+
+    <div class="bottom_cart">
+        <div class="total">
+            <p>subtotal</p>
+            <p class="price_cart_toral">$0</p>
+        </div>
+
+        <div class="button_cart">
+            <a href="checkout.html" class="btn_cart btn">Checkout</a>
+            <span onclick="open_close_cart()" class="btn_cart trans_bg btn">Shop More</span>
+        </div>
+    </div>
+
+</div>
+
+<div class="wishlist">
+    <div class="top_wishlist">
+        <h3>Favorite Items : <span class="Count_item_wishlist">0</span></h3>
+        <span onclick="open_close_wishlist()" class="close_wishlist"><i class="fa-regular fa-circle-xmark"></i></span>
+    </div>
+
+
+    <div class="items_in_wishlist" id="wishlist_items">
+        <!-- Wishlist items will be dynamically added here -->
+    </div>
+
+
+    <div class="bottom_wishlist">
+        <div class="total">
+            <p>total items</p>
+            <p class="total_wishlist_count">0</p>
+        </div>
+
+        <div class="button_wishlist">
+            <a href="products.html" class="btn_wishlist btn">View All Products</a>
+            <span onclick="open_close_wishlist()" class="btn_wishlist trans_bg btn">Continue Shopping</span>
+        </div>
+    </div>
+</div>
+<header>
+</header>
+
+
+<div class="slider">
+    <div class="container">
+
+
+        <!-- Swiper -->
+        <div class="slide-swp mySwiper">
+
+            <div class="swiper-wrapper">
+                <div class="swiper-slide">
+                    <a href="#top-offers"><img src="images/banner3.jpg" alt=""></a>
+                </div>
+                <div class="swiper-slide">
+                    <a href="#Lower_Limb"><img src="images/aa.jpg" alt=""></a>
+                </div>
+                <div class="swiper-slide">
+                    <a href="#Lower_Limb"><img src="images/n.jpg" alt=""></a>
+                </div>
+
+                <div class="swiper-slide">
+                    <a href="#Used Items"><img src="images/bbb.jpg" alt=""></a>
+                </div>
+
+
+            </div>
+            <div class="swiper-pagination"></div>
+
+        </div>
+
+
+        <div class="banner_2">
+            <a href="#top-offers "><img src="images/aaaa.jpg" alt=""></a>
+        </div>
+
+    </div>
+</div>
+
+
+
+
+<div class="banners_4">
+    <div class="container">
+
+
+        <div class="box">
+            <a href="#top-offers" class="link_btn"></a>
+
+            <img src="images/Image_32-removebg-preview.png" alt="">
+            <div class="text">
+                <h5>Break Disc</h5>
+                <h5>deals on this</h5>
+
+                <div class="sale">
+                    <p>Up <br> To</p>
+                    <span>35%</span>
+                </div>
+
+                <h6>Shop Now</h6>
+
+            </div>
+        </div>
+
+
+
+        <div class="box">
+            <a href="#top-offers" class="link_btn"></a>
+
+            <img src="images/Image_22-removebg-preview.png" alt="">
+            <div class="text">
+                <h5>Break Disc</h5>
+                <h5>deals on this</h5>
+                <div class="sale">
+                    <p>Up <br> To</p>
+                    <span>50%</span>
+                </div>
+
+                <h6>Shop Now</h6>
+
+            </div>
+        </div>
+
+
+
+        <div class="box">
+            <a href="#top-offers" class="link_btn"></a>
+
+            <img src="images/Screenshot_2025-04-12_191647-removebg-preview.png" alt="">
+            <div class="text">
+                <h5>Break Disc</h5>
+                <h5>deals on this</h5>
+                <div class="sale">
+                    <p>Up <br> To</p>
+                    <span>70%</span>
+                </div>
+
+                <h6>Shop Now</h6>
+
+            </div>
+        </div>
+
+
+
+        <div class="box">
+            <a href="#top-offers" class="link_btn"></a>
+
+            <img src="images/Screenshot_2025-04-12_191845-removebg-preview.png" alt="">
+            <div class="text">
+                <h5>Break Disc</h5>
+                <h5>deals on this</h5>
+                <div class="sale">
+                    <p>Up <br> To</p>
+                    <span>60%</span>
+
+                </div>
+                <h6>Shop Now</h6>
+            </div>
+        </div>
+
+
+    </div>
+</div>
+
+
+<div class="slider_products slide">
+
+    <div class="container">
+
+        <div class="slide_product mySwiper">
+
+            <div class="top_slide" id="top-offers">
+                <h2><i class="fa-solid fa-tags"></i> Top 10 Offers</h2>
+            </div>
+
+            <div class="products swiper-wrapper" id="swiper_items_sale">
+
+
+
+
+
+
+            </div>
+
+
+
+            <div class="swiper-button-next btn_Swip"></div>
+            <div class="swiper-button-prev btn_Swip"></div>
+        </div>
+
+    </div>
+</div>
+
+
+<div class="banners">
+    <div class="container">
+        <div class="banners_boxs banner_2_img">
+            <a href="#upper_Limb" class="box"><img src="images/banner6.jpg" alt=""></a>
+            <a href="#Lower_Limb" class="box"><img src="images/banner5.jpg" alt=""></a>
+        </div>
+    </div>
+</div>
+
+<div class="slider_products slide">
+
+    <div class="container">
+
+        <div class="slide_product mySwiper">
+
+            <div class="top_slide" id="upper_Limb">
+                <h2><i class="fa-solid fa-tags"></i> New Arrivals </h2>
+            </div>
+
+            <div class="products swiper-wrapper" id="swiper_upper_Limb">
+
+
+
+
+
+
+            </div>
+
+
+
+            <div class="swiper-button-next btn_Swip"></div>
+            <div class="swiper-button-prev btn_Swip"></div>
+        </div>
+
+    </div>
+</div>
+
+<div class="slider_products slide">
+
+    <div class="container">
+
+        <div class="slide_product mySwiper">
+
+            <div class="top_slide" id="Lower_Limb">
+                <h2><i class="fa-solid fa-tags"></i> Top Rated </h2>
+            </div>
+
+            <div class="products swiper-wrapper" id="swiper_Lower_Limb">
+
+
+
+
+
+
+            </div>
+
+
+
+            <div class="swiper-button-next btn_Swip"></div>
+            <div class="swiper-button-prev btn_Swip"></div>
+        </div>
+
+    </div>
+</div>
+
+
+
+
+
+
+
+<div class="banners">
+    <div class="container">
+        <div class="banners_boxs banner_3_img">
+            <a href="#Used Items" class="box"><img src="images/banner4.jpg" alt=""></a>
+            <a href="#upper_Limb" class="box"><img src="images/banner1.jpg" alt=""></a>
+            <a href="#Used Items" class="box"><img src="images/banner2.jpg" alt=""></a>
+        </div>
+    </div>
+</div>
+
+
+<div class="slider_products slide">
+
+    <div class="container">
+
+        <div class="slide_product mySwiper">
+
+            <div class="top_slide" id="Used Items">
+                <h2><i class="fa-solid fa-tags"></i> Used Items</h2>
+            </div>
+
+            <div class="products swiper-wrapper" id="swiper_used_items">
+
+
+
+
+
+
+            </div>
+
+
+
+            <div class="swiper-button-next btn_Swip"></div>
+            <div class="swiper-button-prev btn_Swip"></div>
+        </div>
+
+    </div>
+</div>
+
+<!-- Footer -->
+<footer>
+    <div class="container">
+
+        <div class="big_row">
+            <img class="logo_footer" src="images/Footer%20.png" alt="PULSE Logo">
+
+            <p>Empowering mobility through cutting-edge prosthetic technology and compassionate healthcare worldwide.</p>
+
+            <div class="icons_footer">
+                <a href="#"><i class="fa-solid fa-phone"></i></a>
+                <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
+                <a href="#"><i class="fa-brands fa-instagram"></i></a>
+                <a href="#"><i class="fa-brands fa-x-twitter"></i></a>
+            </div>
+        </div>
+
+        <div class="row">
+            <h4>Find It Fast</h4>
+
+            <div class="links">
+                <a href="#used_items"><i class="fa-solid fa-caret-right"></i> Used Items </a>
+                <a href="#upper_Limb"><i class="fa-solid fa-caret-right"></i> Upper Limb</a>
+                <a href="#Lower_Limb"><i class="fa-solid fa-caret-right"></i> Lower Limb</a>
+                <a href="#Accessories"><i class="fa-solid fa-caret-right"></i> Accessories</a>
+            </div>
+        </div>
+
+
+        <div class="row">
+            <h4>Quick Links</h4>
+
+            <div class="links">
+                <a href="#"><i class="fa-solid fa-caret-right"></i> Support Center</a>
+                <a href="#"><i class="fa-solid fa-caret-right"></i> Returns & Exchanges</a>
+                <a href="#"><i class="fa-solid fa-caret-right"></i> Shipping & Delivery</a>
+                <a href="#"><i class="fa-solid fa-caret-right"></i> Estimated Delivery Time</a>
+            </div>
+        </div>
+
+
+        <div class="row">
+            <h4>Service us</h4>
+
+            <div class="links">
+
+                <a href="#"><i class="fa-solid fa-caret-right"></i> Term & Conditions</a>
+                <a href="#"><i class="fa-solid fa-caret-right"></i> Privacy Policy</a>
+                <a href="#"><i class="fa-solid fa-caret-right"></i> Help</a>
+                <a href="#"><i class="fa-solid fa-caret-right"></i> FAQS</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="bottom_footer">
+        <div class="container">
+            <p>&copy; <span>PULSE STORE.</span> All Rights Reserved.</p>
+
+            <div class="payment_img">
+                <img src="img/payment_method.png" alt="Payment Methods">
+            </div>
+        </div>
+    </div>
+</footer>
+
+<div id="supportCenterModal" class="modal">
+    <div class="modal-content">
+        <span class="modal-close">&times;</span>
+        <h2>Support Center</h2>
+        <div class="modal-body">
+
+
+            <div class="support-contact">
+                <div class="contact-method">
+                    <i class="fa-solid fa-envelope"></i>
+                    <h4>Email Support</h4>
+                    <p>support@pulsestore.com</p>
+                    <p>Response time: Within 24 hours</p>
+                </div>
+
+                <div class="contact-method">
+                    <i class="fa-solid fa-phone"></i>
+                    <h4>Phone Support</h4>
+                    <p>011 5439 8540</p>
+                    <p>Available: Mon-Fri, 9AM-5PM EST</p>
+                </div>
+
+                <div class="contact-method">
+                    <i class="fa-solid fa-comment-dots"></i>
+                    <h4>Live Chat</h4>
+                    <p>Available through our website</p>
+                    <p>Hours: 24/7</p>
+                </div>
+            </div>
+            <div class="video-container">
+                <!-- Video element with overlay for the button -->
+                <div class="video-wrapper">
+                    <video class="support-video" autoplay muted loop>
+                        <source src="images/A%20Day%20in%20the%20Life%20of%20a%20Bionic%20Hand%20User%20(720p).mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+
+                    <!-- Overlay with centered contact button -->
+                    <div class="video-overlay">
+                        <a href="contact.html" class="btn contact-btn">Send Us a Message</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="termsModal" class="modal">
+    <div class="modal-content">
+        <span class="modal-close">&times;</span>
+        <h2>Terms & Conditions</h2>
+        <div class="modal-body">
+
+            <h3>1. Introduction</h3>
+            <p>Welcome to PULSE. These Terms and Conditions govern your use of our website and services. By accessing or using PULSE, you agree to be bound by these Terms. If you disagree with any part of these terms, you may not access our website or use our services.</p>
+            <p>PULSE is an e-commerce platform specializing in prosthetics and assistive devices for individuals with disabilities, combined with charitable initiatives to support the differently-abled community.</p>
+
+            <h3>2. Definitions</h3>
+            <p>Throughout these Terms, the following definitions apply:</p>
+            <ul>
+                <li><strong>"PULSE"</strong>, <strong>"we"</strong>, <strong>"us"</strong>, or <strong>"our"</strong> refers to PULSE, its owners, directors, employees, and affiliates.</li>
+                <li><strong>"User"</strong>, <strong>"you"</strong>, or <strong>"your"</strong> refers to any individual or entity that accesses or uses our Website or Services.</li>
+                <li><strong>"Services"</strong> refers to prosthetics, assistive devices, support services, and charitable initiatives provided by PULSE.</li>
+                <li><strong>"Website"</strong> refers to the PULSE website, including all content, services, and products available at or through the website.</li>
+                <li><strong>"Products"</strong> refers to prosthetics, assistive devices, and related items sold through our platform.</li>
+            </ul>
+
+            <h3>3. Account Registration</h3>
+            <p>To access certain features of our Website, you must register for an account. You agree to provide accurate, current, and complete information during the registration process and to update such information to keep it accurate, current, and complete.</p>
+            <p>You are responsible for safeguarding your account credentials and for any activities or actions under your account. PULSE will not be liable for any losses or damages arising from your failure to comply with these obligations.</p>
+            <p>You must be at least 18 years old to create an account. By creating an account, you represent and warrant that you are 18 years of age or older.</p>
+
+            <h3>4. E-Commerce Terms</h3>
+            <p>By placing an order through our Website, you affirm that you are entering into a legally binding agreement with PULSE.</p>
+            <ul>
+                <li><strong>Product Descriptions:</strong> We strive to describe our products as accurately as possible. However, we do not warrant that product descriptions or other content on the Website are accurate, complete, reliable, current, or error-free.</li>
+                <li><strong>Pricing:</strong> All prices are shown in the applicable currency and are subject to change without notice. We reserve the right to correct any pricing errors on our Website.</li>
+                <li><strong>Payment:</strong> We accept various payment methods as indicated during the checkout process. All payments are processed securely through our payment processors.</li>
+                <li><strong>Shipping and Delivery:</strong> Delivery times vary depending on your location and the product ordered. Custom prosthetics may require additional time for manufacturing.</li>
+                <li><strong>Returns and Refunds:</strong> For standard products, we offer a 30-day return policy. Custom prosthetics may have different return policies as specified at the time of purchase.</li>
+            </ul>
+
+            <h3>5. Medical Disclaimer</h3>
+            <p>The information provided on our Website is for general informational purposes only and is not intended as a substitute for professional medical advice. Always seek the advice of your physician or other qualified health provider with any questions you may have regarding your medical condition or treatment.</p>
+            <p>Our prosthetics and assistive devices should be used under appropriate medical supervision. Proper fitting and adjustment by qualified professionals are essential for safety and effectiveness.</p>
+
+            <h3>6. Charitable Initiatives and Volunteering</h3>
+            <p>PULSE facilitates charitable initiatives and volunteer opportunities to support individuals with disabilities:</p>
+            <ul>
+                <li><strong>Donations:</strong> Financial contributions made through our platform are used to provide prosthetics and assistive devices to those in need. A detailed breakdown of how donations are utilized is available upon request.</li>
+                <li><strong>Volunteering:</strong> By registering as a volunteer, you agree to abide by our volunteer code of conduct, which will be provided separately.</li>
+                <li><strong>Sponsorships:</strong> Sponsors agree to the specific terms outlined in their sponsorship agreements.</li>
+            </ul>
+            <p>PULSE reserves the right to decline donations, volunteer services, or sponsorships at our discretion.</p>
+
+            <h3>9. Privacy Policy</h3>
+            <p>Your use of our Website is also governed by our Privacy Policy, which is incorporated into these Terms by reference.</p>
+            <h3>4. Product Information</h3>
+            <p>We strive to provide accurate product descriptions and information. However, we do not warrant that product descriptions or other content on our Website are accurate, complete, reliable, current, or error-free.</p>
+
+            <h3>5. Pricing and Payment</h3>
+            <p>All prices are listed in US Dollars unless otherwise specified. We reserve the right to change prices at any time. Payment must be made in full before products are shipped.</p>
+
+            <h3>6. Shipping and Delivery</h3>
+            <p>Shipping times are estimates and not guaranteed. We are not responsible for delays caused by customs, weather, or other factors outside our control.</p>
+
+            <h3>7. Returns and Refunds</h3>
+            <p>Please refer to our Returns & Exchanges policy for detailed information on returning products and receiving refunds.</p>
+
+            <h3>7. Intellectual Property</h3>
+            <p>All content on our Website, including text, graphics, logos, images, audio clips, digital downloads, and data compilations, is the property of PULSE or its content suppliers and is protected by international copyright laws.</p>
+            <p>You may not reproduce, duplicate, copy, sell, resell, or exploit any portion of our Website without express written permission from PULSE.</p>
+
+            <h3>8. User Conduct</h3>
+            <p>You agree not to use our Website for any unlawful purpose or in any way that could damage, disable, overburden, or impair our service.</p>
+            <p>You may not attempt to gain unauthorized access to any part of our Website, other accounts, or computer systems through hacking, password mining, or any other means.</p>
+
+            <h3>10. Limitation of Liability</h3>
+            <p>To the fullest extent permitted by applicable law, PULSE shall not be liable for any indirect, incidental, special, consequential, or punitive damages resulting from your use of or inability to use our Website or Services.</p>
+
+            <h3>10. Governing Law</h3>
+            <p>These Terms shall be governed by and construed in accordance with the laws of [Your Jurisdiction], without regard to its conflict of law principles.</p>
+
+            <h3>11. Indemnification</h3>
+            <p>You agree to indemnify, defend, and hold harmless PULSE and its officers, directors, employees, agents, and suppliers from and against any claims, liabilities, damages, judgments, awards, losses, costs, expenses, or fees arising out of or relating to your violation of these Terms or your use of our Website.</p>
+
+            <h3>11. Changes to Terms</h3>
+            <p>We reserve the right to modify these Terms at any time. Your continued use of our Website after any changes indicates your acceptance of the modified Terms.</p>
+
+            <h3>13. Contact Information</h3>
+            <p>If you have any questions about these Terms, please contact us at:</p>
+            <p>Email: support@pulse-prosthetics.com<br>
+                Phone: +1-800-PULSE-HELP<br>
+                Address: PULSE Headquarters, 123 Health Avenue, Wellness City, 10001</p>if you have any questions about these Terms, please contact us at legal@pulsestore.com.</p>
+            <h3>15. Acknowledgement</h3>
+            <p>By using our Website or Services, you acknowledge that you have read these Terms and agree to be bound by them.</p>
+            <p>Last updated: April 11, 2025</p>
+
+        </div>
+    </div>
+</div>
+
+<div id="privacyPolicyModal" class="modal">
+    <div class="modal-content">
+        <span class="modal-close">&times;</span>
+        <h2>Privacy Policy</h2>
+        <div class="modal-body">
+            <p>Last Updated: April 19, 2025</p>
+
+            <h3>1. Introduction</h3>
+            <p>At PULSE STORE, we respect your privacy and are committed to protecting your personal data. This Privacy Policy explains how we collect, use, and safeguard your information when you visit our website or use our services.</p>
+
+            <h3>2. Information We Collect</h3>
+            <p><strong>Personal Information:</strong> Name, email address, phone number, shipping address, billing address, payment information.</p>
+            <p><strong>Medical Information:</strong> When necessary for product customization, we may collect relevant medical data with your explicit consent.</p>
+            <p><strong>Technical Data:</strong> IP address, browser type, device information, cookies, usage data.</p>
+
+            <h3>3. How We Use Your Information</h3>
+            <ul>
+                <li>To process and fulfill your orders</li>
+                <li>To provide customer support</li>
+                <li>To improve our products and services</li>
+                <li>To send you marketing communications (with your consent)</li>
+                <li>To comply with legal obligations</li>
+            </ul>
+
+            <h3>4. Data Sharing and Disclosure</h3>
+            <p>We may share your information with:</p>
+            <ul>
+                <li>Service providers who perform services on our behalf</li>
+                <li>Healthcare professionals when necessary for product customization</li>
+                <li>Legal authorities when required by law</li>
+            </ul>
+            <p>We do not sell your personal information to third parties.</p>
+
+            <h3>5. Data Security</h3>
+            <p>We implement appropriate security measures to protect your personal information. However, no method of transmission over the Internet or electronic storage is 100% secure.</p>
+
+            <h3>6. Your Rights</h3>
+            <p>Depending on your location, you may have rights to:</p>
+            <ul>
+                <li>Access your personal information</li>
+                <li>Correct inaccurate data</li>
+                <li>Delete your data</li>
+                <li>Object to processing</li>
+                <li>Data portability</li>
+            </ul>
+
+            <h3>7. Cookies</h3>
+            <p>We use cookies to enhance your browsing experience. You can set your browser to refuse cookies, but this may limit your ability to use certain features of our website.</p>
+
+            <h3>8. Children's Privacy</h3>
+            <p>Our website is not intended for children under 13 years of age, and we do not knowingly collect personal information from children.</p>
+
+            <h3>9. Changes to This Policy</h3>
+            <p>We may update this Privacy Policy from time to time. We will notify you of any changes by posting the new policy on our website.</p>
+
+            <h3>10. Contact Us</h3>
+            <p>If you have questions about this Privacy Policy, please contact our Data Protection Officer at privacy@pulsestore.com.</p>
+        </div>
+    </div>
+</div>
+
+<div id="helpModal" class="modal">
+    <div class="modal-content">
+        <span class="modal-close">&times;</span>
+        <h2>Help Center</h2>
+        <div class="modal-body">
+            <div class="help-section">
+                <h3>Getting Started</h3>
+                <div class="help-item">
+                    <h4>Creating an Account</h4>
+                    <p>Click on "Log In" in the top right corner of our website and select "Create Account." Fill in your information and follow the verification steps.</p>
+                </div>
+                <div class="help-item">
+                    <h4>Browsing Products</h4>
+                    <p>Navigate through our categories or use the search bar to find specific products. Filter results by category, price, or other attributes.</p>
+                </div>
+            </div>
+
+            <div class="help-section">
+                <h3>Ordering Process</h3>
+                <div class="help-item">
+                    <h4>Adding Items to Cart</h4>
+                    <p>Click the "Add to Cart" button on any product page. You can review your cart by clicking the cart icon in the top right corner.</p>
+                </div>
+                <div class="help-item">
+                    <h4>Checkout Process</h4>
+                    <p>When you're ready to complete your purchase, click "Checkout" in your cart. Follow the steps to enter shipping and payment information.</p>
+                </div>
+                <div class="help-item">
+                    <h4>Order Tracking</h4>
+                    <p>After placing an order, you'll receive an order confirmation email with tracking information. You can also check order status in your account dashboard.</p>
+                </div>
+            </div>
+
+            <div class="help-section">
+                <h3>Product Information</h3>
+                <div class="help-item">
+                    <h4>Custom Prosthetics</h4>
+                    <p>For customized prosthetic devices, additional measurements or consultation may be required. Instructions will be provided during the ordering process.</p>
+                </div>
+                <div class="help-item">
+                    <h4>Product Care</h4>
+                    <p>Each product comes with specific care instructions. Generally, keep prosthetics clean and dry, and follow maintenance schedules.</p>
+                </div>
+            </div>
+
+            <div class="help-section">
+                <h3>Still Need Help?</h3>
+                <p>If you couldn't find the information you need, please contact our Support Center through email at help@pulsestore.com or call us at +1 (800) 555-1234.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="faqsModal" class="modal">
+    <div class="modal-content">
+        <span class="modal-close">&times;</span>
+        <h2>Frequently Asked Questions</h2>
+        <div class="modal-body">
+            <div class="faq-search">
+                <input type="text" id="faqSearch" placeholder="Search FAQs...">
+            </div>
+
+            <div class="faq-categories">
+                <button class="faq-category active" data-category="all">All</button>
+                <button class="faq-category" data-category="ordering">Ordering</button>
+                <button class="faq-category" data-category="products">Products</button>
+                <button class="faq-category" data-category="shipping">Shipping</button>
+                <button class="faq-category" data-category="returns">Returns</button>
+            </div>
+
+            <div class="faq-items">
+                <!-- Ordering FAQs -->
+                <div class="faq-item" data-category="ordering">
+                    <div class="faq-question">
+                        <h3>How do I place an order?</h3>
+                        <i class="fa-solid fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>To place an order, browse our products, add items to your cart, and proceed to checkout. You'll need to create an account or log in, provide shipping and payment information, and confirm your order.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item" data-category="ordering">
+                    <div class="faq-question">
+                        <h3>Can I modify or cancel my order?</h3>
+                        <i class="fa-solid fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>You can modify or cancel your order within 24 hours of placing it by contacting our customer service. After this period, orders are processed and cannot be modified or canceled.</p>
+                    </div>
+                </div>
+
+                <!-- Products FAQs -->
+                <div class="faq-item" data-category="products">
+                    <div class="faq-question">
+                        <h3>Are your prosthetic products customizable?</h3>
+                        <i class="fa-solid fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Yes, many of our prosthetic products can be customized to fit your specific needs. Look for the "Customizable" label on product pages. Additional information and measurements may be required for customization.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item" data-category="products">
+                    <div class="faq-question">
+                        <h3>What is the difference between upper and lower limb prosthetics?</h3>
+                        <i class="fa-solid fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Upper limb prosthetics are designed for arms and hands, while lower limb prosthetics are for legs and feet. Each type is engineered with specific functionalities to support different activities and mobility needs.</p>
+                    </div>
+                </div>
+
+                <!-- Shipping FAQs -->
+                <div class="faq-item" data-category="shipping">
+                    <div class="faq-question">
+                        <h3>How long will it take to receive my order?</h3>
+                        <i class="fa-solid fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Standard shipping typically takes 5-7 business days. Express shipping is available for 2-3 business days. Custom products may take longer, with estimated delivery times provided during checkout.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item" data-category="shipping">
+                    <div class="faq-question">
+                        <h3>Do you ship internationally?</h3>
+                        <i class="fa-solid fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Yes, we ship to over 50 countries worldwide. International shipping times vary by location, typically ranging from 7-21 business days. Additional customs fees may apply depending on your country.</p>
+                    </div>
+                </div>
+                <div class="faq-item" data-category="shipping">
+                    <div class="faq-question">
+                        <h3>What happens if I'm not home when my order arrives?</h3>
+                        <i class="fa-solid fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>For most shipments, the carrier will leave your package at your door if no signature is required. For orders requiring a signature, they will leave a delivery attempt notice with instructions for rescheduling or pickup.</p>
+                    </div>
+                </div>
+                <div class="faq-item" data-category="shipping">
+                    <div class="faq-question">
+                        <h3>Can I change my delivery address after placing my order?</h3>
+                        <i class="fa-solid fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Address changes may be possible if your order hasn't shipped yet. Please contact customer service immediately with your order number to request an address change.</p>
+                    </div>
+                </div>
+                <div class="faq-item" data-category="shipping">
+                    <div class="faq-question">
+                        <h3>Do you deliver on weekends?</h3>
+                        <i class="fa-solid fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Standard and expedited shipping typically only deliver on business days (Monday-Friday). Select carriers may offer weekend delivery for Next Day service in certain areas.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Returns FAQs -->
+        <div class="faq-item" data-category="returns">
+            <div class="faq-question">
+                <h3>What is your return policy?</h3>
+                <i class="fa-solid fa-chevron-down"></i>
+            </div>
+            <div class="faq-answer">
+                <p>Standard products can be returned within 30 days of delivery if they're in original condition. Custom products are non-returnable unless defective. Contact customer service to initiate a return.</p>
+            </div>
+        </div>
+
+        <div class="faq-item" data-category="returns">
+            <div class="faq-question">
+                <h3>How do I return a product?</h3>
+                <i class="fa-solid fa-chevron-down"></i>
+            </div>
+            <div class="faq-answer">
+                <p>To return a product, log into your account, go to order history, select the item you wish to return, and follow the return instructions. You'll receive a return shipping label and further instructions via email.</p>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+</div>
+<div id="returnsModal" class="modal">
+    <div class="modal-content">
+        <span class="modal-close">&times;</span>
+        <h2>Returns & Exchanges</h2>
+        <div class="returns-container">
+            <div class="returns-section">
+                <h3>Return Policy</h3>
+                <p>We want you to be completely satisfied with your purchase. If you're not satisfied for any reason, we accept returns within 30 days of delivery for a full refund of the item price.</p>
+
+                <h4>Return Eligibility:</h4>
+                <ul>
+                    <li>Items must be unused and in original packaging</li>
+                    <li>Original receipt or proof of purchase required</li>
+                    <li>Returns must be initiated within 30 days of delivery</li>
+                    <li>Special order items and clearance sales may have different policies</li>
+                </ul>
+
+                <h4>Non-Returnable Items:</h4>
+                <ul>
+                    <li>Custom or personalized products</li>
+                    <li>Items marked as "Final Sale"</li>
+                    <li>Products with broken seals or missing components</li>
+                </ul>
+            </div>
+
+            <div class="returns-section">
+                <h3>Exchange Process</h3>
+                <p>Exchanges can be processed for the same item in a different size or color, subject to availability.</p>
+
+                <h4>How to Request an Exchange:</h4>
+                <ol>
+                    <li>Login to your account</li>
+                    <li>Navigate to your order history</li>
+                    <li>Select the order containing the item(s) for exchange</li>
+                    <li>Follow the exchange instructions</li>
+                </ol>
+
+                <p>Please note that exchanges are subject to inventory availability. If your desired item is unavailable, we'll process a return instead.</p>
+            </div>
+
+            <div class="returns-section">
+                <h3>How to Start a Return</h3>
+                <p>To return an item, please follow these instructions:</p>
+                <ol>
+                    <li>Locate your order number from your confirmation email or account history</li>
+                    <li>Contact our customer service team at returns@example.com with your order number in the subject line</li>
+                    <li>Include the reason for your return in the email body</li>
+                    <li>Our team will respond within 24 hours with a return authorization and shipping instructions</li>
+                    <li>Package your item(s) in their original packaging with all included components</li>
+                    <li>Attach the provided return label to your package</li>
+                    <li>Drop off your package at any authorized shipping location</li>
+                </ol>
+                <p>Return processing typically takes 7-10 business days from receipt of your returned items.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Shipping & Delivery Modal -->
+<div id="shippingModal" class="modal">
+    <div class="modal-content">
+        <span class="modal-close">&times;</span>
+        <h2>Shipping & Delivery</h2>
+        <div class="shipping-container">
+            <div class="shipping-section">
+                <h3>Shipping Options for Egypt</h3>
+                <table class="shipping-table">
+                    <thead>
+                    <tr>
+                        <th>Shipping Method</th>
+                        <th>Estimated Delivery</th>
+                        <th>Cost</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>Standard Shipping</td>
+                        <td>7-10 business days</td>
+                        <td>EGP 150</td>
+                    </tr>
+                    <tr>
+                        <td>Expedited Shipping</td>
+                        <td>4-6 business days</td>
+                        <td>EGP 300</td>
+                    </tr>
+                    <tr>
+                        <td>Next Day Delivery</td>
+                        <td>1-2 business days</td>
+                        <td>EGP 500</td>
+                    </tr>
+                    <tr>
+                        <td>Free Shipping</td>
+                        <td>7-10 business days</td>
+                        <td>Free on orders over EGP 2000</td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <div class="shipping-notes">
+                    <p><strong>Note:</strong> Business days are Sunday-Thursday in Egypt, excluding public holidays. Orders placed after 2 PM EET may not be processed until the next business day.</p>
+                </div>
+            </div>
+
+            <div class="shipping-section">
+                <h3>Shipping In Egypt</h3>
+                <p>We deliver to all governorates in Egypt with varying delivery times:</p>
+                <ul>
+                    <li>Cairo and Alexandria: Fastest delivery times (as shown in the table above)</li>
+                    <li>Other major cities (Giza, Sharm El Sheikh, Hurghada): Add 1-2 additional days</li>
+                    <li>Remote areas and other governorates: Add 3-5 additional days</li>
+                </ul>
+
+                <p>All shipments to Egypt are fully tracked and insured. Please note that customs clearance may occasionally cause additional delays beyond our control.</p>
+            </div>
+
+
+        </div>
+    </div>
+</div>
+
+<!-- Estimated Delivery Time Modal -->
+<div id="deliveryTimeModal" class="modal">
+    <div class="modal-content">
+        <span class="modal-close">&times;</span>
+        <h2>Estimated Delivery Time</h2>
+        <div class="delivery-time-container">
+            <div class="delivery-time-section">
+                <h3>How We Calculate Delivery Estimates</h3>
+                <p>Our delivery estimates are calculated based on several factors:</p>
+                <ul>
+                    <li>Processing time (typically 1-2 business days)</li>
+                    <li>Shipping method selected</li>
+                    <li>Destination location</li>
+                    <li>Inventory status</li>
+                    <li>Current order volume</li>
+                </ul>
+
+                <div class="delivery-time-diagram">
+                    <div class="timeline">
+                        <div class="timeline-item">
+                            <div class="timeline-icon">
+                                <i class="fa-solid fa-cart-shopping"></i>
+                            </div>
+                            <div class="timeline-content">
+                                <h4>Order Placed</h4>
+                                <p>Order received and payment confirmed</p>
+                            </div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-icon">
+                                <i class="fa-solid fa-box"></i>
+                            </div>
+                            <div class="timeline-content">
+                                <h4>Processing</h4>
+                                <p>Order verification and preparation (1-2 days)</p>
+                            </div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-icon">
+                                <i class="fa-solid fa-truck"></i>
+                            </div>
+                            <div class="timeline-content">
+                                <h4>Shipping</h4>
+                                <p>Order in transit (varies by shipping method)</p>
+                            </div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-icon">
+                                <i class="fa-solid fa-house"></i>
+                            </div>
+                            <div class="timeline-content">
+                                <h4>Delivery</h4>
+                                <p>Order arrives at your doorstep</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="delivery-time-section">
+                <h3>Understanding Delivery Timeframes</h3>
+                <p>To estimate when your order will arrive, please consider these guidelines:</p>
+                <ul>
+                    <li><strong>Standard Shipping:</strong> Orders typically take 5-7 business days to arrive after processing</li>
+                    <li><strong>Expedited Shipping:</strong> Orders typically take 2-3 business days to arrive after processing</li>
+                    <li><strong>Next Day Delivery:</strong> Orders placed before 2 PM will arrive the next business day</li>
+                </ul>
+                <p>Remember to add 1-2 business days for order processing time to all estimates.</p>
+                <p>For precise delivery estimates, please check the shipping time calculator during checkout, which provides personalized timeframes based on your location and current inventory status.</p>
+            </div>
+
+
+        </div>
+    </div>
+</div>
+
+
+
+
+<script>
+    // public/js/auth.js - Client-side authentication handling
+    function debugLoginRequest() {
+        const username = document.getElementById('login-username').value;
+        const password = document.getElementById('login-username').value;
+
+        console.log("Testing login endpoint with credentials:",
+            {username: username, password: "***hidden***"});
+
+        // Display the URL we're calling
+        const loginUrl = '/api/login';
+        console.log("Making request to:", loginUrl);
+
+        fetch(loginUrl, {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({username, password})
+        })
+            .then(response => {
+                console.log("Status code:", response.status);
+                console.log("Headers:", Object.fromEntries(response.headers.entries()));
+                return response.json();
+            })
+            .then(data => {
+                console.log("Response data:", data);
+                console.log("Has token?", !!data.user?.token);
+            })
+            .catch(error => console.error("Network error:", error));
+    }
+
+
+
+    // Add this at the top of your checkout page script
+    console.log("Auth status:", isLoggedIn());
+    console.log("Token:", getToken());
+    console.log("User data:", getCurrentUser());
+
+    function debugAuth() {
+        console.group("Auth Debug Info");
+        console.log("isLoggedIn function exists:", typeof isLoggedIn === 'function');
+        console.log("Auth status:", typeof isLoggedIn === 'function' ? isLoggedIn() : 'function not found');
+        console.log("Token:", localStorage.getItem('token'));
+        console.log("User data:", localStorage.getItem('user'));
+        console.groupEnd();
+    }
+
+
+    debugAuth();
+    // Check if user is logged in
+    function isLoggedIn() {
+        return localStorage.getItem('token') !== null;
+    }
+
+    // Get the current user's token
+    function getToken() {
+        return localStorage.getItem('token');
+    }
+
+    // Get the current user's data
+    function getCurrentUser() {
+        const userData = localStorage.getItem('user');
+        return userData ? JSON.parse(userData) : null;
+    }
+
+    // Log the user out
+    function logout() {
+        localStorage.removeItem('token');
+        localStorage.removeItem('user');
+        // Redirect to login page
+        window.location.href = 'Login Page.html';
+    }
+
+    // Protect routes that require authentication
+    function protectRoute() {
+        if (!isLoggedIn()) {
+            // Save the current URL to redirect back after login
+            localStorage.setItem('redirectUrl', window.location.href);
+            // Redirect to login
+            window.location.href = 'Login Page.html';
+            return false;
+        }
+        return true;
+    }
+
+    // Handle login form submission
+    function handleLogin(event) {
+        event.preventDefault();
+        console.log("Login attempt started");
+
+        const username = document.getElementById('login-username').value;
+        const password = document.getElementById('login-password').value;
+
+        console.log("Attempting login with username:", username);
+
+        // Note that you're using a relative URL '/login' here
+        // But in your original code you had 'http://localhost:3008/login'
+        fetch('/api/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ username, password })
+        })
+            .then(response => {
+                console.log("Login response status:", response.status);
+                return response.json();
+            })
+            .then(data => {
+                console.log("Login response data:", data);
+
+                if (data.success) {
+                    try {
+                        // Check if the data structure matches what we expect
+                        console.log("User data structure:", data.user);
+
+                        // Save token and user data with explicit error handling
+                        localStorage.setItem('token', data.user.token);
+                        console.log("Token saved:", data.user.token);
+
+                        const userData = {
+                            id: data.user.id,
+                            username: data.user.username,
+                            name: data.user.name
+                        };
+                        localStorage.setItem('user', JSON.stringify(userData));
+                        console.log("User data saved:", userData);
+
+                        // Double-check that data was saved correctly
+                        console.log("Verification - Token in localStorage:", localStorage.getItem('token'));
+                        console.log("Verification - User in localStorage:", localStorage.getItem('user'));
+
+                        // Redirect to saved URL or homepage
+                        const redirectUrl = localStorage.getItem('redirectUrl') || '/';
+                        console.log("Redirecting to:", redirectUrl);
+                        localStorage.removeItem('redirectUrl');
+
+                        alert("Login successful! Redirecting...");
+                        window.location.href = redirectUrl;
+                    } catch (err) {
+                        console.error("Error during login success handling:", err);
+                        alert("Login succeeded but there was an error saving your session");
+                    }
+                } else {
+                    console.error("Login failed:", data.message);
+                    alert('Login failed: ' + data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Login fetch error:', error);
+                alert('An error occurred during login. Check the console for details.');
+            });
+    }
+
+    // Handle registration form submission
+    function handleRegister(event) {
+        event.preventDefault();
+
+        const username = document.getElementById('register-username').value;
+        const password = document.getElementById('register-password').value;
+        const name = document.getElementById('register-name').value;
+
+        fetch('/api/register', { // CORRECT HERE!!!
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ username, password, name })
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // Save token and user data
+                    localStorage.setItem('token', data.user.token);
+                    localStorage.setItem('user', JSON.stringify({
+                        id: data.user.id,
+                        username: data.user.username,
+                        name: data.user.name
+                    }));
+
+                    alert('Registration successful!');
+
+                    // Redirect to homepage or dashboard
+                    window.location.href = '/';
+                } else {
+                    alert('Registration failed: ' + data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('An error occurred during registration');
+            });
+    }
+
+    // Update UI based on authentication status
+    function updateAuthUI() {
+        const loggedIn = isLoggedIn();
+        const user = getCurrentUser();
+
+        // Update login/logout buttons
+        const loginButtons = document.querySelectorAll('.login-button');
+        const logoutButtons = document.querySelectorAll('.logout-button');
+        const userInfoElements = document.querySelectorAll('.user-info');
+
+        if (loginButtons) {
+            loginButtons.forEach(button => {
+                button.style.display = loggedIn ? 'none' : 'inline-block';
+            });
+        }
+
+        if (logoutButtons) {
+            logoutButtons.forEach(button => {
+                button.style.display = loggedIn ? 'inline-block' : 'none';
+                if (loggedIn) {
+                    button.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        logout();
+                    });
+                }
+            });
+        }
+
+        if (userInfoElements && loggedIn && user) {
+            userInfoElements.forEach(element => {
+                element.textContent = `Welcome, ${user.name}`;
+                element.style.display = 'inline-block';
+            });
+        }
+    }
+
+
+
+
+
+
+    function setupFormSubmission() {
+        const form = document.getElementById('form_contact');
+
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            // Check if user is logged in
+            if (typeof isLoggedIn !== 'function' || !isLoggedIn()) {
+                alert('Please log in to complete your order');
+                window.location.href = 'Login Page.html';
+                return;
+            }
+
+            const formData = new FormData(form);
+            const jsonData = {};
+
+            formData.forEach((value, key) => {
+                jsonData[key] = value;
+            });
+
+            // Add coupon if applied
+            const couponInput = document.getElementById('coupon');
+            if (couponInput.value) {
+                jsonData['couponCode'] = couponInput.value;
+            }
+
+            fetch('/api/checkout', { // CORRECT HERE!!!
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${getToken()}`
+                },
+                body: JSON.stringify(jsonData)
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        alert('Order placed successfully! Order ID: ' + data.orderId);
+                        localStorage.removeItem('cart'); // Clear the cart
+                        window.location.href = '/order-confirmation.html?id=' + data.orderId;
+                    } else {
+                        alert('Error: ' + data.message);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('An error occurred while processing your order');
+                });
+        });
+    }
+
+    function setupCouponButton() {
+        const couponButton = document.querySelector('.btn_coupon button');
+
+        couponButton.addEventListener('click', function(e) {
+            e.preventDefault();
+
+            // Check if user is logged in
+            if (typeof isLoggedIn !== 'function' || !isLoggedIn()) {
+                alert('Please log in to apply coupons');
+                window.location.href = 'Login Page.html';
+                return;
+            }
+
+            const couponCode = document.getElementById('coupon').value;
+            if (!couponCode) {
+                alert('Please enter a coupon code');
+                return;
+            }
+
+            const subtotalElement = document.querySelector('.subtotal_checkout');
+            const subtotal = parseFloat(subtotalElement.textContent.replace('EGP ', ''));
+
+            fetch('/api/validate-coupon', { // CORRECT HERE!!!
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${getToken()}`
+                },
+                body: JSON.stringify({
+                    couponCode,
+                    subtotal
+                })
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        alert(data.message);
+                        subtotalElement.textContent = `EGP ${data.newSubtotal}`;
+                        document.querySelector('.total_checkout').textContent = `EGP ${data.newTotal}`;
+                        document.getElementById('total_Price').value = data.newTotal;
+                    } else {
+                        alert(data.message);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('An error occurred while validating the coupon');
+                });
+        });
+    }
+
+    function setupPhoneValidation() {
+        const phoneInput = document.getElementById('phone');
+        const phoneError = document.getElementById('phoneError');
+
+        phoneInput.addEventListener('input', function() {
+            const isValid = validatePhoneNumber(this.value);
+            phoneError.style.display = isValid ? 'none' : 'block';
+        });
+
+        function validatePhoneNumber(phone) {
+            const egyptianPhoneRegex = /^01[0125]\d{8}$/;
+            return egyptianPhoneRegex.test(phone);
+        }
+    }
+</script>
+<!-- Swiper JS -->
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+<!-- File JS - Ensure correct loading order with swiper.js before items_home.js -->
+<script src="JS/cartSync.js"></script>
+<script src="JS/auth.js"></script>
+<script src="JS/swiper.js"></script>
+<script src="JS/items_home.js"></script>
+<script src="JS/favorite.js"></script>
+<script src="JS/product.js"></script>
+<script src="JS/footer.js"></script>
+<script src="JS/header.js"></script>
+</body>
+</html>

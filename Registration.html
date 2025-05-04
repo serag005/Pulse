@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration - PULSE</title>
+    <style>
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(to right, #e0f7fa, #ffffff);
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+
+        h1 {
+            color: #005b66;
+            text-align: center;
+            margin-top: 30px;
+            font-size: 2.5em;
+        }
+
+        p {
+            text-align: center;
+            color: #007f84;
+            font-size: 1.1em;
+            margin-bottom: 30px;
+        }
+
+        .form-container {
+            width: 90%;
+            max-width: 800px;
+            margin: 40px auto;
+            background-color: #ffffff;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-container label {
+            font-size: 1.1em;
+            font-weight: bold;
+            display: block;
+            margin: 15px 0 8px;
+        }
+
+        .form-container input,
+        .form-container select,
+        .form-container textarea {
+            width: 100%;
+            padding: 12px;
+            font-size: 1em;
+            border: 2px solid #b2ebf2;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            transition: border-color 0.3s;
+        }
+
+        .form-container input:focus,
+        .form-container select:focus,
+        .form-container textarea:focus {
+            border-color: #00bcd4;
+            outline: none;
+        }
+
+        .form-container button {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #fff;
+            background-color: #00bcd4;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-top: 40px;
+        }
+
+        .form-container button:hover {
+            background-color: #008ba3;
+        }
+
+        .section-title {
+            font-size: 1.3em;
+            font-weight: bold;
+            margin-top: 30px;
+            color: #007f84;
+        }
+
+        .tag-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 10px;
+            margin-bottom: 20px;
+        }
+
+        .tag {
+            padding: 10px 16px;
+            border-radius: 20px;
+            background-color: #007f84;
+            color: #fff;
+            font-size: 1em;
+            cursor: pointer;
+            user-select: none;
+            transition: background-color 0.3s;
+        }
+
+        .tag:hover {
+            background-color: #005f63;
+        }
+
+        .tag.selected {
+            background-color: #00bcd4;
+        }
+
+        .other-section {
+            margin-top: 15px;
+            display: none;
+            margin-bottom: 20px;
+        }
+
+        .confirmation-page {
+            display: none;
+            text-align: center;
+            padding: 40px;
+        }
+
+        .confirmation-page h2 {
+            font-size: 2.2em;
+            color: #00bcd4;
+        }
+
+        .confirmation-page p {
+            font-size: 1.2em;
+            margin-top: 20px;
+        }
+
+        .checkbox-container {
+            display: flex;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        .checkbox-container input {
+            width: auto;
+            margin-right: 10px;
+        }
+
+        .checkbox-container label {
+            display: inline;
+            margin: 0;
+        }
+
+        .checkbox-container a {
+            color: #00bcd4;
+            text-decoration: none;
+        }
+
+        .checkbox-container a:hover {
+            text-decoration: underline;
+        }
+
+        input[type="file"] {
+            padding: 10px;
+            background-color: #f5f5f5;
+        }
+
+        /* Password strength indicator */
+        .password-strength {
+            height: 5px;
+            margin-top: -15px;
+            margin-bottom: 20px;
+            border-radius: 3px;
+            transition: all 0.3s ease;
+        }
+
+        .weak {
+            background-color: #ff5252;
+            width: 33%;
+        }
+
+        .medium {
+            background-color: #ffab40;
+            width: 66%;
+        }
+
+        .strong {
+            background-color: #69f0ae;
+            width: 100%;
+        }
+
+        .password-requirements {
+            font-size: 0.9em;
+            color: #666;
+            margin-top: -15px;
+            margin-bottom: 15px;
+        }
+
+        .requirement {
+            display: inline-block;
+            margin-right: 15px;
+            position: relative;
+            padding-left: 20px;
+        }
+
+        .requirement.met:before {
+            content: "✓";
+            color: #69f0ae;
+            position: absolute;
+            left: 0;
+        }
+
+        .requirement.unmet:before {
+            content: "✗";
+            color: #ff5252;
+            position: absolute;
+            left: 0;
+        }
+
+        /* Password visibility toggle */
+        .password-container {
+            position: relative;
+        }
+
+        .password-toggle {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: #666;
+            font-size: 1.2em;
+            user-select: none;
+        }
+
+        .password-toggle:hover {
+            color: #00bcd4;
+        }
+
+        /* Modal styles */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+
+        .modal-content {
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            max-width: 500px;
+            width: 90%;
+            position: relative;
+            animation: modalFadeIn 0.3s ease-out;
+        }
+
+        /* Image preview styles */
+        .image-preview {
+            width: 100%;
+            height: 200px;
+            border: 2px dashed #b2ebf2;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+
+        .image-preview img {
+            max-width: 100%;
+            max-height: 100%;
+            display: none;
+        }
+
+        .image-preview-text {
+            color: #888;
+        }
+
+        @keyframes modalFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .form-container {
+                padding: 20px;
+            }
+
+            h1 {
+                font-size: 2em;
+            }
+        }
+    </style>
+</head>
+
+<body>
+<div class="form-container" id="form-section">
+    <h1>Registration Form</h1>
+    <p>Please fill out this form with the required information</p>
+
+    <form id="registration-form">
+        <div class="section-title">Basic Information</div>
+
+        <!-- First Name - UPDATED TO LETTERS ONLY -->
+        <label for="first-name">First Name</label>
+        <input type="text" id="first-name" name="firstName" placeholder="Enter your first name" required
+               pattern="[A-Za-z]+" title="Please enter letters only (A-Z, a-z)">
+
+        <!-- Last Name - UPDATED TO LETTERS ONLY -->
+        <label for="last-name">Last Name</label>
+        <input type="text" id="last-name" name="lastName" placeholder="Enter your last name" required
+               pattern="[A-Za-z]+" title="Please enter letters only (A-Z, a-z)">
+
+        <!-- Email -->
+        <label for="email">Email Address</label>
+        <input type="email" id="email" name="email" placeholder="Enter your email address" required>
+
+        <!-- Phone Number -->
+        <label for="phone">Phone Number</label>
+        <input type="tel" id="phone" name="phone" placeholder="Enter your phone number" required pattern="[0-9]{11}"
+               title="Phone number must be 11 digits">
+
+        <!-- Address -->
+        <label for="address">Address</label>
+        <input type="text" id="address" name="address" placeholder="Enter your address">
+
+        <!-- Birth Date - UPDATED WITH AGE VALIDATION -->
+        <label for="birth-date">Birth Date</label>
+        <input type="date" id="birth-date" name="birthDate" required>
+        <div id="age-message" style="color: #ff5252; margin-top: -15px; margin-bottom: 15px; display: none;">You
+            must be at least 18 years old to register.</div>
+
+        <div class="section-title">Account Information</div>
+
+        <!-- New Password with enhanced requirements and visibility toggle -->
+        <label for="newPassword">Create a New Password</label>
+        <div class="password-container">
+            <input type="password" id="newPassword" name="newPassword" placeholder="Enter your new password"
+                   minlength="8" required>
+            <span class="password-toggle" id="new-password-toggle">👁️</span>
+        </div>
+        <div id="password-strength" class="password-strength"></div>
+        <div class="password-requirements">
+            <div id="req-length" class="requirement unmet">At least 8 characters</div>
+            <div id="req-uppercase" class="requirement unmet">Uppercase letter</div>
+            <div id="req-lowercase" class="requirement unmet">Lowercase letter</div>
+            <div id="req-number" class="requirement unmet">Number</div>
+            <div id="req-special" class="requirement unmet">Special character</div>
+        </div>
+
+        <!-- Re-enter Password with visibility toggle -->
+        <label for="confirm-password">Re-enter Your Password</label>
+        <div class="password-container">
+            <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Re-enter your password"
+                   minlength="8" required>
+            <span class="password-toggle" id="confirm-password-toggle">👁️</span>
+        </div>
+
+        <!-- Gender -->
+        <label for="gender">Gender</label>
+        <select id="gender" name="gender" required>
+            <option value="" disabled selected>Select Gender</option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+            <option value="Other">Other</option>
+            <option value="Prefer not to say">Prefer not to say</option>
+        </select>
+
+        <div class="section-title">Additional Information</div>
+
+        <!-- Profile Picture with Preview -->
+        <label for="profile-picture">Upload a profile picture</label>
+        <div class="image-preview" id="image-preview">
+            <span class="image-preview-text">Image Preview</span>
+            <img id="preview-image" src="" alt="Preview">
+        </div>
+        <input type="file" id="profile-picture" name="profilePicture"
+               accept="image/png, image/jpeg, image/jpg, image/gif">
+
+        <!-- How did you hear about us -->
+        <label for="hear-about-us">How did you hear about us?</label>
+        <select id="hear-about-us" name="hearAboutUs" required>
+            <option value="" disabled selected>Select one...</option>
+            <option value="Google">Google</option>
+            <option value="Search Engine">Search Engine</option>
+            <option value="Social Media">Social Media</option>
+            <option value="Friend">Friend</option>
+            <option value="Other">Other</option>
+        </select>
+
+        <div id="other-source-container" class="other-section">
+            <label for="other-source-input">Please Specify</label>
+            <input type="text" id="other-source-input" name="otherSource"
+                   placeholder="Please specify how you heard about us">
+        </div>
+
+        <!-- Bio (remains optional) -->
+        <label for="bio">Provide a bio</label>
+        <textarea id="bio" name="bio" rows="4" placeholder="Tell us about yourself"></textarea>
+
+        <!-- Terms and Conditions -->
+        <div class="checkbox-container">
+            <input type="checkbox" id="terms" name="terms" required>
+            <label for="terms">I accept <a href="#">terms and conditions</a></label>
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit">Submit Registration</button>
+    </form>
+</div>
+
+<!-- Confirmation Page -->
+<div id="confirmation-page" class="confirmation-page form-container">
+    <h2>⏳ Processing Registration...</h2>
+    <p>Your registration is being processed. Please wait while we set up your account.</p>
+    <p>You will be redirected to the login page shortly.</p>
+</div>
+
+<!-- Countdown Modal -->
+<div id="countdown-modal" class="modal" style="display: none;">
+    <div class="modal-content" style="max-width: 400px; text-align: center; padding: 30px; border-radius: 15px;">
+        <h3 style="color: #00bcd4; margin-top: 0;">Processing Registration...</h3>
+        <div style="margin: 20px auto; width: 60px; height: 60px; border: 5px solid #f3f3f3; border-top: 5px solid #00bcd4; border-radius: 50%; animation: spin 2s linear infinite;"></div>
+        <p>Redirecting to login page in <span id="countdown-seconds">3</span> seconds...</p>
+        <div style="width: 100%; background-color: #f0f0f0; height: 6px; border-radius: 3px; margin: 20px 0;">
+            <div id="countdown-progress" style="width: 100%; background-color: #00bcd4; height: 6px; border-radius: 3px; transition: width 1s linear;"></div>
+        </div>
+        <button id="redirect-now-btn" style="background-color: #00bcd4; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer;">
+            Go to Login Now
+        </button>
+    </div>
+</div>
+
+<!-- Error Modal -->
+<div id="error-modal" class="modal" style="display: none;">
+    <div class="modal-content" style="max-width: 400px; text-align: center; padding: 30px; border-radius: 15px; border-top: 5px solid #ff5252;">
+        <h3 style="color: #ff5252; margin-top: 0;">Registration Failed</h3>
+        <p id="error-message">There was an error with your registration. Please try again.</p>
+        <button id="try-again-btn" style="background-color: #ff5252; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; margin-top: 15px;">
+            Try Again
+        </button>
+    </div>
+</div>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Age validation
+        const birthDateInput = document.getElementById('birth-date');
+        const ageMessage = document.getElementById('age-message');
+        const countdownModal = document.getElementById('countdown-modal');
+        const errorModal = document.getElementById('error-modal');
+
+        // Close modals when clicking outside
+        window.addEventListener('click', function(e) {
+            if (e.target === countdownModal) {
+                window.location.href = 'Login Page.html';
+            }
+            if (e.target === errorModal) {
+                errorModal.style.display = 'none';
+                formSection.style.display = 'block';
+                confirmationPage.style.display = 'none';
+            }
+        });
+
+        function validateAge() {
+            const birthDate = new Date(birthDateInput.value);
+            const today = new Date();
+
+            let age = today.getFullYear() - birthDate.getFullYear();
+            const monthDiff = today.getMonth() - birthDate.getMonth();
+
+            if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+                age--;
+            }
+
+            if (age < 18) {
+                ageMessage.style.display = 'block';
+                birthDateInput.setCustomValidity('You must be at least 18 years old to register.');
+            } else {
+                ageMessage.style.display = 'none';
+                birthDateInput.setCustomValidity('');
+            }
+        }
+
+        birthDateInput.addEventListener('change', validateAge);
+        birthDateInput.addEventListener('input', validateAge);
+
+        // Password visibility toggle
+        const newPasswordToggle = document.getElementById('new-password-toggle');
+        const confirmPasswordToggle = document.getElementById('confirm-password-toggle');
+        const newPassword = document.getElementById('newPassword');
+        const confirmPassword = document.getElementById('confirmPassword');
+
+        newPasswordToggle.addEventListener('click', function () {
+            newPassword.type = newPassword.type === 'password' ? 'text' : 'password';
+            this.textContent = newPassword.type === 'password' ? '👁️' : '🔒';
+        });
+
+        confirmPasswordToggle.addEventListener('click', function () {
+            confirmPassword.type = confirmPassword.type === 'password' ? 'text' : 'password';
+            this.textContent = confirmPassword.type === 'password' ? '👁️' : '🔒';
+        });
+
+        // Password strength indicator
+        const passwordStrength = document.getElementById('password-strength');
+        const reqLength = document.getElementById('req-length');
+        const reqUppercase = document.getElementById('req-uppercase');
+        const reqLowercase = document.getElementById('req-lowercase');
+        const reqNumber = document.getElementById('req-number');
+        const reqSpecial = document.getElementById('req-special');
+
+        function checkPasswordComplexity(password) {
+            const hasLength = password.length >= 8;
+            const hasUppercase = /[A-Z]/.test(password);
+            const hasLowercase = /[a-z]/.test(password);
+            const hasNumber = /[0-9]/.test(password);
+            const hasSpecial = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(password);
+
+            reqLength.className = hasLength ? 'requirement met' : 'requirement unmet';
+            reqUppercase.className = hasUppercase ? 'requirement met' : 'requirement unmet';
+            reqLowercase.className = hasLowercase ? 'requirement met' : 'requirement unmet';
+            reqNumber.className = hasNumber ? 'requirement met' : 'requirement unmet';
+            reqSpecial.className = hasSpecial ? 'requirement met' : 'requirement unmet';
+
+            const requirementsMet = [hasUppercase, hasLowercase, hasNumber, hasSpecial].filter(Boolean).length;
+            const isComplex = hasLength && requirementsMet >= 3;
+
+            return { isComplex, hasLength, requirementsMet };
+        }
+
+        newPassword.addEventListener('input', function () {
+            const password = this.value;
+            const complexity = checkPasswordComplexity(password);
+
+            passwordStrength.classList.remove('weak', 'medium', 'strong');
+
+            if (password.length === 0) {
+                passwordStrength.style.display = 'none';
+                return;
+            }
+
+            passwordStrength.style.display = 'block';
+
+            if (!complexity.hasLength) {
+                passwordStrength.classList.add('weak');
+            } else if (complexity.requirementsMet < 3) {
+                passwordStrength.classList.add('medium');
+            } else {
+                passwordStrength.classList.add('strong');
+            }
+
+            if (!complexity.isComplex) {
+                this.setCustomValidity('Password must be at least 8 characters and meet at least 3 of the complexity requirements (uppercase, lowercase, number, special character)');
+            } else {
+                this.setCustomValidity('');
+            }
+
+            if (confirmPassword.value && confirmPassword.value !== password) {
+                confirmPassword.setCustomValidity('Passwords do not match');
+            } else {
+                confirmPassword.setCustomValidity('');
+            }
+        });
+
+        confirmPassword.addEventListener('input', function () {
+            if (this.value !== newPassword.value) {
+                this.setCustomValidity('Passwords do not match');
+            } else {
+                this.setCustomValidity('');
+            }
+        });
+
+        const hearAboutUsSelect = document.getElementById('hear-about-us');
+        const otherSourceContainer = document.getElementById('other-source-container');
+        const otherSourceInput = document.getElementById('other-source-input');
+
+        hearAboutUsSelect.addEventListener('change', function () {
+            if (this.value === 'Other') {
+                otherSourceContainer.style.display = 'block';
+                otherSourceInput.required = true;
+            } else {
+                otherSourceContainer.style.display = 'none';
+                otherSourceInput.required = false;
+            }
+        });
+
+        // Image preview functionality
+        const profilePicture = document.getElementById('profile-picture');
+        const previewImage = document.getElementById('preview-image');
+        const previewText = document.querySelector('.image-preview-text');
+
+        profilePicture.addEventListener('change', function () {
+            const file = this.files[0];
+            if (file) {
+                const reader = new FileReader();
+
+                reader.addEventListener('load', function () {
+                    previewImage.setAttribute('src', this.result);
+                    previewImage.style.display = 'block';
+                    previewText.style.display = 'none';
+                });
+
+                reader.readAsDataURL(file);
+            } else {
+                previewImage.style.display = 'none';
+                previewText.style.display = 'block';
+            }
+        });
+
+        // Form submission
+        const form = document.getElementById('registration-form');
+        const formSection = document.getElementById('form-section');
+        const confirmationPage = document.getElementById('confirmation-page');
+
+        form.addEventListener('submit', async function (event) {
+            event.preventDefault();
+
+            // Validate age if you have a custom function for it
+            validateAge();
+
+            // Check password complexity
+            const password = newPassword.value;
+            const complexity = checkPasswordComplexity(password);
+            if (!complexity.isComplex) {
+                alert('Password must be at least 8 characters and meet at least 3 of the complexity requirements (uppercase, lowercase, number, special character)');
+                return;
+            }
+
+            // Check if passwords match
+            if (newPassword.value !== confirmPassword.value) {
+                alert('Passwords do not match');
+                return;
+            }
+
+            // Validate form fields
+            if (!form.checkValidity()) {
+                form.reportValidity();
+                return;
+            }
+
+            // Hide form and show confirmation page
+            formSection.style.display = 'none';
+            confirmationPage.style.display = 'block';
+
+            const formData = new FormData(form);
+            const formObject = {};
+            formData.forEach((value, key) => {
+                formObject[key] = value;
+            });
+
+            console.log(formObject);  // 🔍 Debug: تأكد من أن القيم في formObject تحتوي على البيانات الصحيحة.
+
+            const jsonData = JSON.stringify(formObject);
+
+            try {
+                const response = await fetch('/api/register', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: jsonData
+                });
+
+
+                const contentType = response.headers.get("content-type");
+                if (contentType && contentType.includes("application/json")) {
+                    const responseData = await response.json();
+                    console.log(responseData);
+
+                    if (response.ok) {
+                        // Show countdown modal instead of alerts
+                        const countdownModal = document.getElementById('countdown-modal');
+                        const countdownSeconds = document.getElementById('countdown-seconds');
+                        const countdownProgress = document.getElementById('countdown-progress');
+                        const redirectNowBtn = document.getElementById('redirect-now-btn');
+
+                        countdownModal.style.display = 'block';
+                        let secondsLeft = 3;
+
+                        // Redirect immediately if button is clicked
+                        redirectNowBtn.addEventListener('click', function() {
+                            window.location.href = 'Login Page.html';
+                        });
+
+                        const countdownInterval = setInterval(() => {
+                            secondsLeft--;
+                            countdownSeconds.textContent = secondsLeft;
+                            countdownProgress.style.width = (secondsLeft / 3 * 100) + '%';
+
+                            if (secondsLeft <= 0) {
+                                clearInterval(countdownInterval);
+                                window.location.href = 'Login Page.html';
+                            }
+                        }, 1000);
+
+                        form.reset();
+                    } else {
+                        // Show error modal
+                        const errorModal = document.getElementById('error-modal');
+                        const errorMessage = document.getElementById('error-message');
+                        const tryAgainBtn = document.getElementById('try-again-btn');
+
+                        errorMessage.textContent = responseData.error || 'Registration failed. Please try again.';
+                        errorModal.style.display = 'block';
+
+                        // Return to registration form on button click
+                        tryAgainBtn.addEventListener('click', function() {
+                            errorModal.style.display = 'none';
+                            formSection.style.display = 'block';
+                            confirmationPage.style.display = 'none';
+                        });
+                    }
+                } else {
+                    const text = await response.text();
+                    console.warn('⚠️ Unexpected response:', text);
+
+                    // Show error modal for unexpected response
+                    const errorModal = document.getElementById('error-modal');
+                    const errorMessage = document.getElementById('error-message');
+                    const tryAgainBtn = document.getElementById('try-again-btn');
+
+                    errorMessage.textContent = 'Server did not return JSON. Please try again.';
+                    errorModal.style.display = 'block';
+
+                    // Return to registration form on button click
+                    tryAgainBtn.addEventListener('click', function() {
+                        errorModal.style.display = 'none';
+                        formSection.style.display = 'block';
+                        confirmationPage.style.display = 'none';
+                    });
+                }
+            } catch (error) {
+                console.error('❌ Network or unexpected error:', error);
+
+                // Show error modal for network error
+                const errorModal = document.getElementById('error-modal');
+                const errorMessage = document.getElementById('error-message');
+                const tryAgainBtn = document.getElementById('try-again-btn');
+
+                errorMessage.textContent = 'Network error. Please check your connection and try again.';
+                errorModal.style.display = 'block';
+
+                // Return to registration form on button click
+                tryAgainBtn.addEventListener('click', function() {
+                    errorModal.style.display = 'none';
+                    formSection.style.display = 'block';
+                    confirmationPage.style.display = 'none';
+                });
+            }
+        });
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Product - PULSE</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(to right, #e0f7fa, #ffffff);
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+
+        h1 {
+            color: #005b66;
+            text-align: center;
+            margin-top: 30px;
+            font-size: 2.5em;
+        }
+
+        p {
+            text-align: center;
+            color: #007f84;
+            font-size: 1.1em;
+            margin-bottom: 30px;
+        }
+
+        .form-container {
+            width: 90%;
+            max-width: 800px;
+            margin: 40px auto;
+            background-color: #ffffff;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-container label {
+            font-size: 1.1em;
+            font-weight: bold;
+            display: block;
+            margin: 15px 0 8px;
+        }
+
+        .form-container input,
+        .form-container select,
+        .form-container textarea {
+            width: 100%;
+            padding: 12px;
+            font-size: 1em;
+            border: 2px solid #b2ebf2;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            transition: border-color 0.3s;
+        }
+
+        .form-container input:focus,
+        .form-container select:focus,
+        .form-container textarea:focus {
+            border-color: #00bcd4;
+            outline: none;
+        }
+
+        .form-container button[type="submit"] {
+            width: 100%;
+        }
+
+        .form-container button {
+            display: inline-block;
+            width: 48%;
+            padding: 15px;
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #fff;
+            background-color: #00bcd4;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-top: 40px;
+        }
+
+        .form-container button:hover {
+            background-color: #008ba3;
+        }
+
+        .button-container {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .section-title {
+            font-size: 1.3em;
+            font-weight: bold;
+            margin-top: 30px;
+            color: #007f84;
+        }
+
+        .image-preview {
+            width: 100%;
+            height: 200px;
+            border: 2px dashed #b2ebf2;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+
+        .image-preview img {
+            max-width: 100%;
+            max-height: 100%;
+            display: none;
+        }
+
+        .image-preview-text {
+            color: #888;
+        }
+
+        input[type="file"] {
+            padding: 10px;
+            background-color: #f5f5f5;
+        }
+
+        .confirmation-page {
+            display: none;
+            text-align: center;
+            padding: 40px;
+        }
+
+        .confirmation-page h2 {
+            font-size: 2.2em;
+            color: #00bcd4;
+        }
+
+        .confirmation-page p {
+            font-size: 1.2em;
+            margin-top: 20px;
+        }
+
+        .confirmation-buttons {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 30px;
+        }
+
+        .confirmation-buttons button {
+            width: 45%;
+        }
+
+        @media (max-width: 768px) {
+            .form-container {
+                padding: 20px;
+            }
+
+            h1 {
+                font-size: 2em;
+            }
+
+            .button-container {
+                flex-direction: column;
+            }
+
+            .form-container button {
+                width: 100%;
+                margin-top: 20px;
+            }
+
+            .confirmation-buttons {
+                flex-direction: column;
+            }
+
+            .confirmation-buttons button {
+                width: 100%;
+                margin-top: 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+<div class="form-container" id="form-section">
+    <h1>Add New Product</h1>
+    <p>Enter the details of the product you want to add</p>
+
+    <form id="add-product-form">
+        <div class="section-title">Product Information</div>
+        <!-- Product Image -->
+        <label for="product-image">Product Image</label>
+        <div class="image-preview" id="image-preview">
+            <span class="image-preview-text">Image Preview</span>
+            <img id="preview-image" src="" alt="Preview">
+        </div>
+        <input type="file" id="product-image" name="image" accept="image/png, image/jpeg, image/jpg, image/gif" required>
+
+
+        <!-- Product Name -->
+        <label for="product-name">Product Name</label>
+        <input type="text" id="product-name" name="name" placeholder="Enter product name" required>
+
+        <!-- Product Price -->
+        <label for="product-price">Price ($)</label>
+        <input type="number" id="product-price" name="price" placeholder="Enter product price" step="0.01" min="0" inputmode="decimal" required>
+
+        <!-- Product Old Price (Optional) -->
+        <label for="product-old-price">Old Price ($) (Optional)</label>
+        <input type="number" id="product-old-price" name="old_price" placeholder="Enter old price (if on sale)" step="0.01" min="0" inputmode="decimal">
+
+        <!-- Product Type -->
+        <label for="product-type">Product Type</label>
+        <input type="text" id="product-type" name="type" placeholder="Enter product type (e.g. Electronics, Clothing)">
+
+        <!-- Product Category -->
+        <label for="product-category">Category</label>
+        <select id="product-category" name="category" required>
+            <option value="used_items">used_item</option>
+            <option value="upper_Limb">upper_Limb</option>
+            <option value="Lower_Limb">Lower_Limb</option>
+            <option value="Accessories">Accessories</option>
+        </select>
+
+        <div id="other-category-container" style="display: none;">
+            <label for="other-category-input">Specify Category</label>
+            <input type="text" id="other-category-input" name="other_category" placeholder="Enter category name">
+        </div>
+
+
+
+        <!-- Submit Button -->
+        <button type="submit">Add Product</button>
+    </form>
+</div>
+
+<!-- Confirmation Page -->
+<div id="confirmation-page" class="confirmation-page form-container">
+    <h2>✅ Product Added Successfully!</h2>
+    <p>The product has been added to your inventory.</p>
+    <div class="confirmation-buttons">
+        <button id="home-button">Return to Home</button>
+        <button id="admin-button">Return to Admin Dashboard</button>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Handle category selection
+        const categorySelect = document.getElementById('product-category');
+        const otherCategoryContainer = document.getElementById('other-category-container');
+        const otherCategoryInput = document.getElementById('other-category-input');
+
+        categorySelect.addEventListener('change', function () {
+            if (this.value === 'Other') {
+                otherCategoryContainer.style.display = 'block';
+                otherCategoryInput.required = true;
+            } else {
+                otherCategoryContainer.style.display = 'none';
+                otherCategoryInput.required = false;
+            }
+        });
+
+        // Image preview functionality
+        const productImage = document.getElementById('product-image');
+        const previewImage = document.getElementById('preview-image');
+        const previewText = document.querySelector('.image-preview-text');
+
+        productImage.addEventListener('change', function () {
+            const file = this.files[0];
+            if (file) {
+                const reader = new FileReader();
+
+                reader.addEventListener('load', function () {
+                    previewImage.setAttribute('src', this.result);
+                    previewImage.style.display = 'block';
+                    previewText.style.display = 'none';
+                });
+
+                reader.readAsDataURL(file);
+            } else {
+                previewImage.style.display = 'none';
+                previewText.style.display = 'block';
+            }
+        });
+
+        // Form submission
+        const form = document.getElementById('add-product-form');
+        const formSection = document.getElementById('form-section');
+        const confirmationPage = document.getElementById('confirmation-page');
+        const homeButton = document.getElementById('home-button');
+        const adminButton = document.getElementById('admin-button');
+
+        form.addEventListener('submit', async function (event) {
+            event.preventDefault();
+
+            // Validate form fields
+            if (!form.checkValidity()) {
+                form.reportValidity();
+                return;
+            }
+
+            // Get form data
+            const formData = new FormData(form);
+
+            // If 'Other' category is selected, use the custom input value
+            if (categorySelect.value === 'Other') {
+                formData.set('category', otherCategoryInput.value);
+            }
+
+            // Validate price fields contain only numbers
+            const price = parseFloat(formData.get('price'));
+            if (isNaN(price)) {
+                alert('Please enter a valid number for Price');
+                return;
+            }
+
+            const oldPrice = formData.get('old_price') ? parseFloat(formData.get('old_price')) : null;
+            if (formData.get('old_price') && isNaN(oldPrice)) {
+                alert('Please enter a valid number for Old Price');
+                return;
+            }
+
+            // Convert FormData to an object for JSON serialization
+            const formObject = {};
+            formData.forEach((value, key) => {
+                // Skip the file input for JSON submission
+                if (key !== 'image') {
+                    formObject[key] = value;
+                }
+            });
+
+            console.log(formObject);  // Debug: Check form values
+
+            try {
+                // For this example, simulating a successful response
+                // In a real application, you would send this data to your server
+                /*
+                const response = await fetch('/api/products', {
+                    method: 'POST',
+                    body: formData  // Use FormData to handle file upload
+                });
+
+                if (response.ok) {
+                    // Show confirmation page
+                } else {
+                    const responseData = await response.json();
+                    alert('Failed to add product: ' + responseData.error);
+                    return;
+                }
+                */
+
+                // Show confirmation page
+                formSection.style.display = 'none';
+                confirmationPage.style.display = 'block';
+
+            } catch (error) {
+                console.error('Error:', error);
+                alert('An error occurred while adding the product. Please try again.');
+            }
+        });
+
+        // Navigation buttons
+        homeButton.addEventListener('click', function() {
+            window.location.href = '/index.html';  // Redirect to home page
+        });
+
+        adminButton.addEventListener('click', function() {
+            window.location.href = '/admin/dashboard.html';  // Redirect to admin dashboard
+        });
+    });
+</script>
+</body>
+
+</html>

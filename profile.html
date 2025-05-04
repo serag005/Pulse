@@ -1,0 +1,1945 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="x-ua-compatible" content="IE=edge">
+  <meta name="description" content="PULSE - Profile Settings">
+  <meta name="keywords" content="prosthetics, mobility, medical devices, profile, settings">
+  <title>PULSE | Profile Settings</title>
+
+  <link rel="icon" href="images/Screenshot%202025-04-10%20211403%20-%20Copy.png">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <link rel="stylesheet" href="CSS/style.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+
+
+    body {
+      padding-top: 150px;
+      background: #e0f7fa;
+    }
+
+    .ui-w-80 {
+      width: 100px !important;
+      height: auto;
+    }
+
+    .btn-primary {
+      background-color: #007c91 !important;
+      border-color: #007c91 !important;
+    }
+
+    .btn-primary:hover {
+      background-color: #035461 !important;
+      border-color: #035461 !important;
+    }
+
+    .btn-secondary {
+      background-color: #72b2bf !important;
+      border-color: #b2ebf2 !important;
+    }
+
+    .btn-outline-primary {
+      border-color: #007c91;
+      color: #007c91;
+    }
+
+    .btn-outline-primary:hover {
+      background-color: #007c91;
+      border-color: #007c91;
+      color: #fff;
+    }
+
+    .list-group-item {
+      color: #007c91;
+      transition: all 0.3s ease;
+    }
+
+    /* Hover effect */
+    .list-group-item:hover {
+      background-color: rgba(0, 124, 145, 0.1);
+      border-color: rgba(0, 124, 145, 0.2);
+      color: #007c91;
+    }
+
+    /* Active state is already defined, but you might want to ensure proper contrast */
+    .list-group-item.active {
+      color: white;
+      background-color: #007c91;
+      border-color: #007c91;
+    }
+    footer{
+      background: var(--color_heading);
+    }
+    footer .container{
+      display: flex;
+      justify-content: space-between;
+      padding: 40px 0;
+    }
+
+    footer .container  .big_row{
+      width: 25%;
+    }
+
+    footer .container  .big_row .logo_footer{
+      width: 180px;
+    }
+
+    footer .container  .big_row p{
+      width: 90%;
+      color: #b1b1b1;
+      font-size: 14px;
+      line-height: 1.5;
+      margin: 15px 0;
+    }
+
+    footer .container  .big_row .icons_footer{
+      display: flex;
+      gap: 10px;
+    }
+    footer .container  .big_row .icons_footer a{
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--main_color);
+      border-radius: 3px;
+      position: relative;
+      top: 0;
+      transition: 0.3s;
+    }
+    footer .container  .big_row .icons_footer a:hover{
+      top: -5px;
+    }
+    footer .container  .big_row .icons_footer a i{
+      color: var(--white_color);
+      font-size: 20px;
+    }
+
+    footer .container .row{
+      width: 16%;
+    }
+
+    footer .container .row h4{
+      color: var(--white_color);
+      font-size: 18px;
+      margin-bottom: 20px;
+      position: relative;
+      padding-bottom: 10px;
+    }
+    footer .container .row h4:after{
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 50px;
+      height: 3px;
+      background-color: var(--main_color);
+    }
+    footer .container .row .links{
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+    }
+
+
+    footer .container .row .links a{
+      color: #b1b1b1;
+      font-size: 14px;
+      position: relative;
+      left: 0;
+      transition: 0.3s;
+    }
+    footer .container .row .links a i{
+      color: var(--main_color);
+      font-size: 14px;
+      margin-right: 5px;
+    }
+    footer .container .row .links a:hover{
+      left: 8px;
+      color: var(--main_color);
+    }
+    .category_nav_list a {
+      color: #000000 !important; /* Forces black color */
+      text-decoration: none; /* Optional: removes underline */
+    }
+
+    /* Optional: Add hover effect */
+    .category_nav_list a:hover {
+      color: #007c91 !important; /* This keeps your theme color on hover */
+    }
+    .nav_links{
+      margin-top: 10px !important;
+
+    }
+    .category_btn p{
+      margin-top: 10px !important;
+    }
+
+    .card {
+      box-shadow: 0 1px 4px rgba(0, 56, 74, 0.2);
+      border-radius: 8px;
+    }
+
+    .account-settings-fileinput {
+      position: absolute;
+      visibility: hidden;
+      width: 1px;
+      height: 1px;
+      opacity: 0;
+    }
+
+    .list-group-item.active {
+      background-color: #007c91;
+      border-color: #007c91;
+    }
+
+    .list-group-item:first-child {
+      border-top-left-radius: 8px;
+    }
+
+    .switcher {
+      display: flex;
+      align-items: center;
+      margin-bottom: 0.5rem;
+    }
+
+    .switcher-input {
+      margin-right: 0.5rem;
+    }
+
+    .tab-pane input, .tab-pane textarea, .tab-pane select {
+      width: 100%;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      padding: 8px;
+    }
+
+    .tab-pane input:focus, .tab-pane textarea:focus, .tab-pane select:focus {
+      border-color: #007c91;
+      box-shadow: 0 0 0 0.2rem rgba(0, 124, 145, 0.25);
+    }
+
+    .order-table th, .order-table td {
+      vertical-align: middle;
+    }
+
+    .badge-success {
+      background-color: #28a745;
+    }
+
+    .badge-warning {
+      background-color: #ffc107;
+    }
+
+    .badge-danger {
+      background-color: #dc3545;
+    }
+
+    h4.font-weight-bold {
+      color: #00384a;
+      margin-bottom: 20px;
+    }
+
+    .container .card {
+      margin-bottom: 30px;
+    }
+
+    .form-group label {
+      color: #00384a;
+      font-weight: 500;
+    }
+
+    .small {
+      color: #7b7b7b;
+    }
+
+    /* Add these new styles for order history */
+    .order-table {
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    }
+
+    .order-table th {
+      background-color: #007c91;
+      color: white;
+      font-weight: 500;
+    }
+
+    .order-table td {
+      vertical-align: middle;
+    }
+
+    .order-item-image {
+      width: 40px;
+      height: 40px;
+      object-fit: cover;
+      border-radius: 4px;
+      margin-right: 10px;
+    }
+
+    /* Style for placeholder when image is missing */
+    .order-item-image.d-flex {
+      display: flex !important;
+      font-size: 16px;
+      border-radius: 50%;
+    }
+
+    .product-list-item {
+      display: flex;
+      align-items: center;
+      margin-bottom: 10px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #f0f0f0;
+    }
+
+    .product-list-item:last-child {
+      border-bottom: none;
+      margin-bottom: 0;
+      padding-bottom: 0;
+    }
+
+    .order-total {
+      margin-top: 10px;
+      font-weight: bold;
+      text-align: right;
+      color: #007c91;
+      border-top: 1px solid #e0e0e0;
+      padding-top: 8px;
+    }
+
+    .empty-order-message {
+      padding: 40px 20px;
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    }
+    
+    /* Enhanced styles for multiple products */
+    .product-count-badge {
+      display: inline-block;
+      background-color: #007c91;
+      color: white;
+      border-radius: 12px;
+      padding: 2px 8px;
+      font-size: 12px;
+      margin-left: 5px;
+    }
+    
+    .order-products-summary {
+      margin-bottom: 5px;
+      color: #007c91;
+      font-weight: 500;
+    }
+    
+    .product-list-container {
+      max-height: 300px;
+      overflow-y: auto;
+      border: 1px solid #f0f0f0;
+      border-radius: 6px;
+      padding: 8px;
+      background-color: #fafafa;
+    }
+    
+    .order-actions {
+      margin-top: 8px;
+      display: flex;
+      justify-content: flex-end;
+    }
+    
+    .order-actions button {
+      margin-left: 5px;
+    }
+    
+    /* Styles for expandable rows */
+    .order-summary-row {
+      transition: background-color 0.2s;
+    }
+    
+    .order-summary-row:hover {
+      background-color: #f5f5f5;
+    }
+    
+    .order-details-row td {
+      padding: 0 !important;
+    }
+    
+    .order-details-row .product-list-container {
+      border: none;
+      border-radius: 0;
+      margin: 0;
+      padding: 15px;
+      background-color: #f8f9fa;
+    }
+    
+    .toggle-details {
+      min-width: 32px;
+      height: 32px;
+      padding: 0 8px !important;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .toggle-details i {
+      transition: transform 0.2s;
+    }
+
+    @media (max-width:1350px) {
+      .container{
+        width: 90%;
+      }
+    }
+
+    /* Start Header */
+
+    header{
+      background: #fff;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      box-shadow: 5px 8px 8px #d1d1d13b;
+      z-index: 1000;
+    }
+
+    header .top_header .container{
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 4px 25px 2px 0px;
+    }
+
+    header .top_header .logo{
+      width: 200px;
+      margin-left: 10px;
+      z-index: 1000;
+    }
+
+    header .top_header .search_box{
+      width: 640px;
+      height: 45px;
+      display: flex;
+      align-items: center;
+      border-radius: 30px;
+      background: var(--bg_color);
+      margin-right: 200px;
+    }
+    header .top_header .search_box input{
+      height: 45px;
+      width: 400px;
+      padding: 5px 15px 5px 10px;
+      background: var(--bg_color);
+    }
+
+    header .top_header .search_box .select_box{
+      position: relative;
+    }
+    header .top_header .search_box .select_box::after{
+      content: '';
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      right: 0;
+      width: 1px;
+      height: 50%;
+      background: #b9b9b9;
+    }
+
+
+    header .top_header .search_box select{
+      height: 45px;
+      width: 200px;
+      background: var(--bg_color);
+      font-size: 16px;
+      cursor: pointer;
+      padding-left: 25px;
+      margin-right: 10px;
+      border-radius: 20px;
+    }
+
+    header .top_header .search_box select option{
+      font-size: 15px;
+    }
+
+    header .top_header .search_box button{
+      height: 45px;
+      width: 100px;
+      background: var(--main_color);
+      font-size: 18px;
+      cursor: pointer;
+      border-radius: 20px;
+      color: var(--white_color);
+    }
+
+    header .top_header .search_box button:hover {
+      background: var(--hover-color);
+      color: var(--white_color);
+      transition: 0.3s ease, transform 0.3s ease, color 0.3s ease;
+    }
+
+    header .top_header .search_box button i{
+      color: inherit;
+    }
+
+
+    header .bottom_header{
+      border-top: 1px solid var(--border_color);
+    }
+
+    header .bottom_header .container{
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    header .bottom_header nav{
+      display: flex;
+      align-items: center;
+      gap: 60px;
+      height: 53px;
+    }
+
+    header .bottom_header .category_nav{
+      width: 220px;
+      position: relative;
+      height: 100%;
+    }
+    header .bottom_header .category_nav .category_btn{
+      height: 100%;
+      width: 100%;
+      border-radius: 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: var(--main_color);
+      padding: 0 15px;
+      cursor: pointer;
+    }
+    header .bottom_header .category_nav .category_btn:hover{
+      background: var(--hover-color);
+      color: var(--white_color);
+      transition: 0.3s ease, transform 0.3s ease, color 0.3s ease;
+    }
+    header .bottom_header .category_nav .category_btn p{
+      color: var(--white_color);
+      font-weight: 600;
+      font-size: 15px;
+    }
+    header .bottom_header .category_nav .category_btn i{
+      color: var(--white_color);
+    }
+
+
+    header .bottom_header .category_nav .category_nav_list{
+      position: absolute;
+      top: 100%;
+      left: 0;
+      background: var(--white_color);
+      width: 100%;
+      border: 1px solid #999;
+      border-top: 0;
+      display: flex;
+      flex-direction: column;
+      clip-path: polygon(0 0 , 100% 0 , 100% 0 , 0 0);
+      transition: 0.3s ease-in-out;
+    }
+    header .bottom_header .category_nav .category_nav_list.active{
+      clip-path: polygon(0 0, 100% 0 , 100% 100% , 0 100%);
+    }
+
+    header .bottom_header .category_nav .category_nav_list a{
+      padding: 14px 10px;
+      border-bottom: 1px solid var(--border_color);
+      font-size: 14px;
+    }
+    header .bottom_header .category_nav .category_nav_list a:last-child{
+      border-bottom: 0;
+    }
+    header .bottom_header .category_nav .category_nav_list a:hover{
+      background: #d0d0d0;
+    }
+
+
+
+
+
+
+    header .bottom_header .nav_links {
+      display: flex;
+      gap: 50px;
+
+    }
+
+    header .bottom_header .nav_links li a {
+      color: var(--color_heading);
+      padding: 12px 8px;
+      border-radius: 5px;
+      font-size: 16px;
+      transition: background 0.3s ease, color 0.3s ease;
+      white-space: nowrap;
+    }
+
+    header .bottom_header .nav_links li:hover a {
+      background: transparent;
+      color: var(--main_color);
+    }
+
+    header .bottom_header .nav_links li.active a {
+      background: transparent;
+      color: var(--main_color);
+    }
+
+
+
+    @media screen and (max-width: 1300px) {
+      header .top_header .container {
+        padding: 4px 15px;
+      }
+
+      header .bottom_header .nav_links {
+        gap: 20px;
+        display: flex;
+
+      }
+
+      header .top_header .search_box {
+        width: 500px;
+      }
+
+      header .top_header .search_box input {
+        width: 300px;
+      }
+
+      header .top_header .search_box select {
+        width: 150px;
+      }
+
+      header .bottom_header .nav_links {
+        gap: 15px;
+      }
+
+    }
+
+    @media (max-width:768px) {
+      body {
+        padding-top: 220px;
+      }
+      header .bottom_header .category_nav {
+        display: none;
+      }
+      header .top_header .search_box {
+        order: 3;
+      }
+
+      header .top_header .search_box select{
+        width: 200px;
+      }
+      header .top_header .search_box input{
+        width: calc(100% - 200px);
+      }
+
+
+      header .top_header .search_box button {
+        width: 60px;
+      }
+
+
+      header .bottom_header .category_nav .category_btn p {
+        display: none;
+      }
+
+    }
+
+    @media (max-width:576px) {
+      body {
+        padding-top: 200px;
+      }
+
+      header .top_header .container {
+        justify-content: space-between;
+        padding: 10px;
+      }
+
+      header .top_header .logo {
+        width: 120px;
+      }
+
+
+      header .top_header .search_box{
+        height: 37px;
+        margin-left: 0;
+      }
+      header .top_header .search_box input{
+        width: 200px;
+        height: 37px;
+        padding: 5px 10px;
+      }
+      header .top_header .search_box select{
+        width: 100px;
+        height: 37px;
+        padding: 5px 10px;
+      }
+      header .top_header .search_box select option{
+        font-size: 13px;
+      }
+      header .top_header .search_box button {
+        height: 37px;
+      }
+      header .top_header .search_box button i {
+        font-size: 16px;
+        display: flex;
+        align-items: center;
+      }
+
+
+
+      header .bottom_header .category_nav {
+        display: none;
+      }
+      header .bottom_header .nav{
+        height: 35px;
+        padding-bottom: 8px;
+        margin-bottom: 2px;
+      }
+
+
+      .open_menu i {
+        height: 35px;
+        width: 35px;
+        line-height: 35px;
+      }
+    }
+
+
+    @media (max-width:500px) {
+      body {
+        padding-top: 180px;
+      }
+      header .top_header .container {
+        justify-content: space-between;
+        padding: 10px;
+      }
+
+      header .top_header .logo {
+        width: 120px;
+      }
+
+
+      header .top_header .header_icons .icon i {
+        font-size: 20px;
+      }
+
+      header .top_header .search_box{
+        height: 35px;
+        margin-left: 0;
+      }
+      header .top_header .search_box input{
+        width: 200px;
+        height: 35px;
+        padding: 5px 10px;
+      }
+      header .top_header .search_box select{
+        width: 100px;
+        height: 35px;
+        padding: 5px 10px;
+      }
+      header .top_header .search_box select option{
+        font-size: 13px;
+      }
+      header .top_header .search_box button {
+        height: 35px;
+      }
+      header .top_header .search_box button i {
+        font-size: 16px;
+        display: flex;
+        align-items: center;
+      }
+
+
+
+      header .bottom_header .nav{
+        height: 35px;
+        padding-bottom: 5px;
+        margin-bottom: 5px;
+      }
+
+
+      header .bottom_header .nav_links {
+        width: 100%;
+        left: -100%;
+      }
+
+
+      .close_menu {
+        top: 20px;
+        right: 20px;
+      }
+
+
+
+      footer .container .row{
+        width: 100%;
+      }
+      footer .container .big_row{
+        width: 100%;
+      }
+    }
+
+    @media (max-width:1100px) {
+
+      body {
+        padding-top: 240px;
+      }
+
+      header .top_header .container {
+        flex-wrap: wrap;
+        padding: 10px 15px;
+      }
+
+      header .top_header .logo {
+        width: 150px;
+        margin-bottom: 10px;
+      }
+
+      header .top_header .search_box {
+        width: 100%;
+        order: 3;
+        margin: 10px 0;
+      }
+
+      header .top_header .search_box select{
+        width: 200px;
+      }
+      header .top_header .search_box input{
+        width: calc(100% - 200px);
+      }
+      header .bottom_header .container {
+        justify-content: space-between;
+      }
+
+      header .bottom_header .nav_links {
+        position: fixed;
+        top: 0;
+        left: -100%;
+        width: 250px;
+        height: 100vh;
+        background: var(--white_color);
+        flex-direction: column;
+        gap: 0;
+        padding-top: 60px;
+        z-index: 1001;
+        box-shadow: 2px 0 5px rgba(0,0,0,0.2);
+        transition: left 0.3s ease;
+      }
+
+      header .bottom_header .nav_links.active {
+        left: 0;
+      }
+
+      header .bottom_header .nav_links li {
+        width: 100%;
+      }
+
+      header .bottom_header .nav_links li a {
+        display: block;
+        padding: 15px 20px;
+        border-bottom: 1px solid var(--border_color);
+      }
+
+
+      .close_menu {
+        display: block;
+        position: absolute;
+        top: 30px;
+        right: 30px;
+        font-size: 30px;
+        cursor: pointer;
+      }
+
+      .open_menu {
+        display: block;
+        font-size: 25px;
+        cursor: pointer;
+      }
+
+      .open_menu i {
+        color: var(--main_color);
+        border: 1px solid var(--main_color);
+        height: 40px;
+        width: 40px;
+        text-align: center;
+        line-height: 40px;
+        border-radius: 3px;
+      }
+
+      header .bottom_header .category_nav {
+        width: auto;
+      }
+
+      header .bottom_header .category_nav .category_btn p {
+        font-size: 14px;
+        margin: 0 15px;
+      }
+
+      header .bottom_header nav {
+        gap: 10px;
+      }
+
+    }
+
+    @media (max-width:1000px) {
+
+      footer .container{
+        flex-wrap: wrap;
+      }
+      footer .container .big_row{
+        width: 40%;
+        margin-bottom: 20px;
+      }
+      footer .container .row{
+        width: 30%;
+        margin-bottom: 20px;
+      }
+
+
+    }
+    @media (max-width:800px){
+
+      footer .container .big_row{
+        width: 50%;
+        margin-bottom: 30px;
+      }
+      footer .container .row{
+        width: 50%;
+        margin-bottom: 30px;
+      }
+      footer .bottom_footer .container{
+        flex-direction: column;
+        gap: 10px;
+      }
+
+
+    }
+
+    @media (max-width:580px){
+
+
+      header .top_header .container {
+        padding: 10px 10px;
+      }
+
+      header .top_header .logo {
+        width: 140px;
+      }
+
+
+    }
+    @media (max-width:500px) {
+
+
+      header .bottom_header .nav_links{
+        width: 100%;
+        left: -100%;
+      }
+
+      .cart{
+        width: 100%;
+        right: -100%;
+      }
+
+
+
+      footer .container .row{
+        width: 100%;
+      }
+      footer .container .big_row{
+        width: 100%;
+      }
+    }
+
+
+  </style>
+</head>
+<body>
+<!-- Cart Panel -->
+<div class="cart">
+  <div class="top_cart">
+    <h3>Cart Items : <span class="count-item-cart">0</span></h3>
+    <span onclick="open_close_cart()" class="close_cart"><i class="fa-regular fa-circle-xmark"></i></span>
+  </div>
+  <div class="items_in_cart" id="cart_items"></div>
+  <div class="bottom_cart">
+    <div class="total">
+      <p>subtotal</p>
+      <p class="price_cart_toral">$0</p>
+    </div>
+    <div class="button_cart">
+      <a href="checkout.html" class="btn_cart btn">Checkout</a>
+      <span onclick="open_close_cart()" class="btn_cart trans_bg btn">Shop More</span>
+    </div>
+  </div>
+</div>
+
+<!-- Wishlist Panel -->
+<div class="wishlist">
+  <div class="head_wishlist">
+    <h3>Your Wishlist</h3>
+    <span class="Count_item_wishlist">0</span>
+    <button class="close_wishlist" onclick="open_close_wishlist()">
+      <i class="fa-solid fa-xmark"></i>
+    </button>
+  </div>
+  <div id="wishlist_items">
+    <!-- Wishlist items will be populated dynamically -->
+  </div>
+</div>
+
+<!-- Header -->
+<header>
+  <div class="top_header">
+    <div class="container">
+      <a href="index.html" class="logo"> <img src="images/LOG.png" alt=""></a>
+
+      <form action="" class="search_box">
+        <div class="select_box">
+          <select id="category" name="category">
+            <option value="All Categories">All Categories</option>
+            <option value="used_items">used_item</option>
+            <option value="upper_Limb">upper_Limb</option>
+            <option value="Lower_Limb">Lower_Limb</option>
+            <option value="Accessories">Accessories</option>
+          </select>
+        </div>
+        <input type="text" name="search" id="search" placeholder="Search for Products" required>
+        <button type="submit">
+          <i class="fa-solid fa-magnifying-glass"></i>
+        </button>
+      </form>
+
+
+    </div>
+  </div>
+
+  <div class="bottom_header">
+    <div class="container">
+      <nav class="nav">
+        <span onclick="open_Menu()" class="open_menu"><i class="fa-solid fa-bars"></i></span>
+        <div class="category_nav">
+          <div onclick="Open_Categ_list()" class="category_btn">
+            <i class="fa-solid fa-bars"></i>
+            <p>Browse Category</p>
+            <i class="fa-solid fa-angle-down"></i>
+          </div>
+          <div class="category_nav_list">
+            <a href="#top-offers">Top 10 Offers</a>
+            <a href="#upper_Limb">New Arrivals</a>
+            <a href="#Lower_Limb">Top Rated</a>
+            <a href="#Used Items">Used Items</a>
+          </div>
+        </div>
+
+        <ul class="nav_links">
+          <span onclick="open_Menu()" class="close_menu"><i class="fa-regular fa-circle-xmark"></i></span>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="About.html">About Us</a></li>
+          <li><a href="products.html">All Products</a></li>
+          <li><a href="contact.html">Contact Us</a></li>
+        </ul>
+      </nav>
+
+
+    </div>
+  </div>
+</header>
+
+<!-- Profile Settings Content -->
+<div class="container">
+  <h4 class="font-weight-bold py-3 mb-4">Profile Settings</h4>
+  <div class="card">
+    <div class="row no-gutters">
+      <div class="col-md-3">
+        <div class="list-group list-group-flush">
+          <a class="list-group-item active" data-toggle="list" href="#account-general">General</a>
+          <a class="list-group-item" data-toggle="list" href="#account-password">Password</a>
+          <a class="list-group-item" data-toggle="list" href="#account-info">Info</a>
+          <a class="list-group-item" data-toggle="list" href="#account-social">Social Links</a>
+          <a class="list-group-item" data-toggle="list" href="#account-orders">Order History</a>
+        </div>
+      </div>
+      <div class="col-md-9">
+        <div class="tab-content p-3">
+          <!-- General -->
+          <div class="tab-pane fade show active" id="account-general">
+            <div class="media align-items-center mb-3">
+              <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0OTYgNTEyIj48cGF0aCBmaWxsPSIjMDA3YzkxIiBkPSJNMjQ4IDhDMTExIDggMCAxMTkgMCAyNTZzMTExIDI0OCAyNDggMjQ4IDI0OC0xMTEgMjQ4LTI0OFMzODUgOCAyNDggOHptMCA5NmM0OC42IDAgODggMzkuNCA4OCA4OHMtMzkuNCA4OC04OCA4OC04OC0zOS40LTg4LTg4IDM5LjQtODggODgtODh6bTAgMzQ0Yy01OC43IDAtMTExLjMtMjYuNi0xNDYuNS02OC4yIDE4LjgtMzUuNCA1OC43LTU5LjggMTAyLjUtNTkuOCAyLjQgMCA0LjggLjQgNy4xIDEuMSAxMy40IDQuMyAyNC4yIDYuOSAzNiA2LjkgMTEuNyAwIDIyLjYtMi42IDM2LTYuOSAyLjMtLjcgNC43LTEuMSA3LjEtMS4xIDQzLjggMCA4My43IDI0LjQgMTAyLjUgNTkuOEMzNTkuMyA0MjEuNCAzMDYuNyA0NDggMjQ4IDQ0OHoiLz48L3N2Zz4=" class="ui-w-80 rounded-circle" id="profile-picture" alt="Profile Picture">
+              <div class="media-body ml-3">
+                <label class="btn btn-outline-primary">
+                  Upload new photo <input type="file" class="account-settings-fileinput">
+                </label>
+                <button class="btn btn-secondary">Reset</button>
+                <div class="small text-muted mt-1">Allowed JPG, GIF, PNG. Max size 800KB</div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label>First Name</label>
+              <input type="text" class="form-control" placeholder="Enter First Name">
+            </div>
+            <div class="form-group">
+              <label>Last Name</label>
+              <input type="text" class="form-control" placeholder="Enter Last Name">
+            </div>
+            <div class="form-group">
+              <label>Email</label>
+              <input type="email" class="form-control" placeholder="Enter your email">
+            </div>
+          </div>
+
+          <!-- Password -->
+          <div class="tab-pane fade" id="account-password">
+            <div class="form-group">
+              <label>Current password</label>
+              <input type="password" class="form-control">
+            </div>
+            <div class="form-group">
+              <label>New password</label>
+              <input type="password" class="form-control">
+            </div>
+            <div class="form-group">
+              <label>Repeat new password</label>
+              <input type="password" class="form-control">
+            </div>
+          </div>
+
+          <!-- Info -->
+          <div class="tab-pane fade" id="account-info">
+            <div class="form-group">
+              <label>Bio</label>
+              <textarea class="form-control" rows="4" placeholder="Write something about yourself..."></textarea>
+            </div>
+            <div class="form-group">
+              <label>Birthday</label>
+              <input type="date" class="form-control">
+            </div>
+            <div class="form-group">
+              <label>Country</label>
+              <select class="form-control">
+                <option selected disabled>Choose...</option>
+                <option > Argentina</option>
+                <option > Australia</option>
+                <option > Brazil</option>
+                <option > Canada</option>
+                <option > China</option>
+                <option > Egypt</option>
+                <option > France</option>
+                <option > Germany</option>
+                <option > India</option>
+                <option > Italy</option>
+                <option > Japan</option>
+                <option > Mexico</option>
+                <option > South Korea</option>
+                <option > United Kingdom</option>
+                <option > United States</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Phone</label>
+              <input type="tel" class="form-control" placeholder="e.g. +1 234 567 8900">
+            </div>
+            <div class="form-group">
+              <label>Address</label>
+              <input type="text" class="form-control" placeholder="Address">
+            </div>
+          </div>
+
+          <!-- Social -->
+          <div class="tab-pane fade" id="account-social">
+            <div class="form-group">
+              <label>Twitter</label>
+              <input type="url" class="form-control" placeholder="https://twitter.com/yourhandle">
+            </div>
+            <div class="form-group">
+              <label>Facebook</label>
+              <input type="url" class="form-control" placeholder="https://facebook.com/yourprofile">
+            </div>
+            <div class="form-group">
+              <label>Instagram</label>
+              <input type="url" class="form-control" placeholder="https://instagram.com/yourprofile">
+            </div>
+          </div>
+
+          <!-- Orders -->
+          <div class="tab-pane fade" id="account-orders">
+            <h5 class="mb-3">Your Order History</h5>
+            <div class="order-history-wrapper">
+              <table class="table table-bordered order-table">
+                <thead class="thead-light">
+                <tr>
+                  <th>Order ID</th>
+                  <th>Product Details</th>
+                  <th>Date</th>
+                  <th>Status</th>
+                </tr>
+                </thead>
+                <tbody id="order-history-body">
+                <!-- Dynamic content will be inserted here -->
+                </tbody>
+              </table>
+              <div class="empty-order-message text-center p-4" style="display: none;">
+                <i class="fa-solid fa-shopping-bag mb-3" style="font-size: 48px; color: #ccc;"></i>
+                <h5>No Orders Yet</h5>
+                <p>You haven't placed any orders yet.</p>
+                <a href="products.html" class="btn btn-primary mt-2">Start Shopping</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="text-right p-3">
+      <button class="btn btn-primary">Save Changes</button>
+      <button class="btn btn-secondary">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<!-- Footer -->
+<!-- Footer -->
+<footer>
+  <div class="container">
+
+    <div class="big_row">
+      <img class="logo_footer" src="images/Footer%20.png" alt="PULSE Logo">
+
+      <p>Empowering mobility through cutting-edge prosthetic technology and compassionate healthcare worldwide.</p>
+
+      <div class="icons_footer">
+        <a href="#"><i class="fa-solid fa-phone"></i></a>
+        <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
+        <a href="#"><i class="fa-brands fa-instagram"></i></a>
+        <a href="#"><i class="fa-brands fa-x-twitter"></i></a>
+      </div>
+    </div>
+
+    <div class="row">
+      <h4>Find It Fast</h4>
+
+      <div class="links">
+        <a href="#used_items"><i class="fa-solid fa-caret-right"></i> Used Items </a>
+        <a href="#upper_Limb"><i class="fa-solid fa-caret-right"></i> Upper Limb</a>
+        <a href="#Lower_Limb"><i class="fa-solid fa-caret-right"></i> Lower Limb</a>
+        <a href="#Accessories"><i class="fa-solid fa-caret-right"></i> Accessories</a>
+      </div>
+    </div>
+
+
+    <div class="row">
+      <h4>Quick Links</h4>
+
+      <div class="links">
+        <a href="#"><i class="fa-solid fa-caret-right"></i> Support Center</a>
+        <a href="#"><i class="fa-solid fa-caret-right"></i> Returns & Exchanges</a>
+        <a href="#"><i class="fa-solid fa-caret-right"></i> Shipping & Delivery</a>
+        <a href="#"><i class="fa-solid fa-caret-right"></i> Estimated Delivery Time</a>
+
+      </div>
+    </div>
+
+
+    <div class="row">
+      <h4>Service us</h4>
+
+      <div class="links">
+
+        <a href="#"><i class="fa-solid fa-caret-right"></i> Term & Conditions</a>
+        <a href="#"><i class="fa-solid fa-caret-right"></i> Privacy Policy</a>
+        <a href="#"><i class="fa-solid fa-caret-right"></i> Help</a>
+        <a href="#"><i class="fa-solid fa-caret-right"></i> FAQS</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="bottom_footer">
+    <div class="container">
+      <p>&copy; <span>PULSE STORE.</span> All Rights Reserved.</p>
+
+      <div class="payment_img">
+        <img src="img/payment_method.png" alt="Payment Methods">
+      </div>
+    </div>
+  </div>
+</footer>
+
+<div id="supportCenterModal" class="modal">
+  <div class="modal-content">
+    <span class="modal-close">&times;</span>
+    <h2>Support Center</h2>
+    <div class="modal-body">
+
+
+      <div class="support-contact">
+        <div class="contact-method">
+          <i class="fa-solid fa-envelope"></i>
+          <h4>Email Support</h4>
+          <p>support@pulsestore.com</p>
+          <p>Response time: Within 24 hours</p>
+        </div>
+
+        <div class="contact-method">
+          <i class="fa-solid fa-phone"></i>
+          <h4>Phone Support</h4>
+          <p>011 5439 8540</p>
+          <p>Available: Mon-Fri, 9AM-5PM EST</p>
+        </div>
+
+        <div class="contact-method">
+          <i class="fa-solid fa-comment-dots"></i>
+          <h4>Live Chat</h4>
+          <p>Available through our website</p>
+          <p>Hours: 24/7</p>
+        </div>
+      </div>
+      <div class="video-container">
+        <!-- Video element with overlay for the button -->
+        <div class="video-wrapper">
+          <video class="support-video" autoplay muted loop>
+            <source src="images/A%20Day%20in%20the%20Life%20of%20a%20Bionic%20Hand%20User%20(720p).mp4" type="video/mp4">
+            Your browser does not support the video tag.
+          </video>
+
+          <!-- Overlay with centered contact button -->
+          <div class="video-overlay">
+            <a href="contact.html" class="btn contact-btn">Send Us a Message</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="termsModal" class="modal">
+  <div class="modal-content">
+    <span class="modal-close">&times;</span>
+    <h2>Terms & Conditions</h2>
+    <div class="modal-body">
+
+      <h3>1. Introduction</h3>
+      <p>Welcome to PULSE. These Terms and Conditions govern your use of our website and services. By accessing or using PULSE, you agree to be bound by these Terms. If you disagree with any part of these terms, you may not access our website or use our services.</p>
+      <p>PULSE is an e-commerce platform specializing in prosthetics and assistive devices for individuals with disabilities, combined with charitable initiatives to support the differently-abled community.</p>
+
+      <h3>2. Definitions</h3>
+      <p>Throughout these Terms, the following definitions apply:</p>
+      <ul>
+        <li><strong>"PULSE"</strong>, <strong>"we"</strong>, <strong>"us"</strong>, or <strong>"our"</strong> refers to PULSE, its owners, directors, employees, and affiliates.</li>
+        <li><strong>"User"</strong>, <strong>"you"</strong>, or <strong>"your"</strong> refers to any individual or entity that accesses or uses our Website or Services.</li>
+        <li><strong>"Services"</strong> refers to prosthetics, assistive devices, support services, and charitable initiatives provided by PULSE.</li>
+        <li><strong>"Website"</strong> refers to the PULSE website, including all content, services, and products available at or through the website.</li>
+        <li><strong>"Products"</strong> refers to prosthetics, assistive devices, and related items sold through our platform.</li>
+      </ul>
+
+      <h3>3. Account Registration</h3>
+      <p>To access certain features of our Website, you must register for an account. You agree to provide accurate, current, and complete information during the registration process and to update such information to keep it accurate, current, and complete.</p>
+      <p>You are responsible for safeguarding your account credentials and for any activities or actions under your account. PULSE will not be liable for any losses or damages arising from your failure to comply with these obligations.</p>
+      <p>You must be at least 18 years old to create an account. By creating an account, you represent and warrant that you are 18 years of age or older.</p>
+
+      <h3>4. E-Commerce Terms</h3>
+      <p>By placing an order through our Website, you affirm that you are entering into a legally binding agreement with PULSE.</p>
+      <ul>
+        <li><strong>Product Descriptions:</strong> We strive to describe our products as accurately as possible. However, we do not warrant that product descriptions or other content on the Website are accurate, complete, reliable, current, or error-free.</li>
+        <li><strong>Pricing:</strong> All prices are shown in the applicable currency and are subject to change without notice. We reserve the right to correct any pricing errors on our Website.</li>
+        <li><strong>Payment:</strong> We accept various payment methods as indicated during the checkout process. All payments are processed securely through our payment processors.</li>
+        <li><strong>Shipping and Delivery:</strong> Delivery times vary depending on your location and the product ordered. Custom prosthetics may require additional time for manufacturing.</li>
+        <li><strong>Returns and Refunds:</strong> For standard products, we offer a 30-day return policy. Custom prosthetics may have different return policies as specified at the time of purchase.</li>
+      </ul>
+
+      <h3>5. Medical Disclaimer</h3>
+      <p>The information provided on our Website is for general informational purposes only and is not intended as a substitute for professional medical advice. Always seek the advice of your physician or other qualified health provider with any questions you may have regarding your medical condition or treatment.</p>
+      <p>Our prosthetics and assistive devices should be used under appropriate medical supervision. Proper fitting and adjustment by qualified professionals are essential for safety and effectiveness.</p>
+
+      <h3>6. Charitable Initiatives and Volunteering</h3>
+      <p>PULSE facilitates charitable initiatives and volunteer opportunities to support individuals with disabilities:</p>
+      <ul>
+        <li><strong>Donations:</strong> Financial contributions made through our platform are used to provide prosthetics and assistive devices to those in need. A detailed breakdown of how donations are utilized is available upon request.</li>
+        <li><strong>Volunteering:</strong> By registering as a volunteer, you agree to abide by our volunteer code of conduct, which will be provided separately.</li>
+        <li><strong>Sponsorships:</strong> Sponsors agree to the specific terms outlined in their sponsorship agreements.</li>
+      </ul>
+      <p>PULSE reserves the right to decline donations, volunteer services, or sponsorships at our discretion.</p>
+
+      <h3>9. Privacy Policy</h3>
+      <p>Your use of our Website is also governed by our Privacy Policy, which is incorporated into these Terms by reference.</p>
+      <h3>4. Product Information</h3>
+      <p>We strive to provide accurate product descriptions and information. However, we do not warrant that product descriptions or other content on our Website are accurate, complete, reliable, current, or error-free.</p>
+
+      <h3>5. Pricing and Payment</h3>
+      <p>All prices are listed in US Dollars unless otherwise specified. We reserve the right to change prices at any time. Payment must be made in full before products are shipped.</p>
+
+      <h3>6. Shipping and Delivery</h3>
+      <p>Shipping times are estimates and not guaranteed. We are not responsible for delays caused by customs, weather, or other factors outside our control.</p>
+
+      <h3>7. Returns and Refunds</h3>
+      <p>Please refer to our Returns & Exchanges policy for detailed information on returning products and receiving refunds.</p>
+
+      <h3>7. Intellectual Property</h3>
+      <p>All content on our Website, including text, graphics, logos, images, audio clips, digital downloads, and data compilations, is the property of PULSE or its content suppliers and is protected by international copyright laws.</p>
+      <p>You may not reproduce, duplicate, copy, sell, resell, or exploit any portion of our Website without express written permission from PULSE.</p>
+
+      <h3>8. User Conduct</h3>
+      <p>You agree not to use our Website for any unlawful purpose or in any way that could damage, disable, overburden, or impair our service.</p>
+      <p>You may not attempt to gain unauthorized access to any part of our Website, other accounts, or computer systems through hacking, password mining, or any other means.</p>
+
+      <h3>10. Limitation of Liability</h3>
+      <p>To the fullest extent permitted by applicable law, PULSE shall not be liable for any indirect, incidental, special, consequential, or punitive damages resulting from your use of or inability to use our Website or Services.</p>
+
+      <h3>10. Governing Law</h3>
+      <p>These Terms shall be governed by and construed in accordance with the laws of [Your Jurisdiction], without regard to its conflict of law principles.</p>
+
+      <h3>11. Indemnification</h3>
+      <p>You agree to indemnify, defend, and hold harmless PULSE and its officers, directors, employees, agents, and suppliers from and against any claims, liabilities, damages, judgments, awards, losses, costs, expenses, or fees arising out of or relating to your violation of these Terms or your use of our Website.</p>
+
+      <h3>11. Changes to Terms</h3>
+      <p>We reserve the right to modify these Terms at any time. Your continued use of our Website after any changes indicates your acceptance of the modified Terms.</p>
+
+      <h3>13. Contact Information</h3>
+      <p>If you have any questions about these Terms, please contact us at:</p>
+      <p>Email: support@pulse-prosthetics.com<br>
+        Phone: +1-800-PULSE-HELP<br>
+        Address: PULSE Headquarters, 123 Health Avenue, Wellness City, 10001</p>if you have any questions about these Terms, please contact us at legal@pulsestore.com.</p>
+      <h3>15. Acknowledgement</h3>
+      <p>By using our Website or Services, you acknowledge that you have read these Terms and agree to be bound by them.</p>
+      <p>Last updated: April 11, 2025</p>
+
+    </div>
+  </div>
+</div>
+
+<div id="privacyPolicyModal" class="modal">
+  <div class="modal-content">
+    <span class="modal-close">&times;</span>
+    <h2>Privacy Policy</h2>
+    <div class="modal-body">
+      <p>Last Updated: April 19, 2025</p>
+
+      <h3>1. Introduction</h3>
+      <p>At PULSE STORE, we respect your privacy and are committed to protecting your personal data. This Privacy Policy explains how we collect, use, and safeguard your information when you visit our website or use our services.</p>
+
+      <h3>2. Information We Collect</h3>
+      <p><strong>Personal Information:</strong> Name, email address, phone number, shipping address, billing address, payment information.</p>
+      <p><strong>Medical Information:</strong> When necessary for product customization, we may collect relevant medical data with your explicit consent.</p>
+      <p><strong>Technical Data:</strong> IP address, browser type, device information, cookies, usage data.</p>
+
+      <h3>3. How We Use Your Information</h3>
+      <ul>
+        <li>To process and fulfill your orders</li>
+        <li>To provide customer support</li>
+        <li>To improve our products and services</li>
+        <li>To send you marketing communications (with your consent)</li>
+        <li>To comply with legal obligations</li>
+      </ul>
+
+      <h3>4. Data Sharing and Disclosure</h3>
+      <p>We may share your information with:</p>
+      <ul>
+        <li>Service providers who perform services on our behalf</li>
+        <li>Healthcare professionals when necessary for product customization</li>
+        <li>Legal authorities when required by law</li>
+      </ul>
+      <p>We do not sell your personal information to third parties.</p>
+
+      <h3>5. Data Security</h3>
+      <p>We implement appropriate security measures to protect your personal information. However, no method of transmission over the Internet or electronic storage is 100% secure.</p>
+
+      <h3>6. Your Rights</h3>
+      <p>Depending on your location, you may have rights to:</p>
+      <ul>
+        <li>Access your personal information</li>
+        <li>Correct inaccurate data</li>
+        <li>Delete your data</li>
+        <li>Object to processing</li>
+        <li>Data portability</li>
+      </ul>
+
+      <h3>7. Cookies</h3>
+      <p>We use cookies to enhance your browsing experience. You can set your browser to refuse cookies, but this may limit your ability to use certain features of our website.</p>
+
+      <h3>8. Children's Privacy</h3>
+      <p>Our website is not intended for children under 13 years of age, and we do not knowingly collect personal information from children.</p>
+
+      <h3>9. Changes to This Policy</h3>
+      <p>We may update this Privacy Policy from time to time. We will notify you of any changes by posting the new policy on our website.</p>
+
+      <h3>10. Contact Us</h3>
+      <p>If you have questions about this Privacy Policy, please contact our Data Protection Officer at privacy@pulsestore.com.</p>
+    </div>
+  </div>
+</div>
+
+<div id="helpModal" class="modal">
+  <div class="modal-content">
+    <span class="modal-close">&times;</span>
+    <h2>Help Center</h2>
+    <div class="modal-body">
+      <div class="help-section">
+        <h3>Getting Started</h3>
+        <div class="help-item">
+          <h4>Creating an Account</h4>
+          <p>Click on "Log In" in the top right corner of our website and select "Create Account." Fill in your information and follow the verification steps.</p>
+        </div>
+        <div class="help-item">
+          <h4>Browsing Products</h4>
+          <p>Navigate through our categories or use the search bar to find specific products. Filter results by category, price, or other attributes.</p>
+        </div>
+      </div>
+
+      <div class="help-section">
+        <h3>Ordering Process</h3>
+        <div class="help-item">
+          <h4>Adding Items to Cart</h4>
+          <p>Click the "Add to Cart" button on any product page. You can review your cart by clicking the cart icon in the top right corner.</p>
+        </div>
+        <div class="help-item">
+          <h4>Checkout Process</h4>
+          <p>When you're ready to complete your purchase, click "Checkout" in your cart. Follow the steps to enter shipping and payment information.</p>
+        </div>
+        <div class="help-item">
+          <h4>Order Tracking</h4>
+          <p>After placing an order, you'll receive an order confirmation email with tracking information. You can also check order status in your account dashboard.</p>
+        </div>
+      </div>
+
+      <div class="help-section">
+        <h3>Product Information</h3>
+        <div class="help-item">
+          <h4>Custom Prosthetics</h4>
+          <p>For customized prosthetic devices, additional measurements or consultation may be required. Instructions will be provided during the ordering process.</p>
+        </div>
+        <div class="help-item">
+          <h4>Product Care</h4>
+          <p>Each product comes with specific care instructions. Generally, keep prosthetics clean and dry, and follow maintenance schedules.</p>
+        </div>
+      </div>
+
+      <div class="help-section">
+        <h3>Still Need Help?</h3>
+        <p>If you couldn't find the information you need, please contact our Support Center through email at help@pulsestore.com or call us at +1 (800) 555-1234.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="faqsModal" class="modal">
+  <div class="modal-content">
+    <span class="modal-close">&times;</span>
+    <h2>Frequently Asked Questions</h2>
+    <div class="modal-body">
+      <div class="faq-search">
+        <input type="text" id="faqSearch" placeholder="Search FAQs...">
+      </div>
+
+      <div class="faq-categories">
+        <button class="faq-category active" data-category="all">All</button>
+        <button class="faq-category" data-category="ordering">Ordering</button>
+        <button class="faq-category" data-category="products">Products</button>
+        <button class="faq-category" data-category="shipping">Shipping</button>
+        <button class="faq-category" data-category="returns">Returns</button>
+      </div>
+
+      <div class="faq-items">
+        <!-- Ordering FAQs -->
+        <div class="faq-item" data-category="ordering">
+          <div class="faq-question">
+            <h3>How do I place an order?</h3>
+            <i class="fa-solid fa-chevron-down"></i>
+          </div>
+          <div class="faq-answer">
+            <p>To place an order, browse our products, add items to your cart, and proceed to checkout. You'll need to create an account or log in, provide shipping and payment information, and confirm your order.</p>
+          </div>
+        </div>
+
+        <div class="faq-item" data-category="ordering">
+          <div class="faq-question">
+            <h3>Can I modify or cancel my order?</h3>
+            <i class="fa-solid fa-chevron-down"></i>
+          </div>
+          <div class="faq-answer">
+            <p>You can modify or cancel your order within 24 hours of placing it by contacting our customer service. After this period, orders are processed and cannot be modified or canceled.</p>
+          </div>
+        </div>
+
+        <!-- Products FAQs -->
+        <div class="faq-item" data-category="products">
+          <div class="faq-question">
+            <h3>Are your prosthetic products customizable?</h3>
+            <i class="fa-solid fa-chevron-down"></i>
+          </div>
+          <div class="faq-answer">
+            <p>Yes, many of our prosthetic products can be customized to fit your specific needs. Look for the "Customizable" label on product pages. Additional information and measurements may be required for customization.</p>
+          </div>
+        </div>
+
+        <div class="faq-item" data-category="products">
+          <div class="faq-question">
+            <h3>What is the difference between upper and lower limb prosthetics?</h3>
+            <i class="fa-solid fa-chevron-down"></i>
+          </div>
+          <div class="faq-answer">
+            <p>Upper limb prosthetics are designed for arms and hands, while lower limb prosthetics are for legs and feet. Each type is engineered with specific functionalities to support different activities and mobility needs.</p>
+          </div>
+        </div>
+
+        <!-- Shipping FAQs -->
+        <div class="faq-item" data-category="shipping">
+          <div class="faq-question">
+            <h3>How long will it take to receive my order?</h3>
+            <i class="fa-solid fa-chevron-down"></i>
+          </div>
+          <div class="faq-answer">
+            <p>Standard shipping typically takes 5-7 business days. Express shipping is available for 2-3 business days. Custom products may take longer, with estimated delivery times provided during checkout.</p>
+          </div>
+        </div>
+
+        <div class="faq-item" data-category="shipping">
+          <div class="faq-question">
+            <h3>Do you ship internationally?</h3>
+            <i class="fa-solid fa-chevron-down"></i>
+          </div>
+          <div class="faq-answer">
+            <p>Yes, we ship to over 50 countries worldwide. International shipping times vary by location, typically ranging from 7-21 business days. Additional customs fees may apply depending on your country.</p>
+          </div>
+        </div>
+        <div class="faq-item" data-category="shipping">
+          <div class="faq-question">
+            <h3>What happens if I'm not home when my order arrives?</h3>
+            <i class="fa-solid fa-chevron-down"></i>
+          </div>
+          <div class="faq-answer">
+            <p>For most shipments, the carrier will leave your package at your door if no signature is required. For orders requiring a signature, they will leave a delivery attempt notice with instructions for rescheduling or pickup.</p>
+          </div>
+        </div>
+        <div class="faq-item" data-category="shipping">
+          <div class="faq-question">
+            <h3>Can I change my delivery address after placing my order?</h3>
+            <i class="fa-solid fa-chevron-down"></i>
+          </div>
+          <div class="faq-answer">
+            <p>Address changes may be possible if your order hasn't shipped yet. Please contact customer service immediately with your order number to request an address change.</p>
+          </div>
+        </div>
+        <div class="faq-item" data-category="shipping">
+          <div class="faq-question">
+            <h3>Do you deliver on weekends?</h3>
+            <i class="fa-solid fa-chevron-down"></i>
+          </div>
+          <div class="faq-answer">
+            <p>Standard and expedited shipping typically only deliver on business days (Monday-Friday). Select carriers may offer weekend delivery for Next Day service in certain areas.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Returns FAQs -->
+    <div class="faq-item" data-category="returns">
+      <div class="faq-question">
+        <h3>What is your return policy?</h3>
+        <i class="fa-solid fa-chevron-down"></i>
+      </div>
+      <div class="faq-answer">
+        <p>Standard products can be returned within 30 days of delivery if they're in original condition. Custom products are non-returnable unless defective. Contact customer service to initiate a return.</p>
+      </div>
+    </div>
+
+    <div class="faq-item" data-category="returns">
+      <div class="faq-question">
+        <h3>How do I return a product?</h3>
+        <i class="fa-solid fa-chevron-down"></i>
+      </div>
+      <div class="faq-answer">
+        <p>To return a product, log into your account, go to order history, select the item you wish to return, and follow the return instructions. You'll receive a return shipping label and further instructions via email.</p>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+</div>
+<div id="returnsModal" class="modal">
+  <div class="modal-content">
+    <span class="modal-close">&times;</span>
+    <h2>Returns & Exchanges</h2>
+    <div class="returns-container">
+      <div class="returns-section">
+        <h3>Return Policy</h3>
+        <p>We want you to be completely satisfied with your purchase. If you're not satisfied for any reason, we accept returns within 30 days of delivery for a full refund of the item price.</p>
+
+        <h4>Return Eligibility:</h4>
+        <ul>
+          <li>Items must be unused and in original packaging</li>
+          <li>Original receipt or proof of purchase required</li>
+          <li>Returns must be initiated within 30 days of delivery</li>
+          <li>Special order items and clearance sales may have different policies</li>
+        </ul>
+
+        <h4>Non-Returnable Items:</h4>
+        <ul>
+          <li>Custom or personalized products</li>
+          <li>Items marked as "Final Sale"</li>
+          <li>Products with broken seals or missing components</li>
+        </ul>
+      </div>
+
+      <div class="returns-section">
+        <h3>Exchange Process</h3>
+        <p>Exchanges can be processed for the same item in a different size or color, subject to availability.</p>
+
+        <h4>How to Request an Exchange:</h4>
+        <ol>
+          <li>Login to your account</li>
+          <li>Navigate to your order history</li>
+          <li>Select the order containing the item(s) for exchange</li>
+          <li>Follow the exchange instructions</li>
+        </ol>
+
+        <p>Please note that exchanges are subject to inventory availability. If your desired item is unavailable, we'll process a return instead.</p>
+      </div>
+
+      <div class="returns-section">
+        <h3>How to Start a Return</h3>
+        <p>To return an item, please follow these instructions:</p>
+        <ol>
+          <li>Locate your order number from your confirmation email or account history</li>
+          <li>Contact our customer service team at returns@example.com with your order number in the subject line</li>
+          <li>Include the reason for your return in the email body</li>
+          <li>Our team will respond within 24 hours with a return authorization and shipping instructions</li>
+          <li>Package your item(s) in their original packaging with all included components</li>
+          <li>Attach the provided return label to your package</li>
+          <li>Drop off your package at any authorized shipping location</li>
+        </ol>
+        <p>Return processing typically takes 7-10 business days from receipt of your returned items.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Shipping & Delivery Modal -->
+<div id="shippingModal" class="modal">
+  <div class="modal-content">
+    <span class="modal-close">&times;</span>
+    <h2>Shipping & Delivery</h2>
+    <div class="shipping-container">
+      <div class="shipping-section">
+        <h3>Shipping Options for Egypt</h3>
+        <table class="shipping-table">
+          <thead>
+          <tr>
+            <th>Shipping Method</th>
+            <th>Estimated Delivery</th>
+            <th>Cost</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td>Standard Shipping</td>
+            <td>7-10 business days</td>
+            <td>EGP 150</td>
+          </tr>
+          <tr>
+            <td>Expedited Shipping</td>
+            <td>4-6 business days</td>
+            <td>EGP 300</td>
+          </tr>
+          <tr>
+            <td>Next Day Delivery</td>
+            <td>1-2 business days</td>
+            <td>EGP 500</td>
+          </tr>
+          <tr>
+            <td>Free Shipping</td>
+            <td>7-10 business days</td>
+            <td>Free on orders over EGP 2000</td>
+          </tr>
+          </tbody>
+        </table>
+
+        <div class="shipping-notes">
+          <p><strong>Note:</strong> Business days are Sunday-Thursday in Egypt, excluding public holidays. Orders placed after 2 PM EET may not be processed until the next business day.</p>
+        </div>
+      </div>
+
+      <div class="shipping-section">
+        <h3>Shipping In Egypt</h3>
+        <p>We deliver to all governorates in Egypt with varying delivery times:</p>
+        <ul>
+          <li>Cairo and Alexandria: Fastest delivery times (as shown in the table above)</li>
+          <li>Other major cities (Giza, Sharm El Sheikh, Hurghada): Add 1-2 additional days</li>
+          <li>Remote areas and other governorates: Add 3-5 additional days</li>
+        </ul>
+
+        <p>All shipments to Egypt are fully tracked and insured. Please note that customs clearance may occasionally cause additional delays beyond our control.</p>
+      </div>
+
+
+    </div>
+  </div>
+</div>
+
+<!-- Estimated Delivery Time Modal -->
+<div id="deliveryTimeModal" class="modal">
+  <div class="modal-content">
+    <span class="modal-close">&times;</span>
+    <h2>Estimated Delivery Time</h2>
+    <div class="delivery-time-container">
+      <div class="delivery-time-section">
+        <h3>How We Calculate Delivery Estimates</h3>
+        <p>Our delivery estimates are calculated based on several factors:</p>
+        <ul>
+          <li>Processing time (typically 1-2 business days)</li>
+          <li>Shipping method selected</li>
+          <li>Destination location</li>
+          <li>Inventory status</li>
+          <li>Current order volume</li>
+        </ul>
+
+        <div class="delivery-time-diagram">
+          <div class="timeline">
+            <div class="timeline-item">
+              <div class="timeline-icon">
+                <i class="fa-solid fa-cart-shopping"></i>
+              </div>
+              <div class="timeline-content">
+                <h4>Order Placed</h4>
+                <p>Order received and payment confirmed</p>
+              </div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-icon">
+                <i class="fa-solid fa-box"></i>
+              </div>
+              <div class="timeline-content">
+                <h4>Processing</h4>
+                <p>Order verification and preparation (1-2 days)</p>
+              </div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-icon">
+                <i class="fa-solid fa-truck"></i>
+              </div>
+              <div class="timeline-content">
+                <h4>Shipping</h4>
+                <p>Order in transit (varies by shipping method)</p>
+              </div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-icon">
+                <i class="fa-solid fa-house"></i>
+              </div>
+              <div class="timeline-content">
+                <h4>Delivery</h4>
+                <p>Order arrives at your doorstep</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="delivery-time-section">
+        <h3>Understanding Delivery Timeframes</h3>
+        <p>To estimate when your order will arrive, please consider these guidelines:</p>
+        <ul>
+          <li><strong>Standard Shipping:</strong> Orders typically take 5-7 business days to arrive after processing</li>
+          <li><strong>Expedited Shipping:</strong> Orders typically take 2-3 business days to arrive after processing</li>
+          <li><strong>Next Day Delivery:</strong> Orders placed before 2 PM will arrive the next business day</li>
+        </ul>
+        <p>Remember to add 1-2 business days for order processing time to all estimates.</p>
+        <p>For precise delivery estimates, please check the shipping time calculator during checkout, which provides personalized timeframes based on your location and current inventory status.</p>
+      </div>
+
+
+    </div>
+  </div>
+</div>
+
+<!-- JavaScript -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="JS/cartSync.js"></script>
+<script src="JS/auth.js"></script>
+<script src="JS/favorite.js"></script>
+<script src="JS/profile.js"></script>
+<script src="JS/footer.js"></script>
+
+<script> // Store nav_links reference at runtime instead of immediately
+function open_Menu() {
+  const nav_links = document.querySelector(".nav_links");
+  if (nav_links) {
+    nav_links.classList.toggle("active");
+  }
+}
+
+function setActiveNavLink() {
+  // Get the current page URL path (e.g., "/about.html")
+  const currentPage = window.location.pathname;
+
+  // Extract just the filename from the path
+  const currentFile = currentPage.split('/').pop();
+
+  // Get all navigation links
+  const navLinks = document.querySelectorAll('.nav_links li a');
+
+  // Loop through each nav link
+  navLinks.forEach(link => {
+    // Get the href attribute and extract just the filename
+    const linkHref = link.getAttribute('href');
+    const linkFile = linkHref.split('/').pop();
+
+    // Only add active class if the filenames match exactly
+    if (currentFile === linkFile) {
+      // Add active class to the parent li element
+      link.parentElement.classList.add('active');
+    } else {
+      // Remove active class if it exists (in case of navigation without page reload)
+      link.parentElement.classList.remove('active');
+    }
+  });
+}
+
+function Open_Categ_list() {
+  const categoryNavList = document.querySelector('.category_nav_list');
+  if (categoryNavList) {
+    categoryNavList.classList.toggle('active');
+  }
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+  document.querySelectorAll('.category_nav_list a').forEach(link => {
+    link.addEventListener('click', function (e) {
+      e.preventDefault(); // Prevent default anchor behavior
+
+      const targetId = this.getAttribute('href').substring(1); // Get the target section ID
+
+      if (!window.location.pathname.endsWith('index.html')) {
+        // Redirect to index.html with the target ID as a query parameter
+        window.location.href = `index.html?target=${targetId}`;
+      } else {
+        const targetElement = document.getElementById(targetId);
+
+        if (targetElement) {
+          const offset = 170; // Adjust this value for the desired space from the top
+          const elementPosition = targetElement.getBoundingClientRect().top + window.scrollY;
+          const offsetPosition = elementPosition - offset;
+
+          window.scrollTo({
+            top: offsetPosition,
+            behavior: 'smooth' // Smooth scrolling
+          });
+        }
+      }
+    });
+  });
+});
+
+
+
+</script>
+</body>
+</html>
