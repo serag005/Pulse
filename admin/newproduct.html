@@ -155,6 +155,10 @@
         .confirmation-buttons button {
             width: 45%;
         }
+        
+        #test-api-btn {
+            display: none;
+        }
 
         @media (max-width: 768px) {
             .form-container {
@@ -201,10 +205,13 @@
         </div>
         <input type="file" id="product-image" name="image" accept="image/png, image/jpeg, image/jpg, image/gif" required>
 
-
         <!-- Product Name -->
         <label for="product-name">Product Name</label>
         <input type="text" id="product-name" name="name" placeholder="Enter product name" required>
+
+        <!-- Product Description -->
+        <label for="product-description">Product Description</label>
+        <textarea id="product-description" name="description" placeholder="Enter product description" rows="4" required></textarea>
 
         <!-- Product Price -->
         <label for="product-price">Price ($)</label>
@@ -221,8 +228,8 @@
         <!-- Product Category -->
         <label for="product-category">Category</label>
         <select id="product-category" name="category" required>
-            <option value="used_items">used_item</option>
-            <option value="upper_Limb">upper_Limb</option>
+            <option value="Used Items">used_item</option>
+            <option value="Upper_Limb">Upper_Limb</option>
             <option value="Lower_Limb">Lower_Limb</option>
             <option value="Accessories">Accessories</option>
         </select>
@@ -232,10 +239,9 @@
             <input type="text" id="other-category-input" name="other_category" placeholder="Enter category name">
         </div>
 
-
-
         <!-- Submit Button -->
         <button type="submit">Add Product</button>
+        <button type="button" id="test-api-btn" style="background-color: #f0f0f0; color: #333; margin-top: 10px;">Test API Connection</button>
     </form>
 </div>
 
@@ -249,8 +255,62 @@
     </div>
 </div>
 
+<!-- Load AdminAPI first -->
+<script src="js/admin-api.js"></script>
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
+    document.addEventListener('DOMContentLoaded', function() {
+        // Verify AdminAPI is loaded properly
+        if (typeof AdminAPI === 'undefined') {
+            console.error('CRITICAL ERROR: AdminAPI is not defined. Check that admin-api.js is loaded correctly.');
+            alert('Error loading admin interface. Please try refreshing the page.');
+            return;
+        }
+        
+        // First, test API connectivity
+        (async function checkServerStatus() {
+            try {
+                console.log('Testing API server status...');
+                const response = await fetch('/api/admin/test-connection', {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Bearer ${localStorage.getItem('adminToken')}`
+                    }
+                });
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    console.log('✅ API server is online:', data);
+                    // Add a status indicator to the page
+                    const statusDiv = document.createElement('div');
+                    statusDiv.style.padding = '10px';
+                    statusDiv.style.backgroundColor = '#e6ffe6';
+                    statusDiv.style.color = '#006600';
+                    statusDiv.style.borderRadius = '5px';
+                    statusDiv.style.margin = '10px 0';
+                    statusDiv.style.textAlign = 'center';
+                    statusDiv.innerHTML = 'Please enter a new product';
+                    document.querySelector('.form-container').prepend(statusDiv);
+                    setTimeout(() => statusDiv.style.display = 'none', 5000);
+                } else {
+                    console.error('❌ API server returned error status:', response.status);
+                    alert('Warning: API server returned error status. Product creation may not work correctly.');
+                }
+            } catch (error) {
+                console.error('❌ Could not connect to API server:', error);
+                alert('Warning: Could not connect to API server. Please check that the server is running.');
+            }
+        })();
+        
+        // Check if user is authenticated
+        if (!AdminAPI.Auth.isLoggedIn()) {
+            console.warn('User is not logged in! Redirecting to login page...');
+            window.location.href = '../Login Page.html';
+            return;
+        }
+        
+        console.log('User is authenticated. Proceeding with product addition form.');
+        
+        // Continue with form initialization
         // Handle category selection
         const categorySelect = document.getElementById('product-category');
         const otherCategoryContainer = document.getElementById('other-category-container');
@@ -296,6 +356,28 @@
         const homeButton = document.getElementById('home-button');
         const adminButton = document.getElementById('admin-button');
 
+        // Test API button handler
+        document.getElementById('test-api-btn').addEventListener('click', async function() {
+            try {
+                alert('Testing API connection...');
+                
+                // Try the general API test endpoint
+                const testResponse = await fetch('/api/admin/test-connection');
+                const testData = await testResponse.json();
+                
+                console.log('Test API response:', testData);
+                
+                if (testData.success) {
+                    alert('API is accessible! Check console for details.');
+                } else {
+                    alert('API test failed. Check console for details.');
+                }
+            } catch (error) {
+                console.error('API test error:', error);
+                alert('API test error: ' + error.message);
+            }
+        });
+
         form.addEventListener('submit', async function (event) {
             event.preventDefault();
 
@@ -326,52 +408,107 @@
                 return;
             }
 
-            // Convert FormData to an object for JSON serialization
-            const formObject = {};
-            formData.forEach((value, key) => {
-                // Skip the file input for JSON submission
-                if (key !== 'image') {
-                    formObject[key] = value;
-                }
-            });
-
-            console.log(formObject);  // Debug: Check form values
-
             try {
-                // For this example, simulating a successful response
-                // In a real application, you would send this data to your server
-                /*
-                const response = await fetch('/api/products', {
-                    method: 'POST',
-                    body: formData  // Use FormData to handle file upload
-                });
-
-                if (response.ok) {
-                    // Show confirmation page
-                } else {
-                    const responseData = await response.json();
-                    alert('Failed to add product: ' + responseData.error);
-                    return;
+                // Show loading state
+                const submitButton = form.querySelector('button[type="submit"]');
+                const originalText = submitButton.textContent;
+                submitButton.disabled = true;
+                submitButton.textContent = 'Adding Product...';
+                
+                // Log form data for debugging
+                console.log('Form data being sent:');
+                for (const [key, value] of formData.entries()) {
+                    console.log(`  ${key}: ${value instanceof File ? `File: ${value.name} (${value.size} bytes)` : value}`);
                 }
-                */
+                
+                // DIRECT API CALL INSTEAD OF USING AdminAPI
+                console.log('Making direct API call to /api/admin/products');
+                const token = localStorage.getItem('adminToken');
+                
+                // Create a clean FormData object with explicit fields
+                const cleanFormData = new FormData();
+                cleanFormData.append('name', formData.get('name'));
+                cleanFormData.append('description', formData.get('description'));
+                cleanFormData.append('price', formData.get('price'));
+                cleanFormData.append('Category', formData.get('category'));
+                
+                // Only add optional fields if they have values
+                if (formData.get('old_price')) {
+                    cleanFormData.append('old_price', formData.get('old_price'));
+                }
+                
+                if (formData.get('type')) {
+                    cleanFormData.append('type', formData.get('type'));
+                }
+                
+                // Add the image file if it exists
+                const imageFile = formData.get('image');
+                if (imageFile && imageFile.size > 0) {
+                    cleanFormData.append('image', imageFile);
+                    console.log('Adding image file to form data:', imageFile.name, 'Size:', imageFile.size, 'Type:', imageFile.type);
+                }
+                
+                // Log full cleaned FormData contents
+                console.log('Final form data being sent:');
+                for (const [key, value] of cleanFormData.entries()) {
+                    console.log(`  ${key}: ${value instanceof File ? `File: ${value.name} (${value.size} bytes, type: ${value.type})` : value}`);
+                }
+                
+                // Make the API call with explicit content type and credentials
+                console.log('Sending API request with token:', token ? 'Token exists' : 'No token');
+                const response = await fetch('/api/admin/products', {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                        // NOTE: Do NOT set Content-Type when sending FormData with files
+                    },
+                    body: cleanFormData
+                });
+                
+                // Get the raw response text first
+                const responseText = await response.text();
+                console.log('Raw API response:', responseText);
+
+                if (!response.ok) {
+                    console.error('API error:', response.status, responseText);
+                    throw new Error(`API returned ${response.status}: ${responseText || 'Unknown error'}`);
+                }
+
+                // Try to parse JSON if there's content
+                let result;
+                if (responseText && responseText.trim()) {
+                    try {
+                        result = JSON.parse(responseText);
+                        console.log('Product created successfully:', result);
+                    } catch (parseError) {
+                        console.error('JSON parse error:', parseError);
+                        throw new Error(`Invalid JSON response: ${responseText.substring(0, 100)}`);
+                    }
+                } else {
+                    console.log('Empty response received');
+                    result = { message: 'Product may have been created, but server returned empty response' };
+                }
 
                 // Show confirmation page
                 formSection.style.display = 'none';
                 confirmationPage.style.display = 'block';
-
             } catch (error) {
-                console.error('Error:', error);
-                alert('An error occurred while adding the product. Please try again.');
+                console.error('Error creating product:', error);
+                alert('An error occurred while adding the product: ' + error.message);
+                
+                // Reset button state
+                submitButton.disabled = false;
+                submitButton.textContent = originalText;
             }
         });
 
         // Navigation buttons
         homeButton.addEventListener('click', function() {
-            window.location.href = '/index.html';  // Redirect to home page
+            window.location.href = '../index.html';  // Redirect to home page
         });
 
         adminButton.addEventListener('click', function() {
-            window.location.href = '/admin/dashboard.html';  // Redirect to admin dashboard
+            window.location.href = 'admin.html';  // Redirect to admin dashboard
         });
     });
 </script>

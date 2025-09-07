@@ -1,3 +1,5 @@
+/* The above JavaScript code is implementing functionality for modals and footer links on a web page.
+Here is a summary of what the code is doing: */
 // Integrated footer and modal functionality
 document.addEventListener('DOMContentLoaded', function() {
     // ======== MODALS FUNCTIONALITY ========

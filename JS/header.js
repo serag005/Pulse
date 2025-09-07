@@ -1,3 +1,14 @@
+/**
+ * The JavaScript code provided includes functions for handling dynamic header swapping, fixing
+ * inconsistent auth state, inserting headers based on login status, creating product cards, updating
+ * cart and wishlist counts, and handling product filtering and interactions on a products page.
+ * @returns The code provided is returning a comprehensive set of functions and event listeners related
+ * to managing user authentication, updating headers based on login status, handling cart and wishlist
+ * functionality, validating phone numbers, filtering and displaying products, and updating button
+ * states for cart and wishlist items. It also includes functions for syncing cart and wishlist states,
+ * adding products to cart and wishlist, and handling category navigation. Additionally, there are
+ * functions for
+ */
 // dynamic header swapping
 
 // Function to fix inconsistent auth state
@@ -179,10 +190,10 @@ function insertHeader() {
                               <i class="fa-solid fa-angle-down"></i>
                           </div>
                           <div class="category_nav_list">
-                              <a href="#top-offers">Top 10 Offers</a>
-                              <a href="#Upper_Limb">New Arrivals</a>
-                              <a href="#Lower_Limb">Top Rated</a>
-                              <a href="#Used Items">Used Items</a>
+                               <a href="#top-offers">Top 10 Offers</a>
+                               <a href="#Upper_Limb">New Arrivals</a>
+                               <a href="#Lower_Limb">Top Rated</a>
+                               <a href="#Used Items">Used Items</a>
                           </div>
                       </div>
                       <ul class="nav_links">
@@ -519,53 +530,99 @@ function open_close_cart() {
 
 // Fetch products and attach event listeners
 if (typeof fetch !== 'undefined') {
-    fetch('/api/products')
-        .then(response => response.json())
-        .then(data => {
-
-            const addToCartButtons = document.querySelectorAll(".btn_add_cart");
-
-            addToCartButtons.forEach(button => {
-                button.addEventListener("click", (event) => {
-                    const productId = event.target.getAttribute('data-id');
-                    const selectedProduct = data.find(product => product.id == productId);
-
-                    if (selectedProduct) {
-                        addToCart(selectedProduct);
-
-                        const allMatchingButtons = document.querySelectorAll(`.btn_add_cart[data-id="${productId}"]`);
-
-                        allMatchingButtons.forEach(btn => {
-                            btn.classList.add("active");
-                            btn.innerHTML = `<i class="fa-solid fa-cart-shopping"></i> Item in cart`;
-                        });
+    // Create a global flag to track whether we've already set up cart buttons
+    window.cartButtonsInitialized = window.cartButtonsInitialized || false;
+    
+    // Only initialize once
+    if (!window.cartButtonsInitialized) {
+        console.log("Setting up cart buttons in header.js");
+        window.cartButtonsInitialized = true;
+        
+        // Create a function to safely handle cart additions
+        window.safeAddToCart = function(productId, buttonElement) {
+            // Prevent adding if already in cart (button is active)
+            if (buttonElement && buttonElement.classList.contains('active')) {
+                console.log(`Product ${productId} already in cart, skipping addition`);
+                return false;
+            }
+            
+            // Get current cart
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            
+            // Check if product already in cart
+            const existingItem = cart.find(item => item.id == productId);
+            if (existingItem) {
+                console.log(`Product ${productId} already in cart, updating quantity`);
+                existingItem.quantity = (existingItem.quantity || 1) + 1;
+                localStorage.setItem('cart', JSON.stringify(cart));
+                
+                // Update UI
+                updateCartButtonsState(productId, true);
+                updateCart();
+                return true;
+            }
+            
+            // Product not in cart, fetch and add it
+            console.log(`Fetching product ${productId} to add to cart`);
+            return fetch('/api/products')
+                .then(response => response.json())
+                .then(products => {
+                    const product = products.find(p => p.id == productId);
+                    if (!product) {
+                        console.error(`Product ${productId} not found in API results`);
+                        return false;
                     }
+                    
+                    console.log(`Adding product ${productId} to cart`);
+                    // Make sure we store the image whether it's in "image" or "img" property
+                    const productWithImage = {
+                        ...product,
+                        image: product.image || product.img,
+                        img: product.img || product.image,
+                        quantity: 1
+                    };
+                    
+                    cart.push(productWithImage);
+                    localStorage.setItem('cart', JSON.stringify(cart));
+                    
+                    // Update UI
+                    updateCartButtonsState(productId, true);
+                    updateCart();
+                    return true;
+                })
+                .catch(error => {
+                    console.error('Error adding to cart:', error);
+                    return false;
                 });
-            });
-        })
-        .catch(error => {
-            console.error('Error fetching products:', error);
-        });
-}
-
-function addToCart(product) {
-    let cart = JSON.parse(localStorage.getItem('cart')) || [];
-
-    // Make sure we store the image whether it's in "image" or "img" property
-    const productWithImage = {
-        ...product,
-        image: product.image || product.img,
-        img: product.img || product.image,
-        quantity: 1
-    };
-
-    cart.push(productWithImage);
-    localStorage.setItem('cart', JSON.stringify(cart));
-
-    updateCart();
-
-    // Update header counts immediately after updating cart
-    updateCounts();
+        };
+        
+        // Delegate event handling for cart buttons to document level
+        document.addEventListener('click', function(event) {
+            // Find closest cart button if there is one
+            const cartButton = event.target.closest('.btn_add_cart');
+            if (!cartButton) return; // Not a cart button click
+            
+            // Stop event propagation
+            event.preventDefault();
+            event.stopPropagation();
+            
+            // Check if button indicates item already in cart
+            if (cartButton.classList.contains('active')) {
+                console.log('Item already in cart, ignoring click');
+                return;
+            }
+            
+            // Get product ID and add to cart
+            const productId = cartButton.getAttribute('data-id');
+            if (!productId) {
+                console.error('No product ID found on cart button');
+                return;
+            }
+            
+            console.log(`Cart button clicked for product ${productId}`);
+            window.safeAddToCart(productId, cartButton);
+        }, true); // Use capture phase to ensure we get the event first
+    }
 }
 
 function updateCart() {
@@ -695,6 +752,12 @@ function updateCart() {
 
     // Update header counts after everything is done
     updateCounts();
+    
+    // Sync wishlist buttons with cart state
+    syncWishlistWithCart();
+    
+    // Update all cart buttons in the page
+    updateAllCartButtons();
 }
 
 function increaseQuantity(index) {
@@ -722,12 +785,15 @@ function removeFromCart(index) {
 
     // Update cart UI
     updateCart();
-
-    // Update cart buttons state
-    updateButtonsState(removedProduct.id);
-
-    // Update wishlist buttons as well
-    updateWishlistCartButtons(removedProduct.id, false);
+    
+    // If there's a productId, also update all relevant buttons
+    if (removedProduct && removedProduct.id) {
+        // Update cart buttons state
+        updateCartButtonsState(removedProduct.id, false);
+        
+        // Update wishlist buttons as well
+        updateWishlistCartButtons(removedProduct.id, false);
+    }
 }
 
 function updateWishlistCartButtons(productId, isInCart) {
@@ -744,11 +810,19 @@ function updateWishlistCartButtons(productId, isInCart) {
     });
 }
 
-function updateButtonsState(productId) {
+function updateCartButtonsState(productId, shouldBeActive = false) {
     const allMatchingButtons = document.querySelectorAll(`.btn_add_cart[data-id="${productId}"]`);
+    
+    console.log(`Updating cart button states for product ${productId}, setting to ${shouldBeActive ? 'active' : 'inactive'}`);
+    
     allMatchingButtons.forEach(button => {
-        button.classList.remove('active');
-        button.innerHTML = `<i class="fa-solid fa-cart-shopping"></i> add to cart`;
+        if (shouldBeActive) {
+            button.classList.add('active');
+            button.innerHTML = `<i class="fa-solid fa-cart-shopping"></i> Item in cart`;
+        } else {
+            button.classList.remove('active');
+            button.innerHTML = `<i class="fa-solid fa-cart-shopping"></i> Add to cart`;
+        }
     });
 }
 
@@ -936,13 +1010,34 @@ function updateWishlist() {
     addToCartButtons.forEach(button => {
         button.addEventListener('click', function() {
             const productId = this.getAttribute('data-id');
-            if (typeof window.addToCartFromWishlist === 'function') {
+            
+            // Check if the button indicates item is already in cart
+            if (this.classList.contains('in-cart')) {
+                // Item already in cart, do nothing or show a message
+                console.log(`Product ${productId} already in cart`);
+                return;
+            }
+            
+            if (window.safeAddToCart) {
+                window.safeAddToCart(productId, this);
+                this.classList.add('in-cart');
+                this.innerHTML = '<i class="fa-solid fa-cart-shopping"></i> Added to Cart';
+            } else if (typeof window.addToCartFromWishlist === 'function') {
                 window.addToCartFromWishlist(productId, this);
             } else {
                 // Fallback
                 const product = getWishlistItems().find(item => item.id == productId);
                 if (product) {
-                    addToCart(product);
+                    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+                    
+                    // Check if product is already in cart
+                    const existingItem = cart.find(item => item.id == productId);
+                    if (!existingItem) {
+                        cart.push({...product, quantity: 1});
+                        localStorage.setItem('cart', JSON.stringify(cart));
+                        updateCart();
+                    }
+                    
                     this.classList.add('in-cart');
                     this.innerHTML = '<i class="fa-solid fa-cart-shopping"></i> Added to Cart';
                 }
@@ -954,6 +1049,32 @@ function updateWishlist() {
     updateCounts();
 }
 
+// Function to update wishlist button states when cart changes
+function syncWishlistWithCart() {
+    const cart = JSON.parse(localStorage.getItem('cart')) || [];
+    const wishlistContainer = document.getElementById("wishlist_items") ||
+        document.querySelector(".items_in_wishlist");
+        
+    if (!wishlistContainer) return;
+    
+    // Get all add to cart buttons in wishlist
+    const addToCartButtons = wishlistContainer.querySelectorAll('.add_to_cart');
+    
+    // Update each button based on cart state
+    addToCartButtons.forEach(button => {
+        const productId = button.getAttribute('data-id');
+        const isInCart = cart.some(item => item.id == productId);
+        
+        if (isInCart) {
+            button.classList.add('in-cart');
+            button.innerHTML = '<i class="fa-solid fa-cart-shopping"></i> Added to Cart';
+        } else {
+            button.classList.remove('in-cart');
+            button.innerHTML = '<i class="fa-solid fa-cart-shopping"></i> Add to Cart';
+        }
+    });
+}
+
 function removeFromWishlist(index) {
     // Use favorite.js implementation if available (preferred)
     if (typeof window.removeFromWishlist === 'function' && window.removeFromWishlist !== removeFromWishlist) {
@@ -963,14 +1084,36 @@ function removeFromWishlist(index) {
 
     // Fallback implementation
     const wishlist = getWishlistItems();
-    wishlist.splice(index, 1);
-
+    const removedItem = wishlist.splice(index, 1)[0];
+    
     // Update both localStorage keys
     localStorage.setItem('wishlist', JSON.stringify(wishlist));
     localStorage.setItem('wishlistItems', JSON.stringify(wishlist));
 
     // Update UI
     updateWishlist();
+    
+    // Update the button state for the removed item
+    if (removedItem && removedItem.id) {
+        updateWishlistButtonState(removedItem.id, false);
+    }
+}
+
+// Function to update wishlist button state for a specific product
+function updateWishlistButtonState(productId, isInWishlist) {
+    const wishlistButtons = document.querySelectorAll(`.btn_add_wishlist[data-id="${productId}"]`);
+    
+    wishlistButtons.forEach(button => {
+        if (isInWishlist) {
+            button.classList.add('active');
+            const icon = button.querySelector('i');
+            if (icon) icon.className = 'fa-solid fa-heart';
+        } else {
+            button.classList.remove('active');
+            const icon = button.querySelector('i');
+            if (icon) icon.className = 'fa-regular fa-heart';
+        }
+    });
 }
 
 // Make functions globally available
@@ -1387,9 +1530,112 @@ document.addEventListener('DOMContentLoaded', function() {
             setTimeout(() => {
                 window.scrollTo({
                     top: offsetPosition,
-                    behavior: 'auto' // Smooth scrolling
+                    behavior: 'smooth' // Smooth scrolling
                 });
-            }, 10);
+            }, 100);
         }
     }
+});
+
+// Function to update all cart button states for a product
+function updateButtonStates(productId) {
+    const allMatchingButtons = document.querySelectorAll(`.btn_add_cart[data-id="${productId}"]`);
+    
+    console.log(`Updating ${allMatchingButtons.length} buttons for product ${productId}`);
+    
+    allMatchingButtons.forEach(btn => {
+        btn.classList.add('active');
+        btn.innerHTML = `<i class="fa-solid fa-cart-shopping"></i> Item in cart`;
+    });
+}
+
+// Function to update all cart buttons in the page
+function updateAllCartButtons() {
+    const cart = JSON.parse(localStorage.getItem('cart')) || [];
+    
+    // Create a set of IDs for faster lookup
+    const cartIds = new Set(cart.map(item => item.id));
+    
+    // Update all cart buttons in the page
+    document.querySelectorAll('.btn_add_cart').forEach(button => {
+        const productId = button.getAttribute('data-id');
+        
+        if (cartIds.has(Number(productId)) || cartIds.has(productId)) {
+            button.classList.add('active');
+            button.innerHTML = `<i class="fa-solid fa-cart-shopping"></i> Item in cart`;
+        } else {
+            button.classList.remove('active');
+            button.innerHTML = `<i class="fa-solid fa-cart-shopping"></i> Add to cart`;
+        }
+    });
+}
+
+function addToWishlist(product) {
+    // Use favorite.js implementation if available (preferred)
+    if (typeof window.addToWishlist === 'function' && window.addToWishlist !== addToWishlist) {
+        window.addToWishlist(product);
+        return;
+    }
+
+    // Fallback implementation
+    const wishlist = getWishlistItems();
+
+    // Check if item already exists
+    const existingItem = wishlist.find(item => item.id === product.id);
+    if (existingItem) {
+        console.log('Item already in wishlist');
+        return;
+    }
+
+    // Add new item
+    wishlist.push(product);
+    
+    // Update both localStorage keys
+    localStorage.setItem('wishlist', JSON.stringify(wishlist));
+    localStorage.setItem('wishlistItems', JSON.stringify(wishlist));
+
+    // Update UI
+    updateWishlist();
+    
+    // Update button state for the added product
+    updateWishlistButtonState(product.id, true);
+}
+
+// Function to update all wishlist buttons based on current wishlist state
+function updateAllWishlistButtons() {
+    const wishlist = getWishlistItems();
+    const wishlistItemIds = wishlist.map(item => item.id);
+    
+    // Get all wishlist buttons on the page
+    const allWishlistButtons = document.querySelectorAll('.btn_add_wishlist');
+    
+    allWishlistButtons.forEach(button => {
+        const productId = button.getAttribute('data-id');
+        const isInWishlist = wishlistItemIds.includes(productId);
+        
+        if (isInWishlist) {
+            button.classList.add('active');
+            const icon = button.querySelector('i');
+            if (icon) icon.className = 'fa-solid fa-heart';
+        } else {
+            button.classList.remove('active');
+            const icon = button.querySelector('i');
+            if (icon) icon.className = 'fa-regular fa-heart';
+        }
+    });
+}
+
+// Initialize page
+document.addEventListener('DOMContentLoaded', function () {
+    // Update all cart button states
+    updateAllCartButtons();
+    
+    // Update all wishlist button states
+    updateAllWishlistButtons();
+    
+    // Update the wishlist and cart
+    updateWishlist();
+    updateCart();
+    
+    // ... rest of initialization ...
 });

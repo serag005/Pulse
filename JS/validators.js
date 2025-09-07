@@ -1,3 +1,14 @@
+/**
+ * The provided code includes functions for input validation, coupon validation and discount
+ * calculation, order processing and storage, as well as client-side JavaScript for enhancing the
+ * checkout page.
+ * @param phone - The `phone` parameter is a string representing a phone number that needs to be
+ * validated against the Egyptian phone number format. The Egyptian phone number format should start
+ * with '01' followed by either '0', '1', '2', or '5', and then followed by 8 digits. The
+ * @returns The code provided includes various functions related to input validation, coupon validation
+ * and discount calculation, order processing and storage, as well as client-side JavaScript functions
+ * for enhancing the checkout page.
+ */
 // Input validation functions
 
 function validatePhoneNumber(phone) {

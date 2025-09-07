@@ -260,6 +260,7 @@
             cursor: pointer;
             color: #666;
             font-size: 1.2em;
+            -webkit-user-select: none;
             user-select: none;
         }
 
@@ -567,6 +568,7 @@
             <a href="help.html" class="other-link">Help Center</a>
             <a href="contact.html" class="other-link">Contact Support</a>
             <a href="about.html" class="other-link">About PULSE</a>
+            
         </div>
     </div>
 </div>
@@ -595,7 +597,7 @@
 </div>
 
 <!-- Login Success Modal -->
-<div id="login-success-modal" class="success-modal">
+<div id="login-success-modal" class="success-modal" style="display: none;">
     <div class="success-content">
         <div class="success-icon">✓</div>
         <h2 class="success-title">Login Successful!</h2>
@@ -605,12 +607,12 @@
 </div>
 
 <!-- Login Error Modal -->
-<div id="login-error-modal" class="success-modal">
+<div id="login-error-modal" class="success-modal" style="display: none;">
     <div class="success-content" style="border-top: 5px solid #ff5252;">
         <div class="success-icon" style="color: #ff5252;">✗</div>
         <h2 class="success-title" style="color: #ff5252;">Login Failed</h2>
         <p class="success-message" id="error-message-text">Unable to log in. Please check your credentials and try again.</p>
-        <button id="try-again-btn" class="continue-btn" style="background-color: #ff5252;">Try Again</button>
+        <button id="try-again-btn" class="continue-btn" style="background-color: #ff5252;">Continue</button>
     </div>
 </div>
 
@@ -668,8 +670,9 @@
     const resetEmailError = document.getElementById('reset-email-error');
     const verificationSent = document.getElementById('verification-sent');
 
-    // DOM elements for login success modal
+    // DOM elements for login success and error modals
     const loginSuccessModal = document.getElementById('login-success-modal');
+    const loginErrorModal = document.getElementById('login-error-modal');
     const continueBtn = document.getElementById('continue-btn');
     const tryAgainBtn = document.getElementById('try-again-btn');
     const errorMessageText = document.getElementById('error-message-text');
@@ -873,23 +876,25 @@
             resetEmail.value = '';
             resetEmailError.style.display = 'none';
         }
-
-        if (e.target === loginSuccessModal) {
-            loginSuccessModal.style.display = 'none';
-        }
-
+        
         if (e.target === loginErrorModal) {
             loginErrorModal.style.display = 'none';
+        }
+        
+        if (e.target === loginSuccessModal) {
+            loginSuccessModal.style.display = 'none';
         }
     });
 
     // Event handlers for modal buttons
-    continueBtn.addEventListener('click', function() {
-        window.location.href = 'index.html';
-    });
-
     tryAgainBtn.addEventListener('click', function() {
         loginErrorModal.style.display = 'none';
+    });
+    
+    continueBtn.addEventListener('click', function() {
+        loginSuccessModal.style.display = 'none';
+        // Redirect to the main page
+        window.location.href = 'index.html';
     });
 
     // Reset password form submission
@@ -921,79 +926,6 @@
         }, 1500);
     });
 
-    // Phone Login Handler
-    phoneForm.addEventListener('submit', function (e) {
-        e.preventDefault();
-
-        const phone = phoneInput.value;
-        const password = phonePassword.value;
-
-        phoneError.style.display = 'none';
-        phonePasswordError.style.display = 'none';
-
-        if (!phone) {
-            phoneError.style.display = 'block';
-            return;
-        }
-
-        if (!password) {
-            phonePasswordError.style.display = 'block';
-            return;
-        }
-
-        // Show loading state
-        phoneSignInBtn.disabled = true;
-        phoneSignInBtn.textContent = "Signing in...";
-
-        const loginData = {
-            phone,
-            password
-        };
-
-        fetch('/api/login', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(loginData)
-        })
-            .then(response => {
-                if (!response.ok) {
-                    return Promise.reject(`Error: ${response.status} - ${response.statusText}`);
-                }
-                return response.json();
-            })
-            .then(data => {
-                // Reset button
-                phoneSignInBtn.disabled = false;
-                phoneSignInBtn.textContent = "Sign in";
-                
-                if (data.success) {
-                    // Store token in localStorage for auth.js
-                    if (data.user && data.user.token) {
-                        localStorage.setItem('token', data.user.token);
-                        localStorage.setItem('user', JSON.stringify(data.user));
-                    }
-                    
-                    // Show success modal
-                    loginSuccessModal.style.display = 'flex';
-                } else {
-                    // Show error modal with message
-                    errorMessageText.textContent = data.error || "Login failed. Please check your credentials.";
-                    loginErrorModal.style.display = 'flex';
-                }
-            })
-            .catch(error => {
-                // Reset button
-                phoneSignInBtn.disabled = false;
-                phoneSignInBtn.textContent = "Sign in";
-                
-                // Show error modal
-                errorMessageText.textContent = error || "Network error. Please try again.";
-                loginErrorModal.style.display = 'flex';
-            });
-    });
-
     // Email Login Handler
     emailForm.addEventListener('submit', function (e) {
         e.preventDefault();
@@ -1023,37 +955,49 @@
             password
         };
 
-        fetch('/api/login', {
+        fetch('/api/admin/login', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(loginData)
         })
-            .then(response => {
-                if (!response.ok) {
-                    return Promise.reject(`Error: ${response.status} - ${response.statusText}`);
-                }
-                return response.json();
-            })
+            .then(response => response.json())
             .then(data => {
                 // Reset button
                 emailSignInBtn.disabled = false;
                 emailSignInBtn.textContent = "Sign in";
                 
-                if (data.success) {
-                    // Store token in localStorage for auth.js
-                    if (data.user && data.user.token) {
-                        localStorage.setItem('token', data.user.token);
-                        localStorage.setItem('user', JSON.stringify(data.user));
-                    }
+                // Hide both modals initially
+                loginSuccessModal.style.display = 'none';
+                loginErrorModal.style.display = 'none';
+                
+                if (data.token) {
+                    // Store token in localStorage
+                    localStorage.setItem('token', data.token);
                     
-                    // Show success modal
-                    loginSuccessModal.style.display = 'flex';
+                    if (data.admin) {
+                        // Admin login
+                        localStorage.setItem('adminToken', data.token);
+                        localStorage.setItem('adminUser', JSON.stringify(data.admin));
+                        window.location.href = 'admin/admin.html';
+                    } else {
+                        // Regular user login
+                        localStorage.setItem('user', JSON.stringify(data.user));
+                        
+                        // Show success modal
+                        loginSuccessModal.style.display = 'flex';
+                        
+                        // Wait 1.5 seconds then redirect
+                        setTimeout(function() {
+                        window.location.href = 'index.html';
+                        }, 1500);
+                    }
                 } else {
-                    // Show error modal with message
-                    errorMessageText.textContent = data.error || "Login failed. Please check your credentials.";
+                    // Show error modal with a friendly message
+                    errorMessageText.textContent = "Please check your credentials and try again.";
                     loginErrorModal.style.display = 'flex';
+                    emailPassword.value = '';
                 }
             })
             .catch(error => {
@@ -1061,9 +1005,102 @@
                 emailSignInBtn.disabled = false;
                 emailSignInBtn.textContent = "Sign in";
                 
-                // Show error modal
-                errorMessageText.textContent = error || "Network error. Please try again.";
+                // Hide success modal, show error modal
+                loginSuccessModal.style.display = 'none';
+                
+                // Show error modal with a friendly message
+                errorMessageText.textContent = "Please check your credentials and try again.";
                 loginErrorModal.style.display = 'flex';
+                emailPassword.value = '';
+            });
+    });
+
+    // Phone Login Handler
+    phoneForm.addEventListener('submit', function (e) {
+        e.preventDefault();
+
+        const phone = phoneInput.value;
+        const password = phonePassword.value;
+
+        phoneError.style.display = 'none';
+        phonePasswordError.style.display = 'none';
+
+        if (!phone) {
+            phoneError.style.display = 'block';
+            return;
+        }
+
+        if (!password) {
+            phonePasswordError.style.display = 'block';
+            return;
+        }
+
+        // Show loading state
+        phoneSignInBtn.disabled = true;
+        phoneSignInBtn.textContent = "Signing in...";
+
+        const loginData = {
+            phone,
+            password
+        };
+
+        fetch('/api/admin/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(loginData)
+        })
+            .then(response => response.json())
+            .then(data => {
+                // Reset button
+                phoneSignInBtn.disabled = false;
+                phoneSignInBtn.textContent = "Sign in";
+                
+                // Hide both modals initially
+                loginSuccessModal.style.display = 'none';
+                loginErrorModal.style.display = 'none';
+                
+                if (data.token) {
+                    // Store token in localStorage
+                    localStorage.setItem('token', data.token);
+                    
+                    if (data.admin) {
+                        // Admin login
+                        localStorage.setItem('adminToken', data.token);
+                        localStorage.setItem('adminUser', JSON.stringify(data.admin));
+                        window.location.href = 'admin/admin.html';
+                    } else {
+                        // Regular user login
+                        localStorage.setItem('user', JSON.stringify(data.user));
+                        
+                        // Show success modal
+                        loginSuccessModal.style.display = 'flex';
+                        
+                        // Wait 1.5 seconds then redirect
+                        setTimeout(function() {
+                        window.location.href = 'index.html';
+                        }, 1500);
+                    }
+                } else {
+                    // Show error modal with a friendly message
+                    errorMessageText.textContent = "Please check your credentials and try again.";
+                    loginErrorModal.style.display = 'flex';
+                    phonePassword.value = '';
+                }
+            })
+            .catch(error => {
+                // Reset button
+                phoneSignInBtn.disabled = false;
+                phoneSignInBtn.textContent = "Sign in";
+                
+                // Hide success modal, show error modal
+                loginSuccessModal.style.display = 'none';
+                
+                // Show error modal with a friendly message
+                errorMessageText.textContent = "Please check your credentials and try again.";
+                loginErrorModal.style.display = 'flex';
+                phonePassword.value = '';
             });
     });
 

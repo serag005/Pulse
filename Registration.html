@@ -114,6 +114,7 @@
             color: #fff;
             font-size: 1em;
             cursor: pointer;
+            -webkit-user-select: none;
             user-select: none;
             transition: background-color 0.3s;
         }
@@ -239,10 +240,11 @@
             position: absolute;
             right: 15px;
             top: 50%;
-            transform: translateY(-50%);
+            transform: translateY(-93%);
             cursor: pointer;
             color: #666;
             font-size: 1.2em;
+            -webkit-user-select: none;
             user-select: none;
         }
 
@@ -325,7 +327,7 @@
     <h1>Registration Form</h1>
     <p>Please fill out this form with the required information</p>
 
-    <form id="registration-form">
+    <form id="registration-form" enctype="multipart/form-data">
         <div class="section-title">Basic Information</div>
 
         <!-- First Name - UPDATED TO LETTERS ONLY -->
@@ -428,7 +430,7 @@
         <!-- Terms and Conditions -->
         <div class="checkbox-container">
             <input type="checkbox" id="terms" name="terms" required>
-            <label for="terms">I accept <a href="#">terms and conditions</a></label>
+            <label for="terms">I accept <a href="#" id="terms-link">terms and conditions</a></label>
         </div>
 
         <!-- Submit Button -->
@@ -443,16 +445,124 @@
     <p>You will be redirected to the login page shortly.</p>
 </div>
 
+<!-- Terms and Conditions Modal -->
+<div id="terms-modal" class="modal" style="display: none;">
+    <div class="modal-content" style="max-width: 800px; text-align: left; padding: 30px; border-radius: 15px; max-height: 80vh; overflow-y: auto;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+            <h3 style="color: #00bcd4; margin: 0;">Terms & Conditions</h3>
+            <span id="close-terms-modal" style="cursor: pointer; font-size: 24px; color: #888;">&times;</span>
+        </div>
+        
+        <div style="margin-bottom: 20px;">
+            <h4>1. Introduction</h4>
+            <p>Welcome to PULSE. These Terms and Conditions govern your use of our website and services. By accessing or using PULSE, you agree to be bound by these Terms. If you disagree with any part of these terms, you may not access our website or use our services.</p>
+            <p>PULSE is an e-commerce platform specializing in prosthetics and assistive devices for individuals with disabilities, combined with charitable initiatives to support the differently-abled community.</p>
+        </div>
+        
+        <div style="margin-bottom: 20px;">
+            <h4>2. Definitions</h4>
+            <p>Throughout these Terms, the following definitions apply:</p>
+            <ul>
+                <li><strong>"PULSE"</strong>, <strong>"we"</strong>, <strong>"us"</strong>, or <strong>"our"</strong> refers to PULSE, its owners, directors, employees, and affiliates.</li>
+                <li><strong>"User"</strong>, <strong>"you"</strong>, or <strong>"your"</strong> refers to any individual or entity that accesses or uses our Website or Services.</li>
+                <li><strong>"Services"</strong> refers to prosthetics, assistive devices, support services, and charitable initiatives provided by PULSE.</li>
+                <li><strong>"Website"</strong> refers to the PULSE website, including all content, services, and products available at or through the website.</li>
+                <li><strong>"Products"</strong> refers to prosthetics, assistive devices, and related items sold through our platform.</li>
+            </ul>
+        </div>
+        
+        <div style="margin-bottom: 20px;">
+            <h4>3. Account Registration</h4>
+            <p>To access certain features of our Website, you must register for an account. You agree to provide accurate, current, and complete information during the registration process and to update such information to keep it accurate, current, and complete.</p>
+            <p>You are responsible for safeguarding your account credentials and for any activities or actions under your account. PULSE will not be liable for any losses or damages arising from your failure to comply with these obligations.</p>
+            <p>You must be at least 18 years old to create an account. By creating an account, you represent and warrant that you are 18 years of age or older.</p>
+        </div>
+        
+        <div style="margin-bottom: 20px;">
+            <h4>4. E-Commerce Terms</h4>
+            <p>By placing an order through our Website, you affirm that you are entering into a legally binding agreement with PULSE.</p>
+            <ul>
+                <li><strong>Product Descriptions:</strong> We strive to describe our products as accurately as possible. However, we do not warrant that product descriptions or other content on the Website are accurate, complete, reliable, current, or error-free.</li>
+                <li><strong>Pricing:</strong> All prices are shown in the applicable currency and are subject to change without notice. We reserve the right to correct any pricing errors on our Website.</li>
+                <li><strong>Payment:</strong> We accept various payment methods as indicated during the checkout process. All payments are processed securely through our payment processors.</li>
+                <li><strong>Shipping and Delivery:</strong> Delivery times vary depending on your location and the product ordered. Custom prosthetics may require additional time for manufacturing.</li>
+                <li><strong>Returns and Refunds:</strong> For standard products, we offer a 30-day return policy. Custom prosthetics may have different return policies as specified at the time of purchase.</li>
+            </ul>
+        </div>
+        
+        <div style="margin-bottom: 20px;">
+            <h4>5. Medical Disclaimer</h4>
+            <p>The information provided on our Website is for general informational purposes only and is not intended as a substitute for professional medical advice. Always seek the advice of your physician or other qualified health provider with any questions you may have regarding your medical condition or treatment.</p>
+            <p>Our prosthetics and assistive devices should be used under appropriate medical supervision. Proper fitting and adjustment by qualified professionals are essential for safety and effectiveness.</p>
+        </div>
+        
+        <div style="margin-bottom: 20px;">
+            <h4>6. Charitable Initiatives and Volunteering</h4>
+            <p>PULSE facilitates charitable initiatives and volunteer opportunities to support individuals with disabilities:</p>
+            <ul>
+                <li><strong>Donations:</strong> Financial contributions made through our platform are used to provide prosthetics and assistive devices to those in need. A detailed breakdown of how donations are utilized is available upon request.</li>
+                <li><strong>Volunteering:</strong> By registering as a volunteer, you agree to abide by our volunteer code of conduct, which will be provided separately.</li>
+                <li><strong>Sponsorships:</strong> Sponsors agree to the specific terms outlined in their sponsorship agreements.</li>
+            </ul>
+            <p>PULSE reserves the right to decline donations, volunteer services, or sponsorships at our discretion.</p>
+        </div>
+        
+        <div style="margin-bottom: 20px;">
+            <h4>7. Privacy Policy</h4>
+            <p>Your use of our Website is also governed by our Privacy Policy, which is incorporated into these Terms by reference.</p>
+        </div>
+        
+        <div style="margin-bottom: 20px;">
+            <h4>8. Intellectual Property</h4>
+            <p>All content on our Website, including text, graphics, logos, images, audio clips, digital downloads, and data compilations, is the property of PULSE or its content suppliers and is protected by international copyright laws.</p>
+            <p>You may not reproduce, duplicate, copy, sell, resell, or exploit any portion of our Website without express written permission from PULSE.</p>
+        </div>
+        
+        <div style="margin-bottom: 20px;">
+            <h4>9. Limitation of Liability</h4>
+            <p>To the fullest extent permitted by applicable law, PULSE shall not be liable for any indirect, incidental, special, consequential, or punitive damages resulting from your use of or inability to use our Website or Services.</p>
+        </div>
+        
+        <div style="margin-bottom: 20px;">
+            <h4>10. Governing Law</h4>
+            <p>These Terms shall be governed by and construed in accordance with the laws of Egypt, without regard to its conflict of law principles.</p>
+        </div>
+        
+        <div style="margin-bottom: 20px;">
+            <h4>11. Changes to Terms</h4>
+            <p>We reserve the right to modify these Terms at any time. Your continued use of our Website after any changes indicates your acceptance of the modified Terms.</p>
+        </div>
+        
+        <div style="margin-bottom: 20px;">
+            <h4>12. Contact Information</h4>
+            <p>If you have any questions about these Terms, please contact us at:</p>
+            <p>Email: support@pulse-prosthetics.com<br>
+            Phone: +1-800-PULSE-HELP<br>
+            Address: PULSE Headquarters, 123 Health Avenue, Wellness City, 10001</p>
+        </div>
+        
+        <div style="margin-bottom: 20px;">
+            <h4>13. Acknowledgement</h4>
+            <p>By using our Website or Services, you acknowledge that you have read these Terms and agree to be bound by them.</p>
+            <p>Last updated: April 11, 2025</p>
+        </div>
+        
+        <button id="accept-terms-btn" style="background-color: #00bcd4; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; margin-top: 15px; width: 100%;">
+            Accept Terms
+        </button>
+    </div>
+</div>
+
 <!-- Countdown Modal -->
 <div id="countdown-modal" class="modal" style="display: none;">
-    <div class="modal-content" style="max-width: 400px; text-align: center; padding: 30px; border-radius: 15px;">
-        <h3 style="color: #00bcd4; margin-top: 0;">Processing Registration...</h3>
-        <div style="margin: 20px auto; width: 60px; height: 60px; border: 5px solid #f3f3f3; border-top: 5px solid #00bcd4; border-radius: 50%; animation: spin 2s linear infinite;"></div>
-        <p>Redirecting to login page in <span id="countdown-seconds">3</span> seconds...</p>
-        <div style="width: 100%; background-color: #f0f0f0; height: 6px; border-radius: 3px; margin: 20px 0;">
-            <div id="countdown-progress" style="width: 100%; background-color: #00bcd4; height: 6px; border-radius: 3px; transition: width 1s linear;"></div>
+    <div class="modal-content" style="max-width: 400px; text-align: center; padding: 40px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2); background-color: #fff; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
+        <h3 style="color: #00bcd4; margin-top: 0; font-size: 1.8em;">Registration Successful!</h3>
+        <div style="margin: 25px auto; width: 70px; height: 70px; border: 5px solid #f3f3f3; border-top: 5px solid #00bcd4; border-radius: 50%; animation: spin 1.5s linear infinite;"></div>
+        <p style="font-size: 1.2em; color: #333;">Redirecting to login page in <span id="countdown-seconds" style="font-weight: bold; color: #00bcd4;">3</span> seconds...</p>
+        <div style="width: 100%; background-color: #f0f0f0; height: 8px; border-radius: 4px; margin: 25px 0;">
+            <div id="countdown-progress" style="width: 100%; background-color: #00bcd4; height: 8px; border-radius: 4px; transition: width 1s linear;"></div>
         </div>
-        <button id="redirect-now-btn" style="background-color: #00bcd4; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer;">
+        <button id="redirect-now-btn" style="background-color: #00bcd4; color: white; border: none; padding: 12px 25px; border-radius: 5px; cursor: pointer; font-size: 1.1em; font-weight: bold; transition: background-color 0.3s;">
             Go to Login Now
         </button>
     </div>
@@ -668,23 +778,21 @@
             formSection.style.display = 'none';
             confirmationPage.style.display = 'block';
 
+            // Create FormData object directly from the form
             const formData = new FormData(form);
-            const formObject = {};
-            formData.forEach((value, key) => {
-                formObject[key] = value;
-            });
-
-            console.log(formObject);  // 🔍 Debug: تأكد من أن القيم في formObject تحتوي على البيانات الصحيحة.
-
-            const jsonData = JSON.stringify(formObject);
+            
+            // Log the form data for debugging
+            console.log("Form data entries:");
+            for (let pair of formData.entries()) {
+                console.log(pair[0], pair[1]);
+            }
 
             try {
-                const response = await fetch('/api/register', {
+                const response = await fetch('http://localhost:3019/api/register', {
                     method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: jsonData
+                    body: formData // Send FormData directly instead of JSON
+                    // Don't set Content-Type header, browser will set it with boundary for multipart/form-data
                 });
-
 
                 const contentType = response.headers.get("content-type");
                 if (contentType && contentType.includes("application/json")) {
@@ -698,7 +806,7 @@
                         const countdownProgress = document.getElementById('countdown-progress');
                         const redirectNowBtn = document.getElementById('redirect-now-btn');
 
-                        countdownModal.style.display = 'block';
+                        countdownModal.style.display = 'flex';
                         let secondsLeft = 3;
 
                         // Redirect immediately if button is clicked
@@ -772,6 +880,59 @@
                 });
             }
         });
+
+        // Terms and Conditions Modal
+        const termsLink = document.getElementById('terms-link');
+        const termsModal = document.getElementById('terms-modal');
+        const closeTermsModal = document.getElementById('close-terms-modal');
+        const acceptTermsBtn = document.getElementById('accept-terms-btn');
+        const termsCheckbox = document.getElementById('terms');
+
+        termsLink.addEventListener('click', function(e) {
+            e.preventDefault();
+            termsModal.style.display = 'flex';
+        });
+
+        closeTermsModal.addEventListener('click', function() {
+            termsModal.style.display = 'none';
+        });
+
+        acceptTermsBtn.addEventListener('click', function() {
+            termsCheckbox.checked = true;
+            termsModal.style.display = 'none';
+        });
+
+        // Close modal when clicking outside
+        window.addEventListener('click', function(e) {
+            if (e.target === termsModal) {
+                termsModal.style.display = 'none';
+            }
+        });
+
+        const redirectNowBtn = document.getElementById('redirect-now-btn');
+
+        redirectNowBtn.addEventListener('click', function() {
+            window.location.href = 'Login Page.html';
+        });
+        
+        // Add hover effect to redirect button
+        redirectNowBtn.addEventListener('mouseover', function() {
+            this.style.backgroundColor = '#008ba3';
+        });
+        
+        redirectNowBtn.addEventListener('mouseout', function() {
+            this.style.backgroundColor = '#00bcd4';
+        });
+
+        const countdownInterval = setInterval(() => {
+            countdownSeconds.textContent = secondsLeft;
+            countdownProgress.style.width = (secondsLeft / 3 * 100) + '%';
+
+            if (secondsLeft <= 0) {
+                clearInterval(countdownInterval);
+                window.location.href = 'Login Page.html';
+            }
+        }, 1000);
     });
 </script>
 </body>

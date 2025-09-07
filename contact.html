@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+node <!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -111,8 +111,8 @@
             <h4>Find It Fast</h4>
 
             <div class="links">
-                <a href="#used_items"><i class="fa-solid fa-caret-right"></i> Used Items </a>
-                <a href="#upper_Limb"><i class="fa-solid fa-caret-right"></i> Upper Limb</a>
+                <a href="#Used Items"><i class="fa-solid fa-caret-right"></i> Used Items </a>
+                <a href="#Upper_Limb"><i class="fa-solid fa-caret-right"></i> Upper Limb</a>
                 <a href="#Lower_Limb"><i class="fa-solid fa-caret-right"></i> Lower Limb</a>
                 <a href="#Accessories"><i class="fa-solid fa-caret-right"></i> Accessories</a>
             </div>
@@ -860,7 +860,7 @@
 
             const formData = { name, email, message };
 
-            fetch('http://localhost:3010/contact', {
+            fetch('http://localhost:3019/api/contact', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -871,6 +871,10 @@
                 .then(data => {
                     console.log(data);
                     alert('Message sent successfully!');
+                    // Clear form fields after successful submission
+                    document.querySelector('input[name="name"]').value = '';
+                    document.querySelector('input[name="email"]').value = '';
+                    document.querySelector('textarea[name="message"]').value = '';
                 })
                 .catch(error => {
                     console.error('Error:', error);

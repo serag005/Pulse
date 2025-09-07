@@ -1,3 +1,10 @@
+/**
+ * This JavaScript file defines routes for managing a user's shopping cart in a Node.js application
+ * using Express and MySQL.
+ * @returns The code provided is a Node.js Express router for handling cart-related operations in a web
+ * application. It includes routes for getting cart items for a user, syncing cart items, adding items
+ * to the cart, updating cart item quantity, removing items from the cart, and clearing the cart.
+ */
 const express = require('express');
 const router = express.Router();
 const mysql = require('mysql2');

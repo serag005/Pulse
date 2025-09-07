@@ -1,3 +1,14 @@
+/**
+ * The JavaScript code provided includes functions to handle user authentication, load profile data,
+ * display order history, set up form submissions, validate profile info fields, and upload profile
+ * pictures with error handling and debug information.
+ * @returns The code provided is a JavaScript code snippet that includes functions to handle profile
+ * data loading, order history loading, form submissions, profile info validation, photo upload
+ * functionality, authentication testing, and error handling for database connection issues. The main
+ * function being returned is the `document.addEventListener('DOMContentLoaded', function() { ... });`
+ * function, which sets up event listeners and initiates various actions based on the page content
+ * being
+ */
 document.addEventListener('DOMContentLoaded', function() {
   // Test authentication status first
   testAuthentication();
@@ -20,6 +31,9 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Setup photo upload functionality
     setupPhotoUpload();
+    
+    // Setup real-time validation for profile info fields
+    setupProfileInfoValidation();
   }
 });
 
@@ -88,10 +102,7 @@ function loadProfileData() {
         bio: ['bio', 'biography', 'about', 'description'],
         birthDate: ['birthDate', 'birth_date', 'dateOfBirth', 'date_of_birth', 'dob'],
         phone: ['phone', 'phoneNumber', 'phone_number', 'mobile', 'cellphone'],
-        address: ['address', 'streetAddress', 'street_address', 'location'],
-        twitter: ['twitter', 'twitterHandle', 'twitter_handle'],
-        facebook: ['facebook', 'facebookProfile', 'facebook_profile'],
-        instagram: ['instagram', 'instaHandle', 'insta_handle']
+        address: ['address', 'streetAddress', 'street_address', 'location']
       };
       
       // For each form field, try all possible database field names
@@ -215,10 +226,7 @@ function getInputSelector(fieldName) {
     bio: '[placeholder="Write something about yourself..."]',
     birthDate: 'input[type="date"]',
     phone: '[placeholder="e.g. +1 234 567 8900"]',
-    address: '[placeholder="Address"]',
-    twitter: '[placeholder="https://twitter.com/yourhandle"]',
-    facebook: '[placeholder="https://facebook.com/yourprofile"]',
-    instagram: '[placeholder="https://instagram.com/yourprofile"]'
+    address: '[placeholder="Address"]'
   };
   
   return selectors[fieldName] || `[name="${fieldName}"]`;
@@ -503,181 +511,295 @@ function getStatusBadgeClass(status) {
 // Function to setup form submissions
 function setupFormSubmissions() {
   // Save button event listener
-  const saveButton = document.querySelector('.btn-primary');
-  if (saveButton) {
+  const saveButtons = document.querySelectorAll('.btn-primary');
+  saveButtons.forEach(saveButton => {
     saveButton.addEventListener('click', function() {
+      // Add loading state to button
+      const originalText = this.innerHTML;
+      this.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Saving...';
+      this.disabled = true;
+
       const activeTab = document.querySelector('.tab-pane.active');
-      if (!activeTab) return;
+      if (!activeTab) {
+        showAlert('error', 'No active tab found');
+        this.innerHTML = originalText;
+        this.disabled = false;
+        return;
+      }
       
       const tabId = activeTab.id;
+      let updatePromise;
       
       switch (tabId) {
         case 'account-general':
-          updateGeneralInfo();
+          updatePromise = updateGeneralInfo();
           break;
         case 'account-password':
-          updatePassword();
+          updatePromise = updatePassword();
           break;
         case 'account-info':
-          updateProfileInfo();
+          updatePromise = updateProfileInfo();
           break;
-        case 'account-social':
-          updateSocialLinks();
-          break;
+        default:
+          showAlert('error', 'Unknown tab type');
+          this.innerHTML = originalText;
+          this.disabled = false;
+          return;
       }
+
+      // Handle the update promise
+      updatePromise
+        .then(() => {
+          showAlert('success', 'Changes saved successfully');
+          // Reload profile data to ensure UI is in sync
+          loadProfileData();
+        })
+        .catch(error => {
+          showAlert('error', error.message || 'Failed to save changes');
+        })
+        .finally(() => {
+          // Reset button state
+          this.innerHTML = originalText;
+          this.disabled = false;
+        });
     });
-  }
+  });
 }
 
 // Function to update general profile information
 function updateGeneralInfo() {
-  const firstNameInput = document.querySelector('[placeholder="Enter First Name"]');
-  const lastNameInput = document.querySelector('[placeholder="Enter Last Name"]');
-  const emailInput = document.querySelector('[placeholder="Enter your email"]');
-  
-  if (!firstNameInput || !lastNameInput || !emailInput) {
-    showAlert('error', 'Form elements not found');
-    return;
-  }
-  
-  const firstName = firstNameInput.value;
-  const lastName = lastNameInput.value;
-  const email = emailInput.value;
-  
-  if (!firstName || !lastName || !email) {
-    showAlert('error', 'Please fill in all required fields');
-    return;
-  }
-  
-  const data = { firstName, lastName, email };
-  
-  fetch('/api/profile/update-general', {
-    method: 'POST',
-    headers: getAuthHeaders(),
-    body: JSON.stringify(data)
-  })
-  .then(response => {
-    if (!response.ok) {
-      return response.json().then(data => {
-        throw new Error(data.message || 'Failed to update profile');
-      });
+  return new Promise((resolve, reject) => {
+    const firstNameInput = document.querySelector('[placeholder="Enter First Name"]');
+    const lastNameInput = document.querySelector('[placeholder="Enter Last Name"]');
+    const emailInput = document.querySelector('[placeholder="Enter your email"]');
+    
+    if (!firstNameInput || !lastNameInput || !emailInput) {
+      reject(new Error('Form elements not found'));
+      return;
     }
-    return response.json();
-  })
-  .then(result => {
-    showAlert('success', result.message || 'Profile updated successfully');
-  })
-  .catch(error => {
-    console.error('Error updating profile:', error);
-    showAlert('error', error.message || 'Failed to update profile');
+    
+    const firstName = firstNameInput.value.trim();
+    const lastName = lastNameInput.value.trim();
+    const email = emailInput.value.trim();
+    
+    if (!firstName || !lastName || !email) {
+      reject(new Error('Please fill in all required fields'));
+      return;
+    }
+    
+    // Validate email format
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    if (!emailRegex.test(email)) {
+      reject(new Error('Please enter a valid email address'));
+      return;
+    }
+    
+    const data = { firstName, lastName, email };
+    
+    fetch('/api/profile/update-general', {
+      method: 'POST',
+      headers: getAuthHeaders(),
+      body: JSON.stringify(data)
+    })
+    .then(response => {
+      if (!response.ok) {
+        return response.json().then(data => {
+          throw new Error(data.message || 'Failed to update profile');
+        });
+      }
+      return response.json();
+    })
+    .then(result => {
+      resolve(result);
+    })
+    .catch(error => {
+      reject(error);
+    });
   });
 }
 
 // Function to update password
 function updatePassword() {
-  const currentPassword = document.querySelector('[label="Current password"]').value;
-  const newPassword = document.querySelector('[label="New password"]').value;
-  const confirmPassword = document.querySelector('[label="Repeat new password"]').value;
-  
-  if (!currentPassword || !newPassword || !confirmPassword) {
-    showAlert('error', 'Please fill in all password fields');
-    return;
-  }
-  
-  if (newPassword !== confirmPassword) {
-    showAlert('error', 'New passwords do not match');
-    return;
-  }
-  
-  const data = { currentPassword, newPassword, confirmPassword };
-  
-  fetch('/api/profile/password', {
-    method: 'PUT',
-    headers: getAuthHeaders(),
-    body: JSON.stringify(data)
-  })
-  .then(response => {
-    if (!response.ok) {
-      return response.json().then(data => {
-        throw new Error(data.message || 'Failed to update password');
-      });
+  return new Promise((resolve, reject) => {
+    const currentPassword = document.querySelector('[label="Current password"]').value;
+    const newPassword = document.querySelector('[label="New password"]').value;
+    const confirmPassword = document.querySelector('[label="Repeat new password"]').value;
+    
+    if (!currentPassword || !newPassword || !confirmPassword) {
+      reject(new Error('Please fill in all password fields'));
+      return;
     }
-    return response.json();
-  })
-  .then(result => {
-    showAlert('success', result.message || 'Password updated successfully');
-    // Clear password fields
-    document.querySelector('[label="Current password"]').value = '';
-    document.querySelector('[label="New password"]').value = '';
-    document.querySelector('[label="Repeat new password"]').value = '';
-  })
-  .catch(error => {
-    console.error('Error updating password:', error);
-    showAlert('error', error.message || 'Failed to update password');
+    
+    if (newPassword !== confirmPassword) {
+      reject(new Error('New passwords do not match'));
+      return;
+    }
+    
+    const data = { currentPassword, newPassword, confirmPassword };
+    
+    fetch('/api/profile/password', {
+      method: 'PUT',
+      headers: getAuthHeaders(),
+      body: JSON.stringify(data)
+    })
+    .then(response => {
+      if (!response.ok) {
+        return response.json().then(data => {
+          throw new Error(data.message || 'Failed to update password');
+        });
+      }
+      return response.json();
+    })
+    .then(result => {
+      // Clear password fields
+      document.querySelector('[label="Current password"]').value = '';
+      document.querySelector('[label="New password"]').value = '';
+      document.querySelector('[label="Repeat new password"]').value = '';
+      resolve(result);
+    })
+    .catch(error => {
+      reject(error);
+    });
   });
 }
 
 // Function to update profile information
 function updateProfileInfo() {
-  const bio = document.querySelector('[placeholder="Write something about yourself..."]').value;
-  const birthDate = document.querySelector('input[type="date"]').value;
-  const countrySelect = document.querySelector('select.form-control');
-  const country = countrySelect.options[countrySelect.selectedIndex].text;
-  const phone = document.querySelector('[placeholder="e.g. +1 234 567 8900"]').value;
-  const address = document.querySelector('[placeholder="Address"]').value;
-  
-  const data = { bio, birthDate, country, phone, address };
-  
-  fetch('/api/profile/info', {
-    method: 'PUT',
-    headers: getAuthHeaders(),
-    body: JSON.stringify(data)
-  })
-  .then(response => {
-    if (!response.ok) {
-      return response.json().then(data => {
-        throw new Error(data.message || 'Failed to update profile info');
-      });
+  return new Promise((resolve, reject) => {
+    // Get all form fields
+    const bio = document.querySelector('[placeholder="Write something about yourself..."]')?.value.trim() || '';
+    const birthDate = document.querySelector('input[type="date"]')?.value;
+    const phone = document.querySelector('[placeholder="e.g. +1 234 567 8900"]')?.value.trim();
+    const address = document.querySelector('[placeholder="Address"]')?.value.trim();
+    
+    // Validate required fields
+    if (!birthDate) {
+      reject(new Error('Birth date is required'));
+      return;
     }
-    return response.json();
-  })
-  .then(result => {
-    showAlert('success', result.message || 'Profile info updated successfully');
-  })
-  .catch(error => {
-    console.error('Error updating profile info:', error);
-    showAlert('error', error.message || 'Failed to update profile info');
+    
+    if (!phone) {
+      reject(new Error('Phone number is required'));
+      return;
+    }
+    
+    if (!address) {
+      reject(new Error('Address is required'));
+      return;
+    }
+    
+    // Validate phone number format
+    const phoneRegex = /^\+?[\d\s-]{10,}$/;
+    if (!phoneRegex.test(phone)) {
+      reject(new Error('Please enter a valid phone number'));
+      return;
+    }
+    
+    // Prepare data for API
+    const data = {
+      bio,
+      birthDate,
+      phone,
+      address
+    };
+    
+    // Show loading state
+    const saveButton = document.querySelector('#account-info .btn-primary');
+    const originalText = saveButton ? saveButton.innerHTML : '';
+    if (saveButton) {
+      saveButton.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Saving...';
+      saveButton.disabled = true;
+    }
+    
+    // Send update request
+    fetch('/api/profile/info', {
+      method: 'PUT',
+      headers: {
+        ...getAuthHeaders(),
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    })
+    .then(response => {
+      if (!response.ok) {
+        return response.json().then(data => {
+          throw new Error(data.message || 'Failed to update profile info');
+        });
+      }
+      return response.json();
+    })
+    .then(result => {
+      // Show success message
+      showAlert('success', 'Profile information updated successfully');
+      
+      // Refresh the profile data to show updated values
+      loadProfileData();
+      
+      resolve(result);
+    })
+    .catch(error => {
+      // Show error message
+      showAlert('error', error.message || 'Failed to update profile info');
+      reject(error);
+    })
+    .finally(() => {
+      // Reset button state
+      if (saveButton) {
+        saveButton.innerHTML = originalText;
+        saveButton.disabled = false;
+      }
+    });
   });
 }
 
-// Function to update social links
-function updateSocialLinks() {
-  const twitter = document.querySelector('[placeholder="https://twitter.com/yourhandle"]').value;
-  const facebook = document.querySelector('[placeholder="https://facebook.com/yourprofile"]').value;
-  const instagram = document.querySelector('[placeholder="https://instagram.com/yourprofile"]').value;
+// Add real-time validation for profile info fields
+function setupProfileInfoValidation() {
+  const phoneInput = document.querySelector('[placeholder="e.g. +1 234 567 8900"]');
+  const birthDateInput = document.querySelector('input[type="date"]');
+  const addressInput = document.querySelector('[placeholder="Address"]');
+  const emailInput = document.querySelector('[placeholder="Enter your email"]');
   
-  const data = { twitter, facebook, instagram };
+  if (emailInput) {
+    emailInput.addEventListener('input', function() {
+      const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+      if (!emailRegex.test(this.value.trim())) {
+        this.classList.add('is-invalid');
+      } else {
+        this.classList.remove('is-invalid');
+      }
+    });
+  }
   
-  fetch('/api/profile/social', {
-    method: 'PUT',
-    headers: getAuthHeaders(),
-    body: JSON.stringify(data)
-  })
-  .then(response => {
-    if (!response.ok) {
-      return response.json().then(data => {
-        throw new Error(data.message || 'Failed to update social links');
-      });
-    }
-    return response.json();
-  })
-  .then(result => {
-    showAlert('success', result.message || 'Social links updated successfully');
-  })
-  .catch(error => {
-    console.error('Error updating social links:', error);
-    showAlert('error', error.message || 'Failed to update social links');
-  });
+  if (phoneInput) {
+    phoneInput.addEventListener('input', function() {
+      const phoneRegex = /^\+?[\d\s-]{10,}$/;
+      if (!phoneRegex.test(this.value.trim())) {
+        this.classList.add('is-invalid');
+      } else {
+        this.classList.remove('is-invalid');
+      }
+    });
+  }
+  
+  if (birthDateInput) {
+    birthDateInput.addEventListener('change', function() {
+      if (!this.value) {
+        this.classList.add('is-invalid');
+      } else {
+        this.classList.remove('is-invalid');
+      }
+    });
+  }
+  
+  if (addressInput) {
+    addressInput.addEventListener('input', function() {
+      if (!this.value.trim()) {
+        this.classList.add('is-invalid');
+      } else {
+        this.classList.remove('is-invalid');
+      }
+    });
+  }
 }
 
 // Function to setup photo upload functionality
@@ -866,7 +988,7 @@ function displayNotLoggedInMessage() {
   if (generalTab) {
     const messageDiv = document.createElement('div');
     messageDiv.className = 'alert alert-warning mt-3';
-    messageDiv.innerHTML = 'Please <a href="login.html">log in</a> to view and edit your profile.';
+    messageDiv.innerHTML = 'Please <a href="../Login Page.html">log in</a> to view and edit your profile.';
     generalTab.prepend(messageDiv);
   }
 }

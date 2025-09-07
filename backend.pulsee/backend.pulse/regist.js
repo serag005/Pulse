@@ -1,3 +1,5 @@
+/* This code snippet is a Node.js module that serves as a registration router for an Express
+application. Here is a breakdown of what it does: */
 // regist.js – Registration router module
 
 const express  = require('express');
@@ -54,7 +56,7 @@ const upload = multer({
   storage: storage,
   fileFilter: fileFilter,
   limits: {
-    fileSize: 800 * 1024 // 800KB max size
+    fileSize: 4096 * 8096 // 800KB max size
   }
 });
 

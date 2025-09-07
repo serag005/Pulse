@@ -1,3 +1,6 @@
+/* This code snippet is a JavaScript file named `contact.js` that has been converted into an Express
+Router module. It sets up a route to handle POST requests for a contact form submission. Here's a
+breakdown of what the code does: */
 // contact.js
 // Converted to Express Router module
 
@@ -27,7 +30,7 @@ connection.connect(err => {
   }
 });
 
-// POST /api/contact
+// POST /api/contact - This route will be mounted at /api/contact in the main server file
 router.post('/', (req, res) => {
   const { name, email, message } = req.body;
 

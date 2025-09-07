@@ -1,3 +1,5 @@
+/* The above code is a JavaScript file that defines an Express Router module for handling
+supplier-related routes. Here is a summary of what the code does: */
 // suppliers.js
 // Converted to Express Router module
 

@@ -1,3 +1,5 @@
+/* This code snippet is a Node.js module that handles the login functionality for a web application
+using Express.js as the server framework. Here's a breakdown of what the code does: */
 // login.js - Login router module
 
 const express = require('express');

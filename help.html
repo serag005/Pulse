@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Help Center - PULSE</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(to right, #e0f7fa, #ffffff);
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 800px;
+            margin: 40px auto;
+            background-color: #ffffff;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #005b66;
+            text-align: center;
+            margin-top: 0;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+        }
+
+        h2 {
+            color: #007f84;
+            font-size: 1.8em;
+            margin-top: 30px;
+            margin-bottom: 20px;
+        }
+
+        h3 {
+            color: #00bcd4;
+            font-size: 1.4em;
+            margin-top: 25px;
+            margin-bottom: 15px;
+        }
+
+        h4 {
+            color: #333;
+            font-size: 1.2em;
+            margin-top: 15px;
+            margin-bottom: 10px;
+        }
+
+        p {
+            font-size: 1.1em;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        .help-section {
+            margin-bottom: 40px;
+            border-bottom: 1px solid #e0e0e0;
+            padding-bottom: 20px;
+        }
+
+        .help-section:last-child {
+            border-bottom: none;
+        }
+
+        .help-item {
+            margin-bottom: 25px;
+        }
+
+        .back-btn {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 12px 20px;
+            background-color: #00bcd4;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+
+        .back-btn:hover {
+            background-color: #008ba3;
+        }
+
+        .contact-info {
+            background-color: #f5f5f5;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+
+        .contact-info p {
+            margin: 10px 0;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+                margin: 20px auto;
+            }
+
+            h1 {
+                font-size: 2em;
+            }
+
+            h2 {
+                font-size: 1.6em;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Help Center</h1>
+        
+        <div class="help-section">
+            <h2>Getting Started</h2>
+            <div class="help-item">
+                <h3>Creating an Account</h3>
+                <p>Click on "Log In" in the top right corner of our website and select "Create Account." Fill in your information and follow the verification steps.</p>
+            </div>
+            <div class="help-item">
+                <h3>Browsing Products</h3>
+                <p>Navigate through our categories or use the search bar to find specific products. Filter results by category, price, or other attributes.</p>
+            </div>
+        </div>
+
+        <div class="help-section">
+            <h2>Ordering Process</h2>
+            <div class="help-item">
+                <h3>Adding Items to Cart</h3>
+                <p>Click the "Add to Cart" button on any product page. You can review your cart by clicking the cart icon in the top right corner.</p>
+            </div>
+            <div class="help-item">
+                <h3>Checkout Process</h3>
+                <p>When you're ready to complete your purchase, click "Checkout" in your cart. Follow the steps to enter shipping and payment information.</p>
+            </div>
+            <div class="help-item">
+                <h3>Order Tracking</h3>
+                <p>After placing an order, you'll receive an order confirmation email with tracking information. You can also check order status in your account dashboard.</p>
+            </div>
+        </div>
+
+        <div class="help-section">
+            <h2>Product Information</h2>
+            <div class="help-item">
+                <h3>Custom Prosthetics</h3>
+                <p>For customized prosthetic devices, additional measurements or consultation may be required. Instructions will be provided during the ordering process.</p>
+            </div>
+            <div class="help-item">
+                <h3>Product Care</h3>
+                <p>Each product comes with specific care instructions. Generally, keep prosthetics clean and dry, and follow maintenance schedules.</p>
+            </div>
+        </div>
+
+        <div class="help-section">
+            <h2>Still Need Help?</h2>
+            <p>If you couldn't find the information you need, please contact our Support Center through the options below:</p>
+            
+            <div class="contact-info">
+                <p><i class="fas fa-envelope"></i> Email: <a href="mailto:help@pulsestore.com">help@pulsestore.com</a></p>
+                <p><i class="fas fa-phone"></i> Phone: +1 (800) 555-1234</p>
+                <p><i class="fas fa-clock"></i> Hours: Monday-Friday, 9am-6pm EST</p>
+            </div>
+            
+            <a href="javascript:history.back()" class="back-btn"><i class="fas fa-arrow-left"></i> Back to Previous Page</a>
+        </div>
+    </div>
+    
+    <script>
+        // Load header and footer
+        document.addEventListener('DOMContentLoaded', function() {
+            // Attempt to load header if there's a script for it
+            if (typeof loadHeader === 'function') {
+                loadHeader();
+            }
+            
+            // Attempt to load footer if there's a script for it
+            if (typeof loadFooter === 'function') {
+                loadFooter();
+            }
+        });
+    </script>
+</body>
+</html> 

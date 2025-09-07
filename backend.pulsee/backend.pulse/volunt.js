@@ -1,3 +1,5 @@
+/* The above code is a JavaScript module that defines an Express Router for handling volunteer
+submissions. Here is a breakdown of what the code does: */
 // volunt.js
 // Converted to Express Router module for volunteer submissions
 

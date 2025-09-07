@@ -966,38 +966,7 @@
   </style>
 </head>
 <body>
-<!-- Cart Panel -->
-<div class="cart">
-  <div class="top_cart">
-    <h3>Cart Items : <span class="count-item-cart">0</span></h3>
-    <span onclick="open_close_cart()" class="close_cart"><i class="fa-regular fa-circle-xmark"></i></span>
-  </div>
-  <div class="items_in_cart" id="cart_items"></div>
-  <div class="bottom_cart">
-    <div class="total">
-      <p>subtotal</p>
-      <p class="price_cart_toral">$0</p>
-    </div>
-    <div class="button_cart">
-      <a href="checkout.html" class="btn_cart btn">Checkout</a>
-      <span onclick="open_close_cart()" class="btn_cart trans_bg btn">Shop More</span>
-    </div>
-  </div>
-</div>
 
-<!-- Wishlist Panel -->
-<div class="wishlist">
-  <div class="head_wishlist">
-    <h3>Your Wishlist</h3>
-    <span class="Count_item_wishlist">0</span>
-    <button class="close_wishlist" onclick="open_close_wishlist()">
-      <i class="fa-solid fa-xmark"></i>
-    </button>
-  </div>
-  <div id="wishlist_items">
-    <!-- Wishlist items will be populated dynamically -->
-  </div>
-</div>
 
 <!-- Header -->
 <header>
@@ -1009,8 +978,8 @@
         <div class="select_box">
           <select id="category" name="category">
             <option value="All Categories">All Categories</option>
-            <option value="used_items">used_item</option>
-            <option value="upper_Limb">upper_Limb</option>
+            <option value="Used Items">Used Item</option>
+            <option value="Upper_Limb">Upper_Limb</option>
             <option value="Lower_Limb">Lower_Limb</option>
             <option value="Accessories">Accessories</option>
           </select>
@@ -1037,7 +1006,7 @@
           </div>
           <div class="category_nav_list">
             <a href="#top-offers">Top 10 Offers</a>
-            <a href="#upper_Limb">New Arrivals</a>
+            <a href="#Upper_Limb">New Arrivals</a>
             <a href="#Lower_Limb">Top Rated</a>
             <a href="#Used Items">Used Items</a>
           </div>
@@ -1067,7 +1036,7 @@
           <a class="list-group-item active" data-toggle="list" href="#account-general">General</a>
           <a class="list-group-item" data-toggle="list" href="#account-password">Password</a>
           <a class="list-group-item" data-toggle="list" href="#account-info">Info</a>
-          <a class="list-group-item" data-toggle="list" href="#account-social">Social Links</a>
+        
           <a class="list-group-item" data-toggle="list" href="#account-orders">Order History</a>
         </div>
       </div>
@@ -1081,7 +1050,6 @@
                 <label class="btn btn-outline-primary">
                   Upload new photo <input type="file" class="account-settings-fileinput">
                 </label>
-                <button class="btn btn-secondary">Reset</button>
                 <div class="small text-muted mt-1">Allowed JPG, GIF, PNG. Max size 800KB</div>
               </div>
             </div>
@@ -1125,27 +1093,7 @@
               <label>Birthday</label>
               <input type="date" class="form-control">
             </div>
-            <div class="form-group">
-              <label>Country</label>
-              <select class="form-control">
-                <option selected disabled>Choose...</option>
-                <option > Argentina</option>
-                <option > Australia</option>
-                <option > Brazil</option>
-                <option > Canada</option>
-                <option > China</option>
-                <option > Egypt</option>
-                <option > France</option>
-                <option > Germany</option>
-                <option > India</option>
-                <option > Italy</option>
-                <option > Japan</option>
-                <option > Mexico</option>
-                <option > South Korea</option>
-                <option > United Kingdom</option>
-                <option > United States</option>
-              </select>
-            </div>
+           
             <div class="form-group">
               <label>Phone</label>
               <input type="tel" class="form-control" placeholder="e.g. +1 234 567 8900">
@@ -1156,21 +1104,7 @@
             </div>
           </div>
 
-          <!-- Social -->
-          <div class="tab-pane fade" id="account-social">
-            <div class="form-group">
-              <label>Twitter</label>
-              <input type="url" class="form-control" placeholder="https://twitter.com/yourhandle">
-            </div>
-            <div class="form-group">
-              <label>Facebook</label>
-              <input type="url" class="form-control" placeholder="https://facebook.com/yourprofile">
-            </div>
-            <div class="form-group">
-              <label>Instagram</label>
-              <input type="url" class="form-control" placeholder="https://instagram.com/yourprofile">
-            </div>
-          </div>
+        
 
           <!-- Orders -->
           <div class="tab-pane fade" id="account-orders">
@@ -1202,7 +1136,6 @@
     </div>
     <div class="text-right p-3">
       <button class="btn btn-primary">Save Changes</button>
-      <button class="btn btn-secondary">Cancel</button>
     </div>
   </div>
 </div>
@@ -1229,8 +1162,8 @@
       <h4>Find It Fast</h4>
 
       <div class="links">
-        <a href="#used_items"><i class="fa-solid fa-caret-right"></i> Used Items </a>
-        <a href="#upper_Limb"><i class="fa-solid fa-caret-right"></i> Upper Limb</a>
+        <a href="#Used Items"><i class="fa-solid fa-caret-right"></i> Used Items </a>
+        <a href="#Upper_Limb"><i class="fa-solid fa-caret-right"></i> Upper Limb</a>
         <a href="#Lower_Limb"><i class="fa-solid fa-caret-right"></i> Lower Limb</a>
         <a href="#Accessories"><i class="fa-solid fa-caret-right"></i> Accessories</a>
       </div>

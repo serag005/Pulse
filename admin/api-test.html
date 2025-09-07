@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Connection Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        h1 {
+            color: #333;
+        }
+        
+        .card {
+            background: #f5f5f5;
+            border-radius: 8px;
+            padding: 16px;
+            margin-bottom: 16px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        button {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-right: 8px;
+            margin-bottom: 8px;
+        }
+        
+        button:hover {
+            background: #45a049;
+        }
+        
+        pre {
+            background: #eee;
+            padding: 10px;
+            border-radius: 4px;
+            overflow: auto;
+        }
+        
+        .loading {
+            display: inline-block;
+            margin-left: 10px;
+            font-style: italic;
+            color: #666;
+        }
+        
+        .success {
+            color: #4CAF50;
+            font-weight: bold;
+        }
+        
+        .error {
+            color: #f44336;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>API Connection Test</h1>
+    
+    <div class="card">
+        <h2>Connection Status</h2>
+        <p>Use these tests to diagnose API connectivity issues.</p>
+        <button id="test-connection">Test Basic Connection</button>
+        <button id="test-auth">Test Authentication</button>
+        <span id="connection-status"></span>
+    </div>
+    
+    <div class="card">
+        <h2>Test Product Creation</h2>
+        <form id="test-product-form">
+            <div>
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" value="Test Product" required>
+            </div>
+            <div>
+                <label for="description">Description:</label>
+                <textarea id="description" name="description" required>This is a test product</textarea>
+            </div>
+            <div>
+                <label for="price">Price:</label>
+                <input type="number" id="price" name="price" value="99.99" required>
+            </div>
+            <div>
+                <label for="category">Category:</label>
+                <input type="text" id="category" name="Category" value="Used Items" required>
+            </div>
+            <div>
+                <label for="image">Image:</label>
+                <input type="file" id="image" name="image">
+            </div>
+            <button type="submit">Submit Test Product</button>
+        </form>
+        <div id="product-result"></div>
+    </div>
+    
+    <div class="card">
+        <h2>Response Log</h2>
+        <pre id="response-log">// Responses will appear here</pre>
+    </div>
+    
+    <script>
+        // Helper function to log responses
+        function logResponse(title, data) {
+            const log = document.getElementById('response-log');
+            log.textContent += `\n\n--- ${title} ---\n`;
+            log.textContent += typeof data === 'string' ? data : JSON.stringify(data, null, 2);
+            
+            // Scroll to bottom
+            log.scrollTop = log.scrollHeight;
+        }
+        
+        // Test basic connection
+        document.getElementById('test-connection').addEventListener('click', async function() {
+            const status = document.getElementById('connection-status');
+            status.textContent = ' Testing...';
+            status.className = 'loading';
+            
+            try {
+                const response = await fetch('/api/admin/test-connection');
+                const data = await response.json();
+                
+                status.textContent = ' Connection successful';
+                status.className = 'success';
+                
+                logResponse('Basic Connection Test', data);
+            } catch (error) {
+                status.textContent = ` Error: ${error.message}`;
+                status.className = 'error';
+                
+                logResponse('Basic Connection Test Error', error.message);
+            }
+        });
+        
+        // Test authentication
+        document.getElementById('test-auth').addEventListener('click', async function() {
+            const status = document.getElementById('connection-status');
+            status.textContent = ' Testing auth...';
+            status.className = 'loading';
+            
+            try {
+                const token = localStorage.getItem('adminToken');
+                
+                if (!token) {
+                    status.textContent = ' No admin token found in localStorage';
+                    status.className = 'error';
+                    logResponse('Auth Test Error', 'No admin token found');
+                    return;
+                }
+                
+                const response = await fetch('/api/admin/customers', {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    status.textContent = ' Authentication successful';
+                    status.className = 'success';
+                    logResponse('Auth Test Success', { 
+                        message: 'Authentication successful',
+                        status: response.status,
+                        customersCount: Array.isArray(data) ? data.length : 'N/A'
+                    });
+                } else {
+                    const text = await response.text();
+                    status.textContent = ` Auth failed: ${response.status}`;
+                    status.className = 'error';
+                    logResponse('Auth Test Failed', { 
+                        status: response.status, 
+                        statusText: response.statusText,
+                        response: text
+                    });
+                }
+            } catch (error) {
+                status.textContent = ` Auth error: ${error.message}`;
+                status.className = 'error';
+                logResponse('Auth Test Error', error.message);
+            }
+        });
+        
+        // Test product creation
+        document.getElementById('test-product-form').addEventListener('submit', async function(event) {
+            event.preventDefault();
+            
+            const result = document.getElementById('product-result');
+            result.textContent = 'Submitting test product...';
+            result.className = 'loading';
+            
+            try {
+                const token = localStorage.getItem('adminToken');
+                
+                if (!token) {
+                    result.textContent = 'No admin token found in localStorage';
+                    result.className = 'error';
+                    logResponse('Product Test Error', 'No admin token found');
+                    return;
+                }
+                
+                const formData = new FormData(this);
+                
+                // Log what we're sending
+                const formContents = {};
+                for (const [key, value] of formData.entries()) {
+                    formContents[key] = value instanceof File ? 
+                        `File: ${value.name || 'unnamed'} (${value.size} bytes)` : 
+                        value;
+                }
+                logResponse('Form Data Being Sent', formContents);
+                
+                const response = await fetch('/api/admin/products', {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: formData
+                });
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    result.textContent = 'Product created successfully!';
+                    result.className = 'success';
+                    logResponse('Product Created', data);
+                } else {
+                    const text = await response.text();
+                    result.textContent = `Failed to create product: ${response.status}`;
+                    result.className = 'error';
+                    logResponse('Product Creation Failed', { 
+                        status: response.status, 
+                        statusText: response.statusText,
+                        response: text
+                    });
+                }
+            } catch (error) {
+                result.textContent = `Error: ${error.message}`;
+                result.className = 'error';
+                logResponse('Product Test Error', error.message);
+            }
+        });
+    </script>
+</body>
+</html> 

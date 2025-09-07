@@ -1,8 +1,11 @@
+/* This code snippet is a Node.js module that defines a router for handling checkout-related requests
+in an Express application. Here's a breakdown of what it does: */
+
 // checkout.js
 const express = require('express');
 const cors    = require('cors');
 const mysql   = require('mysql2');
-const axios   = require('axios').default;
+const axios   = require('axios').default; // promise based http client - GET POST PUT DELETE 
 // const { validatePhoneNumber, validateEmail } = require('../../JS/validators');
 // const { applyCoupon } = require('./couponService');
 // const { saveOrder }     = require('./orderService');

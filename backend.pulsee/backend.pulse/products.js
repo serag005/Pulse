@@ -1,3 +1,12 @@
+/**
+ * The above code defines routes in an Express application to handle product-related operations
+ * including fetching products, searching, adding to cart, and managing cart items in a MySQL database
+ * with a fallback to a JSON file.
+ * @returns The code you provided is a Node.js module that defines various routes related to products,
+ * such as fetching all products, fetching products by category, searching products, adding products to
+ * a cart, getting cart items for a user, updating cart item quantity, and removing items from the
+ * cart.
+ */
 const express = require('express');
 const router = express.Router();
 const mysql = require('mysql2');

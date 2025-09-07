@@ -1,3 +1,11 @@
+/**
+ * The provided JavaScript code defines routes and functions for handling user profile-related
+ * operations using Express, MySQL, JWT authentication, and file uploads.
+ * @returns The code provided is a Node.js Express router module that handles various profile-related
+ * endpoints for a web application. It includes functionalities such as fetching user profile data,
+ * updating profile information, changing passwords, uploading profile pictures, retrieving order
+ * history, and debugging profile pictures in the database.
+ */
 const express = require('express');
 const router = express.Router();
 const mysql = require('mysql2/promise'); // Use promise-based version
@@ -121,7 +129,7 @@ const upload = multer({
   storage: storage,
   fileFilter: fileFilter,
   limits: {
-    fileSize: 800 * 1024 // 800KB max size
+    fileSize: 4096 * 8096 // 800KB max size
   }
 });
 
@@ -283,6 +291,12 @@ router.post('/update-general', tokenAuth, ensureDatabaseConnection, async (req, 
       return res.status(400).json({ message: 'First name, last name, and email are required' });
     }
     
+    // Validate email format
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    if (!emailRegex.test(email)) {
+      return res.status(400).json({ message: 'Please enter a valid email address' });
+    }
+    
     const userId = req.user.id;
     
     // Check if email is already in use by another user
@@ -359,36 +373,18 @@ router.put('/password', tokenAuth, ensureDatabaseConnection, async (req, res) =>
 // Update profile info (bio, birthDate, etc.)
 router.put('/info', tokenAuth, ensureDatabaseConnection, async (req, res) => {
   try {
-    const { bio, birthDate, country, phone, address } = req.body;
+    const { bio, birthDate, phone, address } = req.body;
     const userId = req.user.id;
     
     await pool.query(
-      'UPDATE registrations SET bio = ?, birthDate = ?, country = ?, phone = ?, address = ? WHERE id = ?',
-      [bio, birthDate, country, phone, address, userId]
+      'UPDATE registrations SET bio = ?, birthDate = ?, phone = ?, address = ? WHERE id = ?',
+      [bio, birthDate, phone, address, userId]
     );
     
     res.json({ message: 'Profile info updated successfully' });
   } catch (error) {
     console.error('Error updating profile info:', error);
     res.status(500).json({ message: 'Server error while updating profile info' });
-  }
-});
-
-// Update social links
-router.put('/social', tokenAuth, ensureDatabaseConnection, async (req, res) => {
-  try {
-    const { twitter, facebook, instagram } = req.body;
-    const userId = req.user.id;
-    
-    await pool.query(
-      'UPDATE registrations SET twitter = ?, facebook = ?, instagram = ? WHERE id = ?',
-      [twitter, facebook, instagram, userId]
-    );
-    
-    res.json({ message: 'Social links updated successfully' });
-  } catch (error) {
-    console.error('Error updating social links:', error);
-    res.status(500).json({ message: 'Server error while updating social links' });
   }
 });
 

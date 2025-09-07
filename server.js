@@ -1,3 +1,5 @@
+/* This code snippet is a Node.js server application using Express framework using router modules. Here's a breakdown of
+what it does: */
 // server.js - Main application server
 const express = require('express');
 const path    = require('path');
@@ -61,6 +63,9 @@ app.use('/api/auth', require('./backend.pulsee/backend.pulse/auth'));
 app.use('/api/login', require('./backend.pulsee/backend.pulse/login'));
 app.use('/api/volunteers', require('./backend.pulsee/backend.pulse/volunt'));
 app.use('/api/cart', require('./backend.pulsee/backend.pulse/cartRoutes'));
+app.use('/api/admin', require('./backend.pulsee/backend.pulse/admin'));
+// Remove test router that only provides mock data
+// app.use('/api/test', require('./backend.pulsee/backend.pulse/test-router'));
 
 // Special handler for JSON parse errors
 app.use((err, req, res, next) => {
@@ -116,5 +121,6 @@ app.listen(PORT, () => {
   console.log(`Profile API available at: http://localhost:${PORT}/api/profile`);
   console.log(`Profile Order History API: http://localhost:${PORT}/api/profile/orders`);
   console.log(`Profile Images Path: http://localhost:${PORT}/@uploads/`);
+  console.log(`Admin API available at: http://localhost:${PORT}/api/admin`);
 });
 

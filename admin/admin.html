@@ -6,13 +6,27 @@
     <meta http-equiv="x-ua-compatible" content="IE=edge">
     <meta name="description" content="PULSE - Empowering Mobility with Innovation">
     <meta name="keywords" content="prosthetics, mobility, medical devices, e-commerce">
-    <title>Responsive Admin Dashboard | PULSE</title>
+    <title>E-commerce Admin Dashboard | PULSE</title>
 
-    <link rel="icon" href="images/Screenshot%202025-04-10%20211403%20-%20Copy.png">
+    <link rel="icon" href="../images/Screenshot%202025-04-10%20211403%20-%20Copy.png">
 
     <!-- ======= Styles ====== -->
-    <link rel="stylesheet" href="CSS/css2.css">
+    <link rel="stylesheet" href="css2.css">
 
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- Admin API JS - Load first -->
+    <script src="js/admin-api.js"></script>
+    
+    <!-- Admin UI JS - Load after API is loaded -->
+    <script src="js/admin-ui.js"></script>
 </head>
 
 <body>
@@ -21,71 +35,90 @@
     <div class="navigation">
         <ul>
             <li>
-                <a href="#">
+             
                     <span class="logo">
-                      <img src="images/LOG.png" alt="">
+                      <img src="../images/LOG.png" alt="">
+
                     </span>
                 </a>
             </li>
 
             <li>
-                <a href="#">
+                <a href="#dashboard">
                     <span class="icon">
-                        <ion-icon name="home"></ion-icon>
+                        <ion-icon name="home-outline"></ion-icon>
                     </span>
                     <span class="title">Dashboard</span>
                 </a>
             </li>
 
             <li>
-                <a href="#">
+                <a href="#analytics">
                     <span class="icon">
-                        <ion-icon name="people"></ion-icon>
+                        <ion-icon name="analytics-outline"></ion-icon>
+                    </span>
+                    <span class="title">Analysis</span>
+                </a>
+            </li>
+
+            <li>
+                <a href="#orders">
+                    <span class="icon">
+                        <ion-icon name="pricetag-outline"></ion-icon>
+                    </span>
+                    <span class="title">Orders</span>
+                </a>
+            </li>
+
+            <li>
+                <a href="#customers">
+                    <span class="icon">
+                        <ion-icon name="people-outline"></ion-icon>
                     </span>
                     <span class="title">Customers</span>
                 </a>
             </li>
 
             <li>
-                <a href="#">
+                <a href="#messages">
                     <span class="icon">
-                        <ion-icon name="chatbubble-ellipses"></ion-icon>
+                        <ion-icon name="chatbubble-ellipses-outline"></ion-icon>
                     </span>
                     <span class="title">Messages</span>
                 </a>
             </li>
 
             <li>
-                <a href="#">
+                <a href="#volunteers">
                     <span class="icon">
-                        <ion-icon name="accessibility"></ion-icon>
+                        <ion-icon name="accessibility-outline"></ion-icon>
                     </span>
                     <span class="title">Volunteer</span>
                 </a>
             </li>
 
             <li>
-                <a href="#">
+                <a href="#suppliers">
                     <span class="icon">
-                        <ion-icon name="business"></ion-icon>
+                        <ion-icon name="business-outline"></ion-icon>
                     </span>
                     <span class="title">Suppliers</span>
                 </a>
             </li>
 
             <li>
-                <a href="#">
+                <a href="#products">
                     <span class="icon">
-                        <ion-icon name="bag"></ion-icon>
+                        <ion-icon name="bag-outline"></ion-icon>
                     </span>
                     <span class="title">Products</span>
                 </a>
             </li>
 
             <li>
-                <a href="#">
+                <a href="#" id="signOutBtn">
                     <span class="icon">
-                        <ion-icon name="log-out"></ion-icon>
+                        <ion-icon name="log-out-outline"></ion-icon>
                     </span>
                     <span class="title">Sign Out</span>
                 </a>
@@ -103,34 +136,41 @@
             <div class="search">
                 <label>
                     <input type="text" placeholder="Search here">
-                    <ion-icon name="search"></ion-icon>
+                    <ion-icon name="search-outline"></ion-icon>
                 </label>
             </div>
 
-            <div class="user">
-                <img src="img/team/mm.jpg" alt="">
-            </div>
+            <button class="theme-toggle" aria-label="Toggle dark mode">
+                <ion-icon name="sunny-outline" class="sun-icon"></ion-icon>
+                <ion-icon name="moon-outline" class="moon-icon"></ion-icon>
+            </button>
+
+         
         </div>
 
         <!-- ======================= Cards ================== -->
-        <div class="cardBox">
+        <div id="dashboard" class="cardBox">
             <div class="card">
                 <div>
-                    <div class="numbers">1,504</div>
-                    <div class="cardName">Daily Views</div>
+                    <div class="numbers" id="totalRevenue">EGP 0</div>
+                    <div class="cardName">Total Revenue</div>
+                    <div class="trend" id="revenueTrend">
+                        <i class="fas fa-arrow-up"></i> <span id="revenueGrowth">0%</span>
+                    </div>
                 </div>
-
                 <div class="iconBx">
-                    <ion-icon name="eye-outline"></ion-icon>
+                    <ion-icon name="cash-outline"></ion-icon>
                 </div>
             </div>
 
             <div class="card">
                 <div>
-                    <div class="numbers">80</div>
-                    <div class="cardName">Sales</div>
+                    <div class="numbers" id="totalOrders">0</div>
+                    <div class="cardName">Total Orders</div>
+                    <div class="trend" id="ordersTrend">
+                        <i class="fas" id="ordersTrendIcon"></i> <span id="ordersGrowth">0%</span>
+                    </div>
                 </div>
-
                 <div class="iconBx">
                     <ion-icon name="cart-outline"></ion-icon>
                 </div>
@@ -138,124 +178,165 @@
 
             <div class="card">
                 <div>
-                    <div class="numbers">284</div>
-                    <div class="cardName">Messages</div>
+                    <div class="numbers" id="activeCustomers">0</div>
+                    <div class="cardName">Active Customers</div>
+                    <div class="trend" id="customersTrend">
+                        <i class="fas" id="customersTrendIcon"></i> <span id="customersGrowth">0%</span>
+                    </div>
                 </div>
-
                 <div class="iconBx">
-                    <ion-icon name="chatbubbles-outline"></ion-icon>
+                    <ion-icon name="people-outline"></ion-icon>
                 </div>
             </div>
 
             <div class="card">
                 <div>
-                    <div class="numbers">EGP 7,842</div>
-                    <div class="cardName">Earning</div>
+                    <div class="numbers" id="avgOrderValue">EGP 0</div>
+                    <div class="cardName">Average Order Value</div>
+                    <div class="trend" id="avgOrderTrend">
+                        <i class="fas" id="avgOrderTrendIcon"></i> <span id="avgOrderGrowth">0%</span>
+                    </div>
                 </div>
-
                 <div class="iconBx">
-                    <ion-icon name="cash-outline"></ion-icon>
+                    <ion-icon name="trending-up-outline"></ion-icon>
                 </div>
             </div>
         </div>
 
+      
+
+        <!-- ======================= Best Sellers Section ================== -->
+        <div class="best-sellers">
+            <div class="cardHeader">
+                <h2>Best Selling Products</h2>
+                <div class="time-filter">
+                    <select id="bestSellersPeriod" aria-label="Select time period for best sellers">
+                        <option value="week">This Week</option>
+                        <option value="month">This Month</option>
+                        <option value="year">This Year</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="best-sellers-grid" id="bestSellersGrid">
+                <!-- Best sellers will be loaded dynamically -->
+            </div>
+        </div>
+
+        <!-- ======================= Analytics Charts ================== -->
+        <div class="section-title analysis-title"><h2>Analysis</h2></div>
+        <div id="analytics" class="analytics-container">
+            
+            <!-- First Row -->
+            <div class="chart-card">
+                <div class="cardHeader">
+                    <h2>Sales Overview</h2>
+                    <div class="chart-filters">
+                        <select id="salesPeriod" aria-label="Select sales period">
+                            <option value="7">Last 7 Days</option>
+                            <option value="30">Last 30 Days</option>
+                            <option value="90">Last 90 Days</option>
+                        </select>
+                        <button class="export-btn" onclick="exportChart('salesChart')">
+                            <ion-icon name="download-outline"></ion-icon> Export
+                        </button>
+                    </div>
+                </div>
+                <canvas id="salesChart"></canvas>
+            </div>
+
+            <!-- First Row Analysis -->
+            <div class="analysis-card" data-chart-id="salesChart">
+                <div class="analysis-header">
+                    <h3>Sales Performance</h3>
+                </div>
+                <div class="analysis-content">
+                    <div class="metric">
+                        <span class="label">Total Sales</span>
+                        <span class="value" id="totalSalesMetric">EGP 0</span>
+                    </div>
+                    <div class="metric">
+                        <span class="label">Growth Rate</span>
+                        <span class="value" id="growthRateMetric">0%</span>
+                    </div>
+                    <div class="metric">
+                        <span class="label">Peak Day</span>
+                        <span class="value" id="peakDayMetric">-</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Category Chart -->
+            <div class="chart-card">
+                <div class="cardHeader">
+                    <h2>Sales by Category</h2>
+                    <div class="chart-filters">
+                        <select id="categoryPeriod" aria-label="Select category period">
+                            <option value="week">This Week</option>
+                            <option value="month">This Month</option>
+                            <option value="year">This Year</option>
+                        </select>
+                        <button class="export-btn" onclick="exportChart('categoryChart')">
+                            <ion-icon name="download-outline"></ion-icon> Export
+                        </button>
+                    </div>
+                </div>
+                <canvas id="categoryChart"></canvas>
+            </div>
+
+            <!-- Category Analysis -->
+            <div class="analysis-card" data-chart-id="categoryChart">
+                <div class="analysis-header">
+                    <h3>Category Performance</h3>
+                </div>
+                <div class="analysis-content">
+                    <div class="metric">
+                        <span class="label">Top Category</span>
+                        <span class="value" id="topCategoryMetric">-</span>
+                    </div>
+                    <div class="metric">
+                        <span class="label">Growth Rate</span>
+                        <span class="value" id="categoryGrowthMetric">0%</span>
+                    </div>
+                    <div class="metric">
+                        <span class="label">Total Sales</span>
+                        <span class="value" id="categorySalesMetric">EGP 0</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+      
+
+        <!-- ======================= Quick Stats ================== -->
+        <div class="quick-stats" id="quickStats">
+            <!-- Quick stats will be loaded dynamically -->
+        </div>
+        
+
         <!-- ================ Order Details List ================= -->
-        <div class="details">
+        <div id="orders" class="details">
             <div class="recentOrders">
                 <div class="cardHeader">
-                    <h2>Recent Orders</h2>
-                    <a href="#" class="btn">View All</a>
+                    <h2>All Orders</h2>
+                    
                 </div>
 
                 <div class="table-container">
                     <table>
                         <thead>
                         <tr>
+                            <td>Order ID</td>
                             <td>Name</td>
                             <td>Price</td>
                             <td>Payment</td>
                             <td>Status</td>
+                            <td>Actions</td>
                         </tr>
                         </thead>
 
-                        <tbody>
-                        <tr>
-                            <td>System Electric Hand DMC (Aluminum )</td>
-                            <td>EGP 800</td>
-                            <td>Paid</td>
-                            <td><span class="status delivered">Delivered</span></td>
-                        </tr>
-
-                        <tr>
-                            <td>Modular Transtibial Kit ( Aluminum )</td>
-                            <td>EGP 75</td>
-                            <td>Due</td>
-                            <td><span class="status pending">Pending</span></td>
-                        </tr>
-
-                        <tr>
-                            <td>Polycentric Knee Joint for Knee Disarticulation (Titanium )</td>
-                            <td>EGP 250</td>
-                            <td>Paid</td>
-                            <td><span class="status return">Return</span></td>
-                        </tr>
-
-                        <tr>
-                            <td>Shuttle Lock,Pyramid (Titanium )</td>
-                            <td>EGP 50</td>
-                            <td>Due</td>
-                            <td><span class="status inProgress">In Progress</span></td>
-                        </tr>
-
-                        <tr>
-                            <td>ball shoulder joint (Aluminum )</td>
-                            <td>EGP 280</td>
-                            <td>Paid</td>
-                            <td><span class="status delivered">Delivered</span></td>
-                        </tr>
-
-                        <tr>
-                            <td>Runway foot (carbon fiber)</td>
-                            <td>EGP 450</td>
-                            <td>Due</td>
-                            <td><span class="status pending">Pending</span></td>
-                        </tr>
-
-                        <tr>
-                            <td>Locking unit (stainless/ Aluminum )</td>
-                            <td>EGP 320</td>
-                            <td>Paid</td>
-                            <td><span class="status return">Return</span></td>
-                        </tr>
-
-                        <tr>
-                            <td>foot cover ( polyurethane )</td>
-                            <td>EGP 80</td>
-                            <td>Due</td>
-                            <td><span class="status inProgress">In Progress</span></td>
-                        </tr>
-
-                        <!-- Adding more dummy rows to test scrolling -->
-                        <tr>
-                            <td>Custom Prosthetic Socket (Carbon Fiber)</td>
-                            <td>EGP 950</td>
-                            <td>Paid</td>
-                            <td><span class="status delivered">Delivered</span></td>
-                        </tr>
-
-                        <tr>
-                            <td>Bionic Hand Control System</td>
-                            <td>EGP 1200</td>
-                            <td>Due</td>
-                            <td><span class="status pending">Pending</span></td>
-                        </tr>
-
-                        <tr>
-                            <td>Ankle Joint Mechanism (Titanium)</td>
-                            <td>EGP 380</td>
-                            <td>Paid</td>
-                            <td><span class="status inProgress">In Progress</span></td>
-                        </tr>
+                        <tbody id="recentOrdersTable">
+                        <!-- Dynamic content will be loaded here -->
                         </tbody>
                     </table>
                 </div>
@@ -264,91 +345,21 @@
             <!-- ================= Recent Customers ================ -->
             <div class="recentCustomers">
                 <div class="cardHeader">
-                    <h2>Recent Customers</h2>
+                    <h2>Recent Customers who ordered</h2>
                 </div>
 
-                <table>
-                    <tr>
-                        <td width="60px">
-                            <div class="imgBx"><img src="img/team/mm.jpg" alt=""></div>
-                        </td>
-                        <td>
-                            <h4>AHMED <br> <span>Italy</span></h4>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td width="60px">
-                            <div class="imgBx"><img src="img/team/mm.jpg" alt=""></div>
-                        </td>
-                        <td>
-                            <h4>ALAA <br> <span>India</span></h4>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td width="60px">
-                            <div class="imgBx"><img src="img/team/mm.jpg" alt=""></div>
-                        </td>
-                        <td>
-                            <h4>AHMED<br> <span>Italy</span></h4>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td width="60px">
-                            <div class="imgBx"><img src="img/team/mm.jpg" alt=""></div>
-                        </td>
-                        <td>
-                            <h4>ALAA <br> <span>India</span></h4>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td width="60px">
-                            <div class="imgBx"><img src="img/team/mm.jpg" alt=""></div>
-                        </td>
-                        <td>
-                            <h4>MARIAM <br> <span>Italy</span></h4>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td width="60px">
-                            <div class="imgBx"><img src="img/team/mm.jpg" alt=""></div>
-                        </td>
-                        <td>
-                            <h4>SERAG <br> <span>India</span></h4>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td width="60px">
-                            <div class="imgBx"><img src="img/team/mm.jpg" alt=""></div>
-                        </td>
-                        <td>
-                            <h4>MINA <br> <span>Italy</span></h4>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td width="60px">
-                            <div class="imgBx"><img src="img/team/mm.jpg" alt=""></div>
-                        </td>
-                        <td>
-                            <h4>SANDY <br> <span>India</span></h4>
-                        </td>
-                    </tr>
+                <table id="recentCustomersTable">
+                    <!-- Recent customers will be loaded dynamically -->
                 </table>
             </div>
         </div>
 
         <!-- ================ Customers Table ================= -->
-        <div class="details" style="grid-template-columns: 1fr;">
+        <div id="customers" class="details" style="grid-template-columns: 1fr;">
             <div class="recentOrders">
                 <div class="cardHeader">
                     <h2>Customers</h2>
-                    <a href="#" class="btn">Add New</a>
+                    <a href="../Registration.html" class="btn">Add New</a>
                 </div>
 
                 <div class="table-container">
@@ -356,6 +367,7 @@
                         <thead>
                         <tr>
                             <th>ID</th>
+                            <th>Profile Picture</th>
                             <th>First Name</th>
                             <th>Last Name</th>
                             <th>Email</th>
@@ -366,198 +378,19 @@
                             <th>Actions</th>
                         </tr>
                         </thead>
-                        <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>Ahmed</td>
-                            <td>Mohamed</td>
-                            <td>ahmed@example.com</td>
-                            <td>+20 123456789</td>
-                            <td>123 Cairo St, Egypt</td>
-                            <td>1990-05-15</td>
-                            <td>Male</td>
-                            <td>
-                                <a href="#" style="margin-right: 5px; color: var(--main_color);">
-                                    <ion-icon name="create-outline"></ion-icon>
-                                </a>
-                                <a href="#" style="color: var(--Sale_color);">
-                                    <ion-icon name="trash-outline"></ion-icon>
-                                </a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>Fatima</td>
-                            <td>Hassan</td>
-                            <td>fatima@example.com</td>
-                            <td>+20 987654321</td>
-                            <td>456 Alexandria St, Egypt</td>
-                            <td>1992-08-20</td>
-                            <td>Female</td>
-                            <td>
-                                <a href="#" style="margin-right: 5px; color: var(--main_color);">
-                                    <ion-icon name="create-outline"></ion-icon>
-                                </a>
-                                <a href="#" style="color: var(--Sale_color);">
-                                    <ion-icon name="trash-outline"></ion-icon>
-                                </a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>3</td>
-                            <td>Mahmoud</td>
-                            <td>Ali</td>
-                            <td>mahmoud@example.com</td>
-                            <td>+20 555666777</td>
-                            <td>789 Giza St, Egypt</td>
-                            <td>1988-12-10</td>
-                            <td>Male</td>
-                            <td>
-                                <a href="#" style="margin-right: 5px; color: var(--main_color);">
-                                    <ion-icon name="create-outline"></ion-icon>
-                                </a>
-                                <a href="#" style="color: var(--Sale_color);">
-                                    <ion-icon name="trash-outline"></ion-icon>
-                                </a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>4</td>
-                            <td>Layla</td>
-                            <td>Ibrahim</td>
-                            <td>layla@example.com</td>
-                            <td>+20 111222333</td>
-                            <td>321 Luxor St, Egypt</td>
-                            <td>1995-03-25</td>
-                            <td>Female</td>
-                            <td>
-                                <a href="#" style="margin-right: 5px; color: var(--main_color);">
-                                    <ion-icon name="create-outline"></ion-icon>
-                                </a>
-                                <a href="#" style="color: var(--Sale_color);">
-                                    <ion-icon name="trash-outline"></ion-icon>
-                                </a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>5</td>
-                            <td>Omar</td>
-                            <td>Khaled</td>
-                            <td>omar@example.com</td>
-                            <td>+20 444555666</td>
-                            <td>654 Aswan St, Egypt</td>
-                            <td>1991-07-14</td>
-                            <td>Male</td>
-                            <td>
-                                <a href="#" style="margin-right: 5px; color: var(--main_color);">
-                                    <ion-icon name="create-outline"></ion-icon>
-                                </a>
-                                <a href="#" style="color: var(--Sale_color);">
-                                    <ion-icon name="trash-outline"></ion-icon>
-                                </a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>6</td>
-                            <td>Nour</td>
-                            <td>Ahmed</td>
-                            <td>nour@example.com</td>
-                            <td>+20 777888999</td>
-                            <td>987 Sharm St, Egypt</td>
-                            <td>1993-11-30</td>
-                            <td>Female</td>
-                            <td>
-                                <a href="#" style="margin-right: 5px; color: var(--main_color);">
-                                    <ion-icon name="create-outline"></ion-icon>
-                                </a>
-                                <a href="#" style="color: var(--Sale_color);">
-                                    <ion-icon name="trash-outline"></ion-icon>
-                                </a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>7</td>
-                            <td>Karim</td>
-                            <td>Mohamed</td>
-                            <td>karim@example.com</td>
-                            <td>+20 333444555</td>
-                            <td>852 Hurghada St, Egypt</td>
-                            <td>1989-02-18</td>
-                            <td>Male</td>
-                            <td>
-                                <a href="#" style="margin-right: 5px; color: var(--main_color);">
-                                    <ion-icon name="create-outline"></ion-icon>
-                                </a>
-                                <a href="#" style="color: var(--Sale_color);">
-                                    <ion-icon name="trash-outline"></ion-icon>
-                                </a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>8</td>
-                            <td>Amira</td>
-                            <td>Salem</td>
-                            <td>amira@example.com</td>
-                            <td>+20 222333444</td>
-                            <td>159 Dahab St, Egypt</td>
-                            <td>1994-09-05</td>
-                            <td>Female</td>
-                            <td>
-                                <a href="#" style="margin-right: 5px; color: var(--main_color);">
-                                    <ion-icon name="create-outline"></ion-icon>
-                                </a>
-                                <a href="#" style="color: var(--Sale_color);">
-                                    <ion-icon name="trash-outline"></ion-icon>
-                                </a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>9</td>
-                            <td>Hassan</td>
-                            <td>Ibrahim</td>
-                            <td>hassan@example.com</td>
-                            <td>+20 666777888</td>
-                            <td>753 Mansoura St, Egypt</td>
-                            <td>1987-04-22</td>
-                            <td>Male</td>
-                            <td>
-                                <a href="#" style="margin-right: 5px; color: var(--main_color);">
-                                    <ion-icon name="create-outline"></ion-icon>
-                                </a>
-                                <a href="#" style="color: var(--Sale_color);">
-                                    <ion-icon name="trash-outline"></ion-icon>
-                                </a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>10</td>
-                            <td>Mariam</td>
-                            <td>Mostafa</td>
-                            <td>mariam@example.com</td>
-                            <td>+20 999000111</td>
-                            <td>426 Tanta St, Egypt</td>
-                            <td>1996-01-08</td>
-                            <td>Female</td>
-                            <td>
-                                <a href="#" style="margin-right: 5px; color: var(--main_color);">
-                                    <ion-icon name="create-outline"></ion-icon>
-                                </a>
-                                <a href="#" style="color: var(--Sale_color);">
-                                    <ion-icon name="trash-outline"></ion-icon>
-                                </a>
-                            </td>
-                        </tr>
+                        <tbody id="customersTableBody">
+                        <!-- Customers will be loaded dynamically -->
                         </tbody>
                     </table>
                 </div>
             </div>
         </div>
         <!-- ================ Messages Table ================= -->
-        <div class="details" style="grid-template-columns: 1fr;">
+        <div id="messages" class="details" style="grid-template-columns: 1fr;">
             <div class="recentOrders">
                 <div class="cardHeader">
                     <h2>Messages</h2>
-                    <a href="#" class="btn">View All</a>
+            
                 </div>
 
                 <div class="table-container">
@@ -572,84 +405,8 @@
                             <th>Actions</th>
                         </tr>
                         </thead>
-                        <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>Ahmed Mohamed</td>
-                            <td>ahmed@example.com</td>
-                            <td class="message-content">I'm interested in the System Electric Hand DMC. Can you provide more details about compatibility?</td>
-                            <td>2025-04-15 10:30:22</td>
-                            <td>
-                                <a href="#" class="action-btn view-btn">View</a>
-                                <a href="#" class="action-btn delete-btn">Delete</a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>Fatima Hassan</td>
-                            <td>fatima@example.com</td>
-                            <td class="message-content">Thank you for the quick delivery of my Runway foot. The quality is excellent!</td>
-                            <td>2025-04-14 14:25:10</td>
-                            <td>
-                                <a href="#" class="action-btn view-btn">View</a>
-                                <a href="#" class="action-btn delete-btn">Delete</a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>3</td>
-                            <td>Mahmoud Ali</td>
-                            <td>mahmoud@example.com</td>
-                            <td class="message-content">I'm having trouble with my Polycentric Knee Joint. It seems to be locking up occasionally.</td>
-                            <td>2025-04-13 09:15:43</td>
-                            <td>
-                                <a href="#" class="action-btn view-btn">View</a>
-                                <a href="#" class="action-btn delete-btn">Delete</a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>4</td>
-                            <td>Layla Ibrahim</td>
-                            <td>layla@example.com</td>
-                            <td class="message-content">Do you offer custom fitting services for the foot cover? I need special measurements.</td>
-                            <td>2025-04-12 16:40:33</td>
-                            <td>
-                                <a href="#" class="action-btn view-btn">View</a>
-                                <a href="#" class="action-btn delete-btn">Delete</a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>5</td>
-                            <td>Omar Khaled</td>
-                            <td>omar@example.com</td>
-                            <td class="message-content">I'd like to inquire about bulk ordering for our hospital. Can someone from sales contact me?</td>
-                            <td>2025-04-11 11:20:55</td>
-                            <td>
-                                <a href="#" class="action-btn view-btn">View</a>
-                                <a href="#" class="action-btn delete-btn">Delete</a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>6</td>
-                            <td>Nour Ahmed</td>
-                            <td>nour@example.com</td>
-                            <td class="message-content">Is the ball shoulder joint compatible with your electric hand system?</td>
-                            <td>2025-04-10 13:50:19</td>
-                            <td>
-                                <a href="#" class="action-btn view-btn">View</a>
-                                <a href="#" class="action-btn delete-btn">Delete</a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>7</td>
-                            <td>Karim Mohamed</td>
-                            <td>karim@example.com</td>
-                            <td class="message-content">I would like to become a distributor for your products in Alexandria region. What are the requirements?</td>
-                            <td>2025-04-09 15:35:27</td>
-                            <td>
-                                <a href="#" class="action-btn view-btn">View</a>
-                                <a href="#" class="action-btn delete-btn">Delete</a>
-                            </td>
-                        </tr>
+                        <tbody id="messagesTableBody">
+                        <!-- Messages will be loaded dynamically -->
                         </tbody>
                     </table>
                 </div>
@@ -657,11 +414,11 @@
         </div>
 
         <!-- ================ Volunteer Table ================= -->
-        <div class="details" style="grid-template-columns: 1fr;">
+        <div id="volunteers" class="details" style="grid-template-columns: 1fr;">
             <div class="recentOrders">
                 <div class="cardHeader">
                     <h2>Volunteers</h2>
-                    <a href="#" class="btn">Add New</a>
+                    <a href="../Volunteers.html" class="btn">Add New</a>
                 </div>
 
                 <div class="table-container">
@@ -680,121 +437,8 @@
                             <th>Actions</th>
                         </tr>
                         </thead>
-                        <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>Ahmed Mohamed</td>
-                            <td>28</td>
-                            <td>ahmed@example.com</td>
-                            <td>+20 123456789</td>
-                            <td>Cairo</td>
-                            <td>Weekends</td>
-                            <td>Technical Support</td>
-                            <td>Arabic, English</td>
-                            <td>
-                                <a href="#" style="margin-right: 5px; color: var(--main_color);">
-                                    <ion-icon name="create-outline"></ion-icon>
-                                </a>
-                                <a href="#" style="color: var(--Sale_color);">
-                                    <ion-icon name="trash-outline"></ion-icon>
-                                </a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>Fatima Hassan</td>
-                            <td>25</td>
-                            <td>fatima@example.com</td>
-                            <td>+20 987654321</td>
-                            <td>Alexandria</td>
-                            <td>Evenings</td>
-                            <td>Customer Service</td>
-                            <td>Arabic, English, French</td>
-                            <td>
-                                <a href="#" style="margin-right: 5px; color: var(--main_color);">
-                                    <ion-icon name="create-outline"></ion-icon>
-                                </a>
-                                <a href="#" style="color: var(--Sale_color);">
-                                    <ion-icon name="trash-outline"></ion-icon>
-                                </a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>3</td>
-                            <td>Mahmoud Ali</td>
-                            <td>32</td>
-                            <td>mahmoud@example.com</td>
-                            <td>+20 555666777</td>
-                            <td>Giza</td>
-                            <td>Full-time</td>
-                            <td>Medical Assistance</td>
-                            <td>Arabic, English</td>
-                            <td>
-                                <a href="#" style="margin-right: 5px; color: var(--main_color);">
-                                    <ion-icon name="create-outline"></ion-icon>
-                                </a>
-                                <a href="#" style="color: var(--Sale_color);">
-                                    <ion-icon name="trash-outline"></ion-icon>
-                                </a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>4</td>
-                            <td>Layla Ibrahim</td>
-                            <td>23</td>
-                            <td>layla@example.com</td>
-                            <td>+20 111222333</td>
-                            <td>Luxor</td>
-                            <td>Weekdays</td>
-                            <td>Educational Programs</td>
-                            <td>Arabic, English</td>
-                            <td>
-                                <a href="#" style="margin-right: 5px; color: var(--main_color);">
-                                    <ion-icon name="create-outline"></ion-icon>
-                                </a>
-                                <a href="#" style="color: var(--Sale_color);">
-                                    <ion-icon name="trash-outline"></ion-icon>
-                                </a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>5</td>
-                            <td>Omar Khaled</td>
-                            <td>30</td>
-                            <td>omar@example.com</td>
-                            <td>+20 444555666</td>
-                            <td>Aswan</td>
-                            <td>Weekends</td>
-                            <td>Fundraising</td>
-                            <td>Arabic, English, German</td>
-                            <td>
-                                <a href="#" style="margin-right: 5px; color: var(--main_color);">
-                                    <ion-icon name="create-outline"></ion-icon>
-                                </a>
-                                <a href="#" style="color: var(--Sale_color);">
-                                    <ion-icon name="trash-outline"></ion-icon>
-                                </a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>6</td>
-                            <td>Nour Ahmed</td>
-                            <td>27</td>
-                            <td>nour@example.com</td>
-                            <td>+20 777888999</td>
-                            <td>Sharm El-Sheikh</td>
-                            <td>Part-time</td>
-                            <td>Marketing</td>
-                            <td>Arabic, English</td>
-                            <td>
-                                <a href="#" style="margin-right: 5px; color: var(--main_color);">
-                                    <ion-icon name="create-outline"></ion-icon>
-                                </a>
-                                <a href="#" style="color: var(--Sale_color);">
-                                    <ion-icon name="trash-outline"></ion-icon>
-                                </a>
-                            </td>
-                        </tr>
+                        <tbody id="volunteersTableBody">
+                        <!-- Volunteers will be loaded dynamically -->
                         </tbody>
                     </table>
                 </div>
@@ -802,11 +446,11 @@
         </div>
 
         <!-- ================ Suppliers Table ================= -->
-        <div class="details" style="grid-template-columns: 1fr;">
+        <div id="suppliers" class="details" style="grid-template-columns: 1fr;">
             <div class="recentOrders">
                 <div class="cardHeader">
                     <h2>Suppliers</h2>
-                    <a href="#" class="btn">Add New</a>
+                    <a href="../Suppliers.html" class="btn">Add New</a>
                 </div>
 
                 <div class="table-container">
@@ -825,131 +469,18 @@
                             <th>Actions</th>
                         </tr>
                         </thead>
-                        <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>MediTech Solutions</td>
-                            <td>contact@meditech.com</td>
-                            <td>+20 123456789</td>
-                            <td>Cairo</td>
-                            <td>Financial, Materials</td>
-                            <td>Research and Development</td>
-                            <td>High Profile</td>
-                            <td>2025-01-15</td>
-                            <td>
-                                <a href="#" style="margin-right: 5px; color: var(--main_color);">
-                                    <ion-icon name="create-outline"></ion-icon>
-                                </a>
-                                <a href="#" style="color: var(--Sale_color);">
-                                    <ion-icon name="trash-outline"></ion-icon>
-                                </a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>Alexandria Prosthetics</td>
-                            <td>info@alexprosthetics.com</td>
-                            <td>+20 987654321</td>
-                            <td>Alexandria</td>
-                            <td>Materials, Equipment</td>
-                            <td>Manufacturing</td>
-                            <td>Medium Profile</td>
-                            <td>2025-02-20</td>
-                            <td>
-                                <a href="#" style="margin-right: 5px; color: var(--main_color);">
-                                    <ion-icon name="create-outline"></ion-icon>
-                                </a>
-                                <a href="#" style="color: var(--Sale_color);">
-                                    <ion-icon name="trash-outline"></ion-icon>
-                                </a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>3</td>
-                            <td>Global Mobility Inc.</td>
-                            <td>partners@globalmobility.com</td>
-                            <td>+20 555666777</td>
-                            <td>Giza</td>
-                            <td>Financial, Marketing</td>
-                            <td>Distribution</td>
-                            <td>High Profile</td>
-                            <td>2024-11-10</td>
-                            <td>
-                                <a href="#" style="margin-right: 5px; color: var(--main_color);">
-                                    <ion-icon name="create-outline"></ion-icon>
-                                </a>
-                                <a href="#" style="color: var(--Sale_color);">
-                                    <ion-icon name="trash-outline"></ion-icon>
-                                </a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>4</td>
-                            <td>Luxor Medical Equipment</td>
-                            <td>sales@luxormedical.com</td>
-                            <td>+20 111222333</td>
-                            <td>Luxor</td>
-                            <td>Equipment</td>
-                            <td>Supply Chain</td>
-                            <td>Low Profile</td>
-                            <td>2025-03-05</td>
-                            <td>
-                                <a href="#" style="margin-right: 5px; color: var(--main_color);">
-                                    <ion-icon name="create-outline"></ion-icon>
-                                </a>
-                                <a href="#" style="color: var(--Sale_color);">
-                                    <ion-icon name="trash-outline"></ion-icon>
-                                </a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>5</td>
-                            <td>BioMaterials Egypt</td>
-                            <td>info@biomaterials-eg.com</td>
-                            <td>+20 444555666</td>
-                            <td>Aswan</td>
-                            <td>Materials, Research</td>
-                            <td>Innovation Projects</td>
-                            <td>Medium Profile</td>
-                            <td>2025-01-25</td>
-                            <td>
-                                <a href="#" style="margin-right: 5px; color: var(--main_color);">
-                                    <ion-icon name="create-outline"></ion-icon>
-                                </a>
-                                <a href="#" style="color: var(--Sale_color);">
-                                    <ion-icon name="trash-outline"></ion-icon>
-                                </a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>6</td>
-                            <td>Smart Prosthetics Ltd.</td>
-                            <td>contact@smartprosthetics.net</td>
-                            <td>+20 777888999</td>
-                            <td>Sharm El-Sheikh</td>
-                            <td>Technology, Financial</td>
-                            <td>Technical Support</td>
-                            <td>High Profile</td>
-                            <td>2024-12-15</td>
-                            <td>
-                                <a href="#" style="margin-right: 5px; color: var(--main_color);">
-                                    <ion-icon name="create-outline"></ion-icon>
-                                </a>
-                                <a href="#" style="color: var(--Sale_color);">
-                                    <ion-icon name="trash-outline"></ion-icon>
-                                </a>
-                            </td>
-                        </tr>
+                        <tbody id="suppliersTableBody">
+                        <!-- Suppliers will be loaded dynamically -->
                         </tbody>
                     </table>
                 </div>
             </div>
         </div>
-        <div class="details" style="grid-template-columns: 1fr;">
+        <div id="products" class="details" style="grid-template-columns: 1fr;">
             <div class="recentOrders">
                 <div class="cardHeader">
                     <h2>Products</h2>
-                    <a href="#" class="btn">Add New</a>
+                    <a href="newproduct.html" class="btn">Add New</a>
                 </div>
 
                 <div class="table-container">
@@ -966,109 +497,8 @@
                             <th>Actions</th>
                         </tr>
                         </thead>
-                        <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td><img src="/api/placeholder/60/60" alt="System Electric Hand DMC" style="width: 60px; height: 60px; object-fit: cover;"></td>
-                            <td>System Electric Hand DMC</td>
-                            <td>12,500.00 EGP</td>
-                            <td>14,000.00 EGP</td>
-                            <td>Electric</td>
-                            <td>Upper Limb</td>
-                            <td>
-                                <a href="#" style="margin-right: 5px; color: var(--main_color);">
-                                    <ion-icon name="create-outline"></ion-icon>
-                                </a>
-                                <a href="#" style="color: var(--Sale_color);">
-                                    <ion-icon name="trash-outline"></ion-icon>
-                                </a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td><img src="/api/placeholder/60/60" alt="Polycentric Knee Joint" style="width: 60px; height: 60px; object-fit: cover;"></td>
-                            <td>Polycentric Knee Joint</td>
-                            <td>8,750.00 EGP</td>
-                            <td>9,800.00 EGP</td>
-                            <td>Mechanical</td>
-                            <td>Lower Limb</td>
-                            <td>
-                                <a href="#" style="margin-right: 5px; color: var(--main_color);">
-                                    <ion-icon name="create-outline"></ion-icon>
-                                </a>
-                                <a href="#" style="color: var(--Sale_color);">
-                                    <ion-icon name="trash-outline"></ion-icon>
-                                </a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>3</td>
-                            <td><img src="/api/placeholder/60/60" alt="Ball Shoulder Joint" style="width: 60px; height: 60px; object-fit: cover;"></td>
-                            <td>Ball Shoulder Joint</td>
-                            <td>7,200.00 EGP</td>
-                            <td>7,800.00 EGP</td>
-                            <td>Mechanical</td>
-                            <td>Upper Limb</td>
-                            <td>
-                                <a href="#" style="margin-right: 5px; color: var(--main_color);">
-                                    <ion-icon name="create-outline"></ion-icon>
-                                </a>
-                                <a href="#" style="color: var(--Sale_color);">
-                                    <ion-icon name="trash-outline"></ion-icon>
-                                </a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>4</td>
-                            <td><img src="/api/placeholder/60/60" alt="Foot Cover Size 42" style="width: 60px; height: 60px; object-fit: cover;"></td>
-                            <td>Foot Cover Size 42</td>
-                            <td>950.00 EGP</td>
-                            <td>1,100.00 EGP</td>
-                            <td>Cosmetic</td>
-                            <td>Lower Limb</td>
-                            <td>
-                                <a href="#" style="margin-right: 5px; color: var(--main_color);">
-                                    <ion-icon name="create-outline"></ion-icon>
-                                </a>
-                                <a href="#" style="color: var(--Sale_color);">
-                                    <ion-icon name="trash-outline"></ion-icon>
-                                </a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>5</td>
-                            <td><img src="/api/placeholder/60/60" alt="Runway Foot" style="width: 60px; height: 60px; object-fit: cover;"></td>
-                            <td>Runway Foot</td>
-                            <td>4,500.00 EGP</td>
-                            <td>5,200.00 EGP</td>
-                            <td>Athletic</td>
-                            <td>Lower Limb</td>
-                            <td>
-                                <a href="#" style="margin-right: 5px; color: var(--main_color);">
-                                    <ion-icon name="create-outline"></ion-icon>
-                                </a>
-                                <a href="#" style="color: var(--Sale_color);">
-                                    <ion-icon name="trash-outline"></ion-icon>
-                                </a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>6</td>
-                            <td><img src="/api/placeholder/60/60" alt="Multi-Axis Wrist" style="width: 60px; height: 60px; object-fit: cover;"></td>
-                            <td>Multi-Axis Wrist</td>
-                            <td>3,850.00 EGP</td>
-                            <td>4,200.00 EGP</td>
-                            <td>Mechanical</td>
-                            <td>Upper Limb</td>
-                            <td>
-                                <a href="#" style="margin-right: 5px; color: var(--main_color);">
-                                    <ion-icon name="create-outline"></ion-icon>
-                                </a>
-                                <a href="#" style="color: var(--Sale_color);">
-                                    <ion-icon name="trash-outline"></ion-icon>
-                                </a>
-                            </td>
-                        </tr>
+                        <tbody id="productsTableBody">
+                        <!-- Products will be loaded dynamically -->
                         </tbody>
                     </table>
                 </div>
@@ -1076,6 +506,10 @@
         </div>
     </div>
 </div>
+
+<!-- ====== ionicons ======= -->
+<script type="module" src="https://cdn.jsdelivr.net/npm/ionicons@7.2.2/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://cdn.jsdelivr.net/npm/ionicons@7.2.2/dist/ionicons/ionicons.js"></script>
 
 <!-- =========== Scripts =========  -->
 <script>
@@ -1100,34 +534,1532 @@
         navigation.classList.toggle("active");
         main.classList.toggle("active");
     };
-    document.addEventListener('DOMContentLoaded', function() {
-        // Add event listeners to view buttons
-        const viewButtons = document.querySelectorAll('.view-btn');
-        viewButtons.forEach(button => {
-            button.addEventListener('click', function(e) {
-                e.preventDefault();
-                // In a real implementation, you would fetch message details
-                // For now, we'll just display an alert
-                alert('Message view functionality would be implemented here');
-            });
-        });
 
-        // Add event listeners to delete buttons
-        const deleteButtons = document.querySelectorAll('.delete-btn');
-        deleteButtons.forEach(button => {
-            button.addEventListener('click', function(e) {
-                e.preventDefault();
-                if (confirm('Are you sure you want to delete this message?')) {
-                    // In a real implementation, you would delete the message
-                    alert('Message delete functionality would be implemented here');
+    // Smooth scrolling for navigation links and load appropriate data
+    document.querySelectorAll('.navigation a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const targetId = this.getAttribute('href');
+            if (targetId === '#') return; // Skip if href is just "#"
+            
+            const targetElement = document.querySelector(targetId);
+            if (targetElement) {
+                targetElement.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+                
+                // Update active state
+                list.forEach((item) => {
+                    item.classList.remove("hovered");
+                    item.classList.remove("active");
+                });
+                this.parentElement.classList.add("hovered");
+                this.parentElement.classList.add("active");
+                
+                // Load the appropriate data for the section
+                const section = targetId.substring(1); // Remove the # 
+                loadSectionData(section);
+            }
+        });
+    });
+
+    // Add scroll spy to highlight the current section in the navigation
+    window.addEventListener('scroll', function() {
+        const sections = document.querySelectorAll('#dashboard, #analytics, #orders, #customers, #messages, #volunteers, #suppliers, #products');
+        const scrollPosition = window.scrollY + 100; // Adjust offset as needed
+        
+        // Find the current section
+        let currentSection = '';
+        sections.forEach(section => {
+            const sectionTop = section.offsetTop;
+            const sectionHeight = section.offsetHeight;
+            
+            if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
+                currentSection = section.id;
+            }
+        });
+        
+        // Update active navigation item
+        if (currentSection) {
+            list.forEach(item => {
+                item.classList.remove('active');
+                const link = item.querySelector(`a[href="#${currentSection}"]`);
+                if (link) {
+                    item.classList.add('active');
                 }
+            });
+        }
+    });
+
+    // Function to load section data
+    function loadSectionData(section) {
+        console.log('Loading data for section:', section);
+        switch(section) {
+            case 'dashboard':
+                window.loadDashboardStats();
+                window.loadBestSellers();
+                window.loadQuickStats();
+                window.loadRecentOrders();
+                window.loadRecentCustomers();
+                break;
+            case 'analytics':
+                // Analytics data is loaded via charts
+                if (typeof window.initCharts === 'function') {
+                    window.initCharts();
+                }
+                break;
+            case 'orders':
+                window.loadRecentOrders();
+                break;
+            case 'customers':
+                window.loadCustomers();
+                break;
+            case 'messages':
+                window.loadMessages();
+                break;
+            case 'volunteers':
+                window.loadVolunteers();
+                break;
+            case 'suppliers':
+                window.loadSuppliers();
+                break;
+            case 'products':
+                window.loadProducts();
+                break;
+        }
+    }
+
+    // Debug logging for initialization
+    console.log('Basic UI initialization complete in admin.html');
+    
+    // Verify AdminAPI is loaded properly
+    if (typeof AdminAPI === 'undefined') {
+        console.error('CRITICAL ERROR: AdminAPI is not defined. Check that admin-api.js is loaded correctly.');
+    } else {
+        console.log('AdminAPI loaded successfully:', Object.keys(AdminAPI));
+        // Check authentication
+        if (!AdminAPI.Auth.isLoggedIn()) {
+            console.warn('User is not logged in! Redirecting to login page...');
+            window.location.href = '../Login Page.html';
+        } else {
+            console.log('User is authenticated. Proceeding with dashboard initialization.');
+        }
+    }
+    
+    // Verify AdminUI functions are loaded
+    if (typeof loadDashboardStats === 'undefined') {
+        console.error('CRITICAL ERROR: Admin UI functions are not defined. Check that admin-ui.js is loaded and exposed correctly.');
+    } else {
+        console.log('Admin UI functions loaded successfully.');
+        
+        // Initialize the dashboard data
+        setTimeout(() => {
+            // Load initial data for dashboard
+            loadSectionData('dashboard');
+            
+            // Pre-load data for other sections to ensure they're ready when needed
+            loadSectionData('customers');
+            loadSectionData('messages');
+            loadSectionData('volunteers');
+            loadSectionData('suppliers');
+            loadSectionData('products');
+        }, 500); // small delay to ensure DOM is fully loaded
+    }
+    
+    // Add a dark mode toggle functionality
+    const themeToggle = document.querySelector('.theme-toggle');
+    if (themeToggle) {
+        themeToggle.addEventListener('click', function() {
+            document.documentElement.setAttribute('data-theme', 
+                document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+            
+            // Update charts for dark mode if they exist
+            if (typeof updateChartsForDarkMode === 'function') {
+                try {
+                    updateChartsForDarkMode();
+                } catch (e) {
+                    console.error('Error updating charts for dark mode:', e);
+                }
+            }
+        });
+    }
+    
+    // Initialize debugging for network requests
+    window.addEventListener('error', function(e) {
+        console.error('Global error caught:', e.message, e);
+    });
+    
+    // Monitor for failed API calls
+    const originalFetch = window.fetch;
+    window.fetch = function(...args) {
+        console.log('Fetch request:', args[0]);
+        return originalFetch.apply(this, args)
+            .then(response => {
+                console.log('Fetch response status:', response.status, 'for', args[0]);
+                return response;
+            })
+            .catch(error => {
+                console.error('Fetch error for', args[0], ':', error);
+                throw error;
+            });
+    };
+
+    // Handle sign out
+    document.getElementById('signOutBtn').addEventListener('click', function(e) {
+        e.preventDefault();
+        // Clear admin token
+        localStorage.removeItem('adminToken');
+        // Clear any other auth tokens
+        localStorage.removeItem('token');
+        localStorage.removeItem('user');
+        // Redirect to login page
+        window.location.href = '../Login Page.html';
+    });
+
+    function exportChart(chartId) {
+        const chartInstance = Object.values(window.adminCharts).find(
+            chart => chart.canvas && chart.canvas.id === chartId
+        );
+        if (!chartInstance) {
+            alert('Chart not found!');
+            return;
+        }
+        const link = document.createElement('a');
+        link.href = chartInstance.toBase64Image();
+        link.download = `${chartId}.png`;
+        link.click();
+    }
+    window.exportChart = exportChart;
+
+    // Custom event handlers for different entity types
+    document.addEventListener('DOMContentLoaded', function() {
+        // Global event delegation for all entity tables
+        document.addEventListener('click', function(event) {
+            // Handle clicks on buttons or their child elements (icons)
+            const getButton = (selector) => {
+                if (event.target.matches(selector)) {
+                    return event.target;
+                }
+                const closest = event.target.closest(selector);
+                return closest;
+            };
+            
+            // Handle product edit buttons
+            const productEditBtn = getButton('.product-edit-btn');
+            if (productEditBtn) {
+                event.preventDefault();
+                console.log('Product edit button clicked');
+                const productId = productEditBtn.getAttribute('data-id');
+                console.log('Edit product with ID:', productId);
+                
+                // Call the edit modal for product
+                if (productId) {
+                    editProduct(productId);
+                } else {
+                    showError('No product ID found on button');
+                }
+            }
+            
+            // Handle delete buttons for all entities
+            const deleteBtn = getButton('.delete-btn');
+            if (deleteBtn) {
+                event.preventDefault();
+                const id = deleteBtn.getAttribute('data-id');
+                const entityType = deleteBtn.getAttribute('data-type');
+                console.log(`Delete ${entityType} with ID:`, id);
+                
+                if (id && entityType) {
+                    confirmDelete(id, entityType);
+                } else {
+                    showError('Missing ID or entity type for delete operation');
+                }
+            }
+        });
+    });
+    
+    // Function to edit product
+    function editProduct(productId) {
+        console.log('editProduct called with ID:', productId);
+        
+        // Validate we have an ID
+        if (!productId) {
+            console.error('No product ID provided');
+            showError('Invalid product ID');
+            return;
+        }
+        
+        // Track ongoing request to prevent duplicate modals
+        if (window.ongoingEditRequest) {
+            console.log('Edit request already in progress, aborting');
+            return;
+        }
+        
+        window.ongoingEditRequest = true;
+        
+        // Show loading indicator
+        const loadingToast = document.createElement('div');
+        loadingToast.className = 'toast-notification info';
+        loadingToast.innerHTML = `
+            <div class="toast-icon">
+                <ion-icon name="refresh-outline"></ion-icon>
+            </div>
+            <div class="toast-message">Loading product data...</div>
+        `;
+        document.body.appendChild(loadingToast);
+        
+        // Get the token and log it to help debug
+        const token = localStorage.getItem('adminToken');
+        console.log('Token available for product fetch:', !!token, 'Length:', token ? token.length : 0);
+        
+        // Fetch product data with proper API prefix and auth header
+        fetch(`/api/admin/products/${productId}`, {
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(response => {
+            console.log('Product fetch response status:', response.status);
+            if (!response.ok) {
+                throw new Error(`API returned ${response.status}: ${response.statusText}`);
+            }
+            return response.json();
+        })
+        .then(product => {
+            console.log('Product data received:', product);
+            // Dump all properties from the API response to see what naming convention is used
+            console.log('All product properties:');
+            for (const key in product) {
+                console.log(`- ${key}: ${product[key]}`);
+            }
+            
+            // Remove loading toast
+            loadingToast.remove();
+            
+            // Helper function to resolve image path
+            function resolveImagePath(imagePath) {
+                if (!imagePath) {
+                    return '../images/placeholder.jpg';
+                }
+                
+                // If it starts with 'images/' add the parent directory prefix
+                if (imagePath.startsWith('images/')) {
+                    return `../${imagePath}`;
+                }
+                
+                // If it starts with '@uploads/' add the parent directory prefix
+                if (imagePath.startsWith('@uploads/')) {
+                    return `../backend.pulsee/backend.pulse/${imagePath}`;
+                }
+                
+                // If it's a full URL, use it as is
+                if (imagePath.startsWith('http://') || imagePath.startsWith('https://')) {
+                    return imagePath;
+                }
+                
+                // Otherwise assume it's already a proper relative path
+                return imagePath;
+            }
+            
+            // Build the product edit modal content
+            const modalContent = `
+                <div class="modal fade" id="edit-product-modal" tabindex="-1" role="dialog" aria-labelledby="productEditModalLabel" style="display: none; background-color: rgba(0,0,0,0.5);">
+                    <div class="modal-dialog modal-lg" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="productEditModalLabel">Edit Product: ${product.name}</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <form id="edit-product-form" enctype="multipart/form-data">
+                                    <input type="hidden" name="id" value="${product.id}">
+                                    
+                                    <div class="form-row">
+                                        <div class="form-col-6">
+                                            <div class="form-group">
+                                                <label for="name">Product Name</label>
+                                                <input type="text" class="form-control" id="name" name="name" value="${product.name || ''}" required>
+                                            </div>
+                                        </div>
+                                        <div class="form-col-6">
+                                            <div class="form-group">
+                                                <label for="price">Price (EGP)</label>
+                                                <input type="number" class="form-control" id="price" name="price" value="${product.price || ''}" step="0.01" min="0" required>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-col-6">
+                                            <div class="form-group">
+                                                <label for="old_price">Old Price (EGP)</label>
+                                                <input type="number" class="form-control" id="old_price" name="old_price" value="${product.old_price || ''}" step="0.01" min="0">
+                                            </div>
+                                        </div>
+                                        <div class="form-col-6">
+                                            <div class="form-group">
+                                                <label for="type">Type</label>
+                                                <input type="text" class="form-control" id="type" name="type" value="${product.type || ''}">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-col-6">
+                                            <div class="form-group">
+                                                <label for="Category">Category</label>
+                                                <select class="form-control" id="Category" name="Category">
+                                                    <option value="Upper Limb" ${product.Category === 'Upper Limb' ? 'selected' : ''}>Upper Limb</option>
+                                                    <option value="Lower Limb" ${product.Category === 'Lower Limb' ? 'selected' : ''}>Lower Limb</option>
+                                                    <option value="Spine" ${product.Category === 'Spine' ? 'selected' : ''}>Spine</option>
+                                                    <option value="Accessories" ${product.Category === 'Accessories' ? 'selected' : ''}>Accessories</option>
+                                                    <option value="Other" ${product.Category && !['Upper Limb', 'Lower Limb', 'Spine', 'Accessories'].includes(product.Category) ? 'selected' : ''}>Other</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="form-col-6">
+                                            <div class="form-group">
+                                                <label for="description">Description</label>
+                                                <textarea class="form-control" id="description" name="description" rows="4">${product.description || ''}</textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Current Image</label>
+                                        <div class="current-image">
+                                            <img src="${resolveImagePath(product.image)}" alt="${product.name}" onerror="this.onerror=null; this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTYgMjU2Ij48cmVjdCB3aWR0aD0iMjU2IiBoZWlnaHQ9IjI1NiIgZmlsbD0iI2Y4ZjlmYSIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBmb250LXNpemU9IjMwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSIjYWFhYWFhIiBkeT0iLjNlbSIgZm9udC1mYW1pbHk9IidBcmlhbCcsIHNhbnMtc2VyaWYiPuKaoO+4jzwvdGV4dD48L3N2Zz4='">
+                                        </div>
+                                        <label for="newImage">Upload New Image</label>
+                                        <input type="file" class="form-control-file" id="newImage" name="newImage" accept="image/*">
+                                        <input type="hidden" name="existingImage" value="${product.image || ''}">
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" onclick="closeModal('edit-product-modal')">Cancel</button>
+                                <button type="button" class="btn btn-primary" onclick="saveProduct()">Save Changes</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            // Use our modal manager to create and show the modal
+            ModalManager.ensureContainer();
+            ModalManager.container.innerHTML = modalContent;
+            
+            // Show the modal
+            const modalElement = document.getElementById('edit-product-modal');
+            if (modalElement) {
+                ModalManager.show(modalElement);
+            } else {
+                showError('Product edit modal not found. Please refresh the page and try again.');
+            }
+            
+            // Add event listener for form submission
+            const form = document.getElementById('edit-product-form');
+            if (form) {
+                form.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    saveProduct();
+                });
+            }
+            
+            console.log('Product edit modal built and displayed');
+        })
+        .catch(error => {
+            console.error('Error fetching product data:', error);
+            
+            // Replace loading toast with error toast
+            loadingToast.remove();
+            const errorToast = document.createElement('div');
+            errorToast.className = 'toast-notification error';
+            errorToast.innerHTML = `
+                <div class="toast-icon">
+                    <ion-icon name="alert-circle-outline"></ion-icon>
+                </div>
+                <div class="toast-message">Failed to load product data: ${error.message}</div>
+                <button class="toast-close">
+                    <ion-icon name="close-outline"></ion-icon>
+                </button>
+            `;
+            document.body.appendChild(errorToast);
+            
+            // Auto remove error toast after 5 seconds
+            setTimeout(() => {
+                errorToast.classList.add('fade-out');
+                setTimeout(() => {
+                    errorToast.remove();
+                }, 300);
+            }, 5000);
+            
+            // Add close event handler
+            errorToast.querySelector('.toast-close').addEventListener('click', () => {
+                errorToast.classList.add('fade-out');
+                setTimeout(() => {
+                    errorToast.remove();
+                }, 300);
+            });
+            
+            // If authentication error, refresh token
+            if (error.message && error.message.includes('401')) {
+                localStorage.removeItem('adminToken');
+                // Don't redirect immediately to allow user to see the error
+                setTimeout(() => {
+                    window.location.href = '../Login Page.html';
+                }, 3000);
+            }
+        })
+        .finally(() => {
+            window.ongoingEditRequest = false;
+        });
+    }
+    
+    // Function to save product changes
+    function saveProduct() {
+        const form = document.getElementById('edit-product-form');
+        if (!form) {
+            showError('Product form not found');
+            return;
+        }
+        
+        // Create FormData object for file upload support
+        const formData = new FormData(form);
+        const productId = formData.get('id');
+        
+        if (!productId) {
+            showError('Product ID is missing');
+            return;
+        }
+        
+        console.log('Saving product data with ID:', productId);
+        
+        // Show loading state
+        const saveButton = document.querySelector('#edit-product-modal .btn-primary');
+        if (saveButton) {
+            saveButton.innerHTML = '<ion-icon name="refresh-outline" class="spin"></ion-icon> Saving...';
+            saveButton.disabled = true;
+        }
+        
+        // Send update request to API
+        fetch(`/api/admin/products/${productId}`, {
+            method: 'PUT',
+            headers: {
+                'Authorization': `Bearer ${localStorage.getItem('adminToken')}`
+                // Note: don't set Content-Type for FormData
+            },
+            body: formData
+        })
+        .then(response => {
+            console.log('API response status:', response.status);
+            console.log('API response OK:', response.ok);
+            
+            if (!response.ok) {
+                throw new Error(`API returned ${response.status}`);
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log('API response data:', data);
+            // Log specific name fields to check what was saved
+            console.log('Saved first name:', data.name);
+            console.log('Saved price:', data.price);
+            
+            // Reset button state
+            if (saveButton) {
+                saveButton.innerHTML = 'Save Changes';
+                saveButton.disabled = false;
+            }
+            
+            // Close the modal and show success message
+            ModalManager.close('edit-product-modal');
+            showSuccess('Product updated successfully!');
+            
+            // Reload products list
+            if (typeof loadProducts === 'function') {
+                console.log('Reloading products list');
+                loadProducts();
+            } else {
+                console.error('loadProducts function not found');
+            }
+        })
+        .catch(error => {
+            console.error('Error updating product:', error);
+            
+            // Reset button state
+            if (saveButton) {
+                saveButton.innerHTML = 'Save Changes';
+                saveButton.disabled = false;
+            }
+            
+            showError('Failed to update product. Please try again.');
+        });
+    }
+    
+    // Remove the other edit functions, but keep showSuccess, showError which are used by products
+    function showSuccess(message) {
+        const toast = document.createElement('div');
+        toast.className = 'toast-notification success';
+        toast.innerHTML = `
+            <div class="toast-icon">
+                <ion-icon name="checkmark-circle-outline"></ion-icon>
+            </div>
+            <div class="toast-message">${message}</div>
+            <button class="toast-close">
+                <ion-icon name="close-outline"></ion-icon>
+            </button>
+        `;
+        document.body.appendChild(toast);
+        
+        // Auto remove after 3 seconds
+        setTimeout(() => {
+            toast.classList.add('fade-out');
+            setTimeout(() => {
+                toast.remove();
+            }, 300);
+        }, 3000);
+        
+        // Close button functionality
+        toast.querySelector('.toast-close').addEventListener('click', () => {
+            toast.classList.add('fade-out');
+            setTimeout(() => {
+                toast.remove();
+            }, 300);
+        });
+    }
+    
+    function showError(message) {
+        const toast = document.createElement('div');
+        toast.className = 'toast-notification error';
+        toast.innerHTML = `
+            <div class="toast-icon">
+                <ion-icon name="alert-circle-outline"></ion-icon>
+            </div>
+            <div class="toast-message">${message}</div>
+            <button class="toast-close">
+                <ion-icon name="close-outline"></ion-icon>
+            </button>
+        `;
+        document.body.appendChild(toast);
+        
+        // Auto remove after 5 seconds
+        setTimeout(() => {
+            toast.classList.add('fade-out');
+            setTimeout(() => {
+                toast.remove();
+            }, 300);
+        }, 5000);
+        
+        // Close button functionality
+        toast.querySelector('.toast-close').addEventListener('click', () => {
+            toast.classList.add('fade-out');
+            setTimeout(() => {
+                toast.remove();
+            }, 300);
+        });
+    }
+    
+    // Make only necessary functions available globally
+    window.editProduct = editProduct;
+    window.saveProduct = saveProduct;
+    window.showSuccess = showSuccess;
+    window.showError = showError;
+
+    // Customer Edit Functions
+    function editCustomer(customerId) {
+        console.log('Editing customer with ID:', customerId);
+        
+        if (!customerId) {
+            showError('Invalid customer ID');
+            return;
+        }
+        
+        // First make sure the form is reset to clear any previous data
+        const form = document.getElementById('editCustomerForm');
+        if (form) {
+            console.log('Resetting form');
+            form.reset();
+        }
+        
+        // Show loading indicator
+        const loadingToast = document.createElement('div');
+        loadingToast.className = 'toast-notification info';
+        loadingToast.innerHTML = `
+            <div class="toast-icon">
+                <ion-icon name="refresh-outline"></ion-icon>
+            </div>
+            <div class="toast-message">Loading customer data...</div>
+        `;
+        document.body.appendChild(loadingToast);
+        
+        // Get token
+        const token = localStorage.getItem('adminToken');
+        
+        // Fetch customer data
+        fetch(`/api/admin/customers/${customerId}`, {
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`API returned ${response.status}: ${response.statusText}`);
+            }
+            return response.json();
+        })
+        .then(customer => {
+            console.log('Customer data received from API:', customer);
+            // Dump all properties from the API response to see what naming convention is used
+            console.log('All customer properties:');
+            for (const key in customer) {
+                console.log(`- ${key}: ${customer[key]}`);
+            }
+            
+            // Remove loading toast
+            loadingToast.remove();
+            
+            // Fill form with customer data - safely checking if elements exist
+            const idField = document.getElementById('customerId');
+            if (idField) {
+                idField.value = customer.id || '';
+                console.log('Set customer ID field to:', idField.value);
+            }
+            
+            // Handle both naming conventions from the API (first_name/last_name and firstName/lastName)
+            const firstName = customer.first_name || customer.firstName || '';
+            const lastName = customer.last_name || customer.lastName || '';
+            
+            const firstNameField = document.getElementById('customerFirstName');
+            if (firstNameField) {
+                firstNameField.value = firstName;
+                console.log('Set first name field to:', firstName);
+            }
+            
+            const lastNameField = document.getElementById('customerLastName');
+            if (lastNameField) {
+                lastNameField.value = lastName;
+                console.log('Set last name field to:', lastName);
+            }
+            
+            const emailField = document.getElementById('customerEmail');
+            if (emailField) {
+                emailField.value = customer.email || '';
+                console.log('Set email field to:', emailField.value);
+            }
+            
+            const phoneField = document.getElementById('customerPhone');
+            if (phoneField) {
+                phoneField.value = customer.phone || '';
+                console.log('Set phone field to:', phoneField.value);
+            }
+            
+            const addressField = document.getElementById('customerAddress');
+            if (addressField) {
+                addressField.value = customer.address || '';
+                console.log('Set address field to:', addressField.value);
+            }
+            
+            const birthDateField = document.getElementById('customerBirthDate');
+            if (birthDateField) {
+                // Format the date to YYYY-MM-DD format for the date input
+                let birthDate = '';
+                if (customer.birthDate) {
+                    // Extract just the YYYY-MM-DD part from the ISO date string
+                    birthDate = customer.birthDate.split('T')[0];
+                }
+                birthDateField.value = birthDate;
+                console.log('Set birth date field to:', birthDateField.value);
+            }
+            
+            const statusField = document.getElementById('customerStatus');
+            if (statusField) {
+                statusField.value = customer.status || 'active';
+                console.log('Set status field to:', statusField.value);
+            }
+            
+            // Show the new modal
+            const modalElement = document.getElementById('customerEditModal');
+            if (modalElement) {
+                console.log('Opening customer edit modal');
+                ModalManager.show(modalElement);
+                
+                // Force browser to recognize changes
+                setTimeout(() => {
+                    // Ensure we've updated the fields by triggering a change event
+                    const fields = ['customerFirstName', 'customerLastName', 'customerEmail', 
+                                    'customerPhone', 'customerAddress', 'customerBirthDate', 'customerStatus'];
+                    fields.forEach(id => {
+                        const field = document.getElementById(id);
+                        if (field) {
+                            // Trigger change event to ensure browser recognizes the new value
+                            const event = new Event('change', { bubbles: true });
+                            field.dispatchEvent(event);
+                        }
+                    });
+                }, 100);
+            } else {
+                console.error('Customer edit modal not found');
+                showError('Customer edit modal not found. Please refresh the page and try again.');
+            }
+        })
+        .catch(error => {
+            console.error('Error fetching customer data:', error);
+            
+            // Remove loading toast and show error
+            loadingToast.remove();
+            showError(`Failed to load customer data: ${error.message}`);
+            
+            // Handle authentication errors
+            if (error.message.includes('401')) {
+                localStorage.removeItem('adminToken');
+                setTimeout(() => {
+                    window.location.href = '../Login Page.html';
+                }, 3000);
+            }
+        });
+    }
+    
+    function saveCustomer() {
+        console.log('saveCustomer function called');
+        
+        // Get the correct form
+        const form = document.getElementById('editCustomerForm');
+        if (!form) {
+            console.error('Form not found in DOM');
+            showError('Customer form not found');
+            return;
+        }
+        console.log('Form found:', form);
+        
+        // Log all form elements for debugging
+        const formElements = form.elements;
+        console.log('Form elements:', formElements);
+        for (let i = 0; i < formElements.length; i++) {
+            const element = formElements[i];
+            console.log(`Element ${i}:`, element.id, 'Value:', element.value);
+        }
+        
+        // Get customer ID
+        const customerId = document.getElementById('customerId').value;
+        console.log('Customer ID:', customerId);
+        
+        if (!customerId) {
+            console.error('Customer ID is missing');
+            showError('Customer ID is missing');
+            return;
+        }
+        
+        // Create references to all form elements for clarity
+        const firstNameElement = document.getElementById('customerFirstName');
+        const lastNameElement = document.getElementById('customerLastName');
+        const emailElement = document.getElementById('customerEmail');
+        const phoneElement = document.getElementById('customerPhone');
+        const addressElement = document.getElementById('customerAddress');
+        const birthDateElement = document.getElementById('customerBirthDate');
+        const statusElement = document.getElementById('customerStatus');
+        
+        // Log DOM elements to ensure they exist
+        console.log('First name element exists:', !!firstNameElement);
+        console.log('Last name element exists:', !!lastNameElement);
+        console.log('Email element exists:', !!emailElement);
+        console.log('Phone element exists:', !!phoneElement);
+        console.log('Address element exists:', !!addressElement);
+        console.log('Birth date element exists:', !!birthDateElement);
+        console.log('Status element exists:', !!statusElement);
+        
+        // Extract values directly from the form fields - ensure we get current values
+        const firstName = firstNameElement ? firstNameElement.value.trim() : '';
+        const lastName = lastNameElement ? lastNameElement.value.trim() : '';
+        const email = emailElement ? emailElement.value.trim() : '';
+        const phone = phoneElement ? phoneElement.value.trim() : '';
+        const address = addressElement ? addressElement.value.trim() : '';
+        const birthDate = birthDateElement ? birthDateElement.value.trim() : '';
+        const status = statusElement ? statusElement.value : 'active';
+        
+        // Log all extracted values
+        console.log('Extracted field values:');
+        console.log('First name:', firstName);
+        console.log('Last name:', lastName);
+        console.log('Email:', email);
+        console.log('Phone:', phone);
+        console.log('Address:', address);
+        console.log('Birth date:', birthDate);
+        console.log('Status:', status);
+        
+        // Create data object from form values
+        const customerData = {
+            id: customerId,
+            first_name: firstName,
+            last_name: lastName,
+            firstName: firstName,
+            lastName: lastName,
+            email: email,
+            phone: phone,
+            address: address,
+            birthDate: birthDate,
+            status: status
+        };
+        
+        console.log('Saving customer data with values:', customerData);
+        
+        // Show loading state
+        const saveButton = document.querySelector('#customerEditModal .btn-primary');
+        if (saveButton) {
+            console.log('Save button found, updating UI');
+            saveButton.innerHTML = '<ion-icon name="refresh-outline" class="spin"></ion-icon> Saving...';
+            saveButton.disabled = true;
+        } else {
+            console.error('Save button not found');
+        }
+        
+        // Log the API endpoint and request details
+        const apiEndpoint = `/api/admin/customers/${customerId}`;
+        console.log('Sending PUT request to:', apiEndpoint);
+        console.log('Request headers:', {
+            'Authorization': 'Bearer [TOKEN_HIDDEN]',
+            'Content-Type': 'application/json'
+        });
+        console.log('Request body:', JSON.stringify(customerData));
+        
+        // Send update request
+        fetch(`/api/admin/customers/${customerId}`, {
+            method: 'PUT',
+            headers: {
+                'Authorization': `Bearer ${localStorage.getItem('adminToken')}`,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(customerData)
+        })
+        .then(response => {
+            console.log('API response status:', response.status);
+            console.log('API response OK:', response.ok);
+            
+            if (!response.ok) {
+                throw new Error(`API returned ${response.status}`);
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log('API response data:', data);
+            // Log specific name fields to check what was saved
+            console.log('Saved first name:', data.first_name || data.firstName);
+            console.log('Saved last name:', data.last_name || data.lastName);
+            
+            // Reset button
+            if (saveButton) {
+                saveButton.innerHTML = 'Save Changes';
+                saveButton.disabled = false;
+            }
+            
+            // Close modal and show success
+            if (typeof ModalManager !== 'undefined' && typeof ModalManager.hide === 'function') {
+                console.log('Using ModalManager.hide to close the modal');
+                ModalManager.hide('customerEditModal');
+            } else {
+                console.log('Falling back to direct DOM manipulation');
+                const modal = document.getElementById('customerEditModal');
+                if (modal) {
+                    modal.style.display = 'none';
+                    modal.classList.remove('show');
+                }
+            }
+            showSuccess('Customer updated successfully!');
+            
+            // Reload customers list
+            if (typeof loadCustomers === 'function') {
+                console.log('Reloading customers list');
+                loadCustomers();
+            } else {
+                console.error('loadCustomers function not found');
+            }
+        })
+        .catch(error => {
+            console.error('Error updating customer:', error);
+            
+            // Reset button
+            if (saveButton) {
+                saveButton.innerHTML = 'Save Changes';
+                saveButton.disabled = false;
+            }
+            
+            showError('Failed to update customer: ' + error.message);
+        });
+    }
+    
+    // Add customer edit functions to window
+    window.editCustomer = editCustomer;
+    window.saveCustomer = saveCustomer;
+</script>
+
+<!-- Remove the customer, supplier, and volunteer modals, but keep the Order Details Modal -->
+<div id="orderDetailsModal" class="modal" style="display: none;">
+    <div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2>Order Details</h2>
+                <button type="button" class="close" onclick="closeModal('orderDetailsModal')">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+        </div>
+        <div class="modal-body">
+            <div class="order-info">
+                <div class="info-group">
+                    <h3>Order Information</h3>
+                    <p><strong>Order ID:</strong> <span id="modalOrderId"></span></p>
+                    <p><strong>Order Date:</strong> <span id="modalOrderDate"></span></p>
+                    <p><strong>Status:</strong> <span id="modalOrderStatus"></span></p>
+                    <p><strong>Total Amount:</strong> <span id="modalOrderTotal"></span></p>
+                </div>
+                <div class="info-group">
+                    <h3>Customer Information</h3>
+                    <p><strong>Name:</strong> <span id="modalCustomerName"></span></p>
+                    <p><strong>Email:</strong> <span id="modalCustomerEmail"></span></p>
+                    <p><strong>Phone:</strong> <span id="modalCustomerPhone"></span></p>
+                    <p><strong>Address:</strong> <span id="modalCustomerAddress"></span></p>
+                </div>
+            </div>
+            <div class="order-items">
+                <h3>Order Items</h3>
+                <table class="order-items-table">
+                    <thead>
+                        <tr>
+                            <th>Product</th>
+                            <th>Price</th>
+                            <th>Quantity</th>
+                            <th>Subtotal</th>
+                        </tr>
+                    </thead>
+                    <tbody id="modalOrderItems">
+                        <!-- Order items will be loaded here -->
+                    </tbody>
+                </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" onclick="closeModal('orderDetailsModal')">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Customer Edit Modal with improved form styling -->
+<div id="customerEditModal" class="modal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Edit Customer</h2>
+                <button type="button" class="close" onclick="closeModal('customerEditModal')">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="editCustomerForm">
+                    <input type="hidden" id="customerId">
+                    
+                    <div class="form-group">
+                        <label for="customerFirstName">First Name</label>
+                        <input type="text" class="form-control" id="customerFirstName" placeholder="First Name" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="customerLastName">Last Name</label>
+                        <input type="text" class="form-control" id="customerLastName" placeholder="Last Name" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="customerEmail">Email</label>
+                        <input type="email" class="form-control" id="customerEmail" placeholder="Customer Email" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="customerPhone">Phone</label>
+                        <input type="text" class="form-control" id="customerPhone" placeholder="Phone Number">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="customerAddress">Address</label>
+                        <input type="text" class="form-control" id="customerAddress" placeholder="Customer Address">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="customerBirthDate">Birth Date</label>
+                        <input type="date" class="form-control" id="customerBirthDate">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="customerStatus">Status</label>
+                        <select class="form-control" id="customerStatus">
+                            <option value="active">Active</option>
+                            <option value="inactive">Inactive</option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="modal-btn btn-secondary" onclick="closeModal('customerEditModal')">Cancel</button>
+                <button type="button" class="modal-btn btn-primary" onclick="saveCustomer()">Save Changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Add test button to open modal -->
+<div class="mt-4 text-center">
+    <button onclick="openCustomerEditModal()" class="modal-btn btn-primary" aria-label="Open Customer Form">
+    
+    </button>
+</div>
+
+<!-- Add enhanced modal styling -->
+<style>
+    /* Enhanced Modal Styling for PULSE Theme */
+    .modal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 1050;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        outline: 0;
+        background-color: rgba(0, 0, 0, 0.6);
+        display: none;
+        align-items: center;
+        justify-content: center;
+        backdrop-filter: blur(3px);
+        -webkit-backdrop-filter: blur(3px);
+        transition: all 0.3s ease;
+    }
+    
+    .modal.show {
+        display: flex !important;
+        animation: modalFadeIn 0.3s ease forwards;
+    }
+    
+    .modal-dialog {
+        max-width: 800px;
+        margin: 1.75rem auto;
+        position: relative;
+        width: 90%;
+        pointer-events: auto;
+        transform: translateY(0);
+        transition: transform 0.3s ease;
+    }
+    
+    .modal-content {
+        border: none;
+        border-radius: 12px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        background-color: var(--white_color);
+        position: relative;
+        width: 100%;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        pointer-events: auto;
+    }
+    
+    .modal-header {
+        background: linear-gradient(135deg, var(--primary_color) 0%, var(--secondary_color) 100%);
+        color: white;
+        border-top-left-radius: 12px;
+        border-top-right-radius: 12px;
+        padding: 20px 24px;
+        border-bottom: none;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+    
+    .modal-header h2, .modal-header h5 {
+        color: white;
+        font-weight: 600;
+        margin: 0;
+        font-size: 1.4rem;
+        letter-spacing: 0.01em;
+    }
+    
+    .modal-header .close {
+        color: white;
+        opacity: 0.8;
+        text-shadow: none;
+        transition: all 0.2s ease;
+        background: transparent;
+        border: none;
+        font-size: 1.5rem;
+        padding: 0;
+        margin: 0;
+        width: 30px;
+        height: 30px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+    }
+    
+    .modal-header .close:hover {
+        opacity: 1;
+        transform: rotate(90deg);
+        background-color: rgba(255, 255, 255, 0.1);
+    }
+    
+    .modal-header .close span {
+        color: white;
+    }
+    
+    .modal-body {
+        padding: 24px;
+        max-height: calc(100vh - 200px);
+        overflow-y: auto;
+        background-color: var(--white_color);
+    }
+    
+    .modal-footer {
+        border-top: 1px solid rgba(0, 0, 0, 0.1);
+        padding: 16px 24px;
+        display: flex;
+        justify-content: flex-end;
+        gap: 10px;
+        background-color: var(--white_color);
+    }
+    
+    /* Form styling with icons - ENHANCED */
+    .form-group {
+        margin-bottom: 20px;
+        position: relative;
+    }
+    
+    .form-group label {
+        font-weight: 500;
+        margin-bottom: 8px;
+        display: block;
+        color: var(--main_color);
+        font-size: 0.95rem;
+    }
+    
+  
+    
+    /* IMPROVED: Input icon positioning */
+    .input-icon {
+        position: absolute;
+        left: 12px;
+        top: 38px; /* Position below label */
+        color: #035461; /* Darker color for better contrast */
+        font-size: 18px;
+        pointer-events: none;
+        z-index: 2;
+    }
+    
+    /* For form groups without label, adjust icon position */
+    .form-group:not(:has(label)) .input-icon {
+        top: 50%;
+        transform: translateY(-50%);
+    }
+    
+
+    
+
+    
+   
+    
+    /* Form inside modals specific adjustments */
+    .modal-body .form-group {
+        margin-bottom: 20px;
+    }
+    
+    /* IMPROVED: Input wrapper with icon */
+    .input-with-icon {
+        position: relative;
+        width: 100%;
+    }
+  
+    
+    .input-with-icon .input-icon {
+        position: absolute;
+        left: 12px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #035461; /* Darker version of main_color for better contrast */
+        font-size: 18px;
+        pointer-events: none;
+    }
+    
+
+    
+    [data-theme="dark"] .input-icon {
+        color: var(--primary_color, #0193a5);
+    }
+    
+  
+    
+    /* Add this for better styling on volunteer form */
+    #volunteerEditModal .form-group,
+    #edit-volunteer-form .form-group {
+        margin-bottom: 20px;
+    }
+    
+    #volunteerEditModal .form-control,
+    #edit-volunteer-form .form-control {
+        border: 2px solid #444;
+        padding-left: 40px;
+    }
+    
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+        .form-control {
+            padding: 10px 14px 10px 36px;
+        }
+        
+        .input-icon {
+            font-size: 16px;
+            left: 10px;
+        }
+    }
+    
+    /* Animation for modal */
+    @keyframes modalFadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(-20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    
+    /* Dark theme support */
+    [data-theme="dark"] .modal-content {
+        background-color: var(--card_color, #1e1e1e);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+    }
+    
+    [data-theme="dark"] .modal-header {
+        background: linear-gradient(135deg, var(--primary_color, #0193a5) 0%, var(--secondary_color, #01c9a7) 100%);
+    }
+    
+    [data-theme="dark"] .modal-body {
+        background-color: var(--card_color, #1e1e1e);
+    }
+    
+    [data-theme="dark"] .modal-footer {
+        background-color: var(--card_color, #1e1e1e);
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    /* Focus state enhancement to highlight icon as well */
+    .form-control:focus + .input-icon,
+    .input-with-icon:focus-within .input-icon {
+        color: var(--primary_color);
+    }
+</style>
+
+<script>
+    // Function to enhance form inputs with icons after DOM is loaded
+    document.addEventListener('DOMContentLoaded', function() {
+        // Enhanced function to add icons to form fields with better selector targeting
+        function enhanceFormFields() {
+            // Icon mappings for different input types
+            const inputMappings = [
+                { selector: 'input[name*="name"], input[id*="name"], input[placeholder*="Name"], input[name*="first"], input[name*="last"], input[id*="first"], input[id*="last"]', icon: 'person-outline' },
+                { selector: 'input[type="email"], input[name*="email"], input[id*="email"], input[placeholder*="Email"]', icon: 'mail-outline' },
+                { selector: 'input[name*="phone"], input[id*="phone"], input[placeholder*="Phone"]', icon: 'call-outline' },
+                { selector: 'input[name*="address"], input[id*="address"], input[name*="location"], input[id*="location"]', icon: 'location-outline' },
+                { selector: 'input[name*="password"], input[id*="password"], input[type="password"]', icon: 'lock-closed-outline' },
+                { selector: 'input[name*="date"], input[id*="date"], input[type="date"]', icon: 'calendar-outline' },
+                { selector: 'input[name*="time"], input[id*="time"], input[type="time"]', icon: 'time-outline' },
+                { selector: 'input[name*="search"], input[id*="search"], input[type="search"]', icon: 'search-outline' },
+                { selector: 'input[name*="price"], input[id*="price"], input[name*="cost"], input[name*="amount"]', icon: 'cash-outline' },
+                { selector: 'select, input[list]', icon: 'chevron-down-outline' },
+                { selector: 'textarea', icon: 'create-outline' }
+            ];
+
+            // Process each mapping
+            inputMappings.forEach(mapping => {
+                // Find all inputs matching the selector
+                document.querySelectorAll(mapping.selector).forEach(input => {
+                    // Skip if already enhanced
+                    if (input.classList.contains('icon-enhanced') || input.parentElement.classList.contains('input-with-icon')) {
+                        return;
+                    }
+
+                    // Flag as enhanced
+                    input.classList.add('icon-enhanced');
+                    
+                    // Check if the input is already in a wrapper
+                    const wrapper = input.parentElement.classList.contains('form-group') ? 
+                        input.parentElement : 
+                        document.createElement('div');
+                    
+                    if (!input.parentElement.classList.contains('form-group')) {
+                        // Create a wrapper if needed
+                        wrapper.className = 'input-with-icon form-group';
+                        input.parentNode.insertBefore(wrapper, input);
+                        wrapper.appendChild(input);
+                    } else {
+                        input.parentElement.classList.add('input-with-icon');
+                    }
+                    
+                    // Add icon
+                    const icon = document.createElement('ion-icon');
+                    icon.setAttribute('name', mapping.icon);
+                    icon.className = 'input-icon';
+                    input.parentNode.appendChild(icon);
+                    
+                    // Ensure input has form-control class
+                    input.classList.add('form-control');
+                    
+                    // Add padding to accommodate the icon
+                    if (!input.style.paddingLeft) {
+                        input.style.paddingLeft = '40px';
+                    }
+                });
+            });
+        }
+
+        // Initial enhancement
+        enhanceFormFields();
+        
+        // Set up mutation observer to catch dynamically added form elements
+        const observer = new MutationObserver(function(mutations) {
+            for (const mutation of mutations) {
+                if (mutation.type === 'childList' && mutation.addedNodes.length) {
+                    enhanceFormFields();
+                }
+            }
+        });
+        
+        // Start observing the document body for DOM changes
+        observer.observe(document.body, { 
+            childList: true, 
+            subtree: true 
+        });
+        
+        // Also enhance forms when modals are opened
+        document.addEventListener('modal:opened', function() {
+            setTimeout(enhanceFormFields, 100); // Short delay to ensure DOM is ready
+        });
+        
+        // Ensure forms are enhanced when edit buttons are clicked
+        document.querySelectorAll('.edit-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                setTimeout(enhanceFormFields, 300); // Allow time for modal to open
             });
         });
     });
 </script>
 
-<!-- ====== ionicons ======= -->
-<script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
-<script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+<script>
+    // Make sure our ModalManager is compatible with the one in admin-ui.js
+    document.addEventListener('DOMContentLoaded', function() {
+        // Only merge if we have both implementations
+        if (window.ModalManager && typeof window.ModalManager.activeModals !== 'undefined') {
+            console.log('Merging ModalManager implementations for compatibility');
+            
+            // Store our show and hide methods
+            const customShow = window.ModalManager.show;
+            const customHide = window.ModalManager.hide;
+            
+            // Store original show method from admin-ui.js if it exists with activeModals
+            if (typeof window.ModalManager.show === 'function' && 
+                typeof window.ModalManager.activeModals !== 'undefined') {
+                
+                // Create an enhanced show method that works with both string IDs and DOM elements
+                window.ModalManager.show = function(modalParam) {
+                    console.log('Enhanced ModalManager.show called with:', modalParam);
+                    
+                    // Convert string ID to DOM element if needed
+                    const modalElement = typeof modalParam === 'string' 
+                        ? document.getElementById(modalParam) 
+                        : modalParam;
+                    
+                    if (!modalElement) {
+                        console.error('Modal not found:', modalParam);
+                        return null;
+                    }
+                    
+                    // Use the admin-ui.js style show method (with DOM element)
+                    return customShow.call(window.ModalManager, modalElement);
+                };
+                
+                // Similarly enhance the hide method
+                window.ModalManager.hide = function(modalParam) {
+                    console.log('Enhanced ModalManager.hide called with:', modalParam);
+                    
+                    // Convert string ID to DOM element if needed
+                    const modalElement = typeof modalParam === 'string' 
+                        ? document.getElementById(modalParam) 
+                        : modalParam;
+                    
+                    if (!modalElement) {
+                        console.error('Modal not found:', modalParam);
+                        return null;
+                    }
+                    
+                    // Use the admin-ui.js style hide method (with DOM element)
+                    return customHide.call(window.ModalManager, modalElement);
+                };
+            }
+        }
+    });
+</script>
+
+<!-- Add script to ensure form values are captured properly -->
+<script>
+    // Add event listener to run when the DOM is fully loaded
+    document.addEventListener('DOMContentLoaded', function() {
+        console.log('Setting up enhanced form event listeners');
+        
+        // Get the customer edit form
+        const customerForm = document.getElementById('editCustomerForm');
+        if (customerForm) {
+            console.log('Customer form found, adding event listeners');
+            
+            // Add event listener for form inputs to track changes
+            customerForm.addEventListener('input', function(e) {
+                const target = e.target;
+                console.log(`Input event on ${target.id}: Value changed to "${target.value}"`);
+            });
+            
+            // Add event listener for form submission
+            customerForm.addEventListener('submit', function(e) {
+                console.log('Form submission detected');
+                e.preventDefault(); // Prevent normal form submission
+                saveCustomer(); // Call our save function
+            });
+            
+            // Add event listener for save button click directly
+            const saveButton = document.querySelector('#customerEditModal .btn-primary');
+            if (saveButton) {
+                console.log('Save button found, adding click event listener');
+                saveButton.addEventListener('click', function(e) {
+                    console.log('Save button clicked directly');
+                    saveCustomer();
+                });
+            }
+        } else {
+            console.error('Customer form not found on page load');
+        }
+        
+        // Add closeModal function globally if it doesn't exist
+        if (typeof window.closeModal !== 'function') {
+            console.log('Adding global closeModal function');
+            window.closeModal = function(modalId) {
+                console.log(`Global closeModal called for: ${modalId}`);
+                if (typeof ModalManager !== 'undefined' && typeof ModalManager.hide === 'function') {
+                    ModalManager.hide(modalId);
+                } else {
+                    const modal = document.getElementById(modalId);
+                    if (modal) {
+                        modal.style.display = 'none';
+                        modal.classList.remove('show');
+                    }
+                }
+            };
+        }
+    });
+</script>
 </body>
 </html>

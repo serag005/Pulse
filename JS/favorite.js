@@ -1,3 +1,7 @@
+/**
+ * The JavaScript code provides functionality for managing a wishlist, including toggling visibility,
+ * adding/removing items, updating UI, and syncing data with localStorage.
+ */
 // JavaScript for the Wishlist Functionality
 console.log("Loading favorite.js");
 

@@ -1,3 +1,13 @@
+/**
+ * The function contains various functionalities related to fetching, displaying, and interacting with
+ * product data on different pages of a website, including handling product sliders, updating cart and
+ * wishlist items, creating product cards, initializing Swiper instances, and ensuring containers
+ * exist.
+ * @returns The code provided includes various functions related to fetching, loading, and updating
+ * product data on different pages of a website. It also includes functions for initializing Swiper
+ * sliders for different product categories, handling add to cart and add to wishlist functionality,
+ * setting up product modals, and ensuring containers exist before loading products.
+ */
 document.addEventListener('DOMContentLoaded', function() {
     // First ensure all containers exist to prevent errors
     ensureContainersExist();

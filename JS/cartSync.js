@@ -1,4 +1,10 @@
 /**
+ * The `cartSync.js` script manages synchronization between the localStorage cart and the database
+ * cart, allowing users to add, remove, update items in the cart with server sync functionality.
+ * @returns The code snippet provided is returning a set of functions related to cart synchronization
+ * and management. These functions include:
+ */
+/**
  * cartSync.js - Handles synchronization between localStorage cart and database cart
  */
 

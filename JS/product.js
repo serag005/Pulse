@@ -1,3 +1,7 @@
+/**
+ * The JavaScript code includes functions for loading and filtering products, managing wishlist items,
+ * handling cart interactions, and displaying product modals on a web page.
+ */
 // Event listeners for search form and category select
 document.addEventListener('DOMContentLoaded', function() {
     console.log('DOM content loaded - initializing product functionality');
@@ -22,19 +26,31 @@ document.addEventListener('DOMContentLoaded', function() {
             const searchValue = document.getElementById('search')?.value || '';
             const categoryValue = categorySelect?.value || 'All Categories';
 
-            // Navigate to products page with search parameters
-            window.location.href = 'products.html' +
-                '?category=' + encodeURIComponent(categoryValue) +
-                '&search=' + encodeURIComponent(searchValue);
+            // Only navigate if there's a search value or category is selected
+            if (searchValue.trim() !== '' || categoryValue !== 'All Categories') {
+                // Navigate to products page with search parameters
+                window.location.href = 'products.html' +
+                    '?category=' + encodeURIComponent(categoryValue) +
+                    '&search=' + encodeURIComponent(searchValue);
+            }
         });
     }
 
     // Add event listener for category selection
     if (categorySelect) {
         categorySelect.addEventListener('change', function() {
-            // Navigate to products page with category parameter
-            window.location.href = 'products.html' +
-                '?category=' + encodeURIComponent(this.value);
+            // Get the current search value if there is one
+            const searchValue = document.getElementById('search')?.value || '';
+
+            // Navigate to products page with category parameter (and search if present)
+            if (searchValue.trim() !== '') {
+                window.location.href = 'products.html' +
+                    '?category=' + encodeURIComponent(this.value) +
+                    '&search=' + encodeURIComponent(searchValue);
+            } else {
+                window.location.href = 'products.html' +
+                    '?category=' + encodeURIComponent(this.value);
+            }
         });
     }
 
@@ -67,18 +83,6 @@ function loadAndFilterProducts() {
     const categoryFilter = urlParams.get('category');
     const searchFilter = urlParams.get('search') ? urlParams.get('search').toLowerCase() : '';
 
-    // Determine API endpoint based on filters
-    let apiUrl = '/api/products';
-
-    if (searchFilter) {
-        // Using the correct query parameter 'q' as defined in your backend
-        apiUrl = `/api/products/search?q=${encodeURIComponent(searchFilter)}`;
-    } else if (categoryFilter && categoryFilter !== 'All Categories') {
-        apiUrl = `/api/products/category/${encodeURIComponent(categoryFilter)}`;
-    }
-
-    console.log('Fetching products from:', apiUrl);
-
     // Get the products container
     const productsContainer = document.querySelector('.products_page');
     if (!productsContainer) {
@@ -100,8 +104,8 @@ function loadAndFilterProducts() {
         if (searchInput) searchInput.value = searchFilter;
     }
 
-    // Fetch and process products with improved error handling
-    fetch(apiUrl)
+    // Fetch all products first, then filter on client side
+    fetch('/api/products')
         .then(response => {
             if (!response.ok) {
                 throw new Error(`Server returned ${response.status}: ${response.statusText}`);
@@ -117,27 +121,44 @@ function loadAndFilterProducts() {
                 throw new Error('Invalid data format received from server');
             }
 
-            if (data.length === 0) {
+            // Filter products based on search term and category
+            let filteredProducts = [...data];
+
+            // Apply category filter if present and not "All Categories"
+            if (categoryFilter && categoryFilter !== 'All Categories') {
+                filteredProducts = filteredProducts.filter(product =>
+                    product.Category === categoryFilter
+                );
+            }
+
+            // Apply search filter if present
+            if (searchFilter) {
+                filteredProducts = filteredProducts.filter(product =>
+                    product.name.toLowerCase().includes(searchFilter) ||
+                    (product.description && product.description.toLowerCase().includes(searchFilter))
+                );
+            }
+
+            // Update product counter
+            updateProductCounter(filteredProducts.length, searchFilter, categoryFilter);
+
+            if (filteredProducts.length === 0) {
                 productsContainer.innerHTML = '<div class="no-products">No products found matching your criteria.</div>';
-                updateProductCounter(0);
                 return;
             }
 
-            console.log(`Received ${data.length} products from server`);
+            console.log(`Displaying ${filteredProducts.length} products after filtering`);
 
             // Get current cart data from localStorage
             const cart = JSON.parse(localStorage.getItem('cart')) || [];
 
-            // Update product counter
-            updateProductCounter(data.length);
-
             // Generate HTML for each product
-            data.forEach(product => {
+            filteredProducts.forEach(product => {
                 productsContainer.innerHTML += generateProductHTML(product, cart);
             });
 
             // Attach event listeners to Add to Cart buttons
-            attachCartButtonListeners(data);
+            attachCartButtonListeners(filteredProducts);
 
             // Add glow effects to product cards
             document.querySelectorAll('.product_page_Card').forEach(card => {
@@ -242,119 +263,118 @@ function isInWishlist(productId) {
 
 // Attach event listeners to cart buttons
 function attachCartButtonListeners(products) {
-    console.log('Attaching cart button listeners');
-
-    // Attach cart button listeners
-    document.querySelectorAll('.btn_add_cart').forEach(btn => {
-        // Remove any existing listeners to prevent duplicates
-        const newBtn = btn.cloneNode(true);
-        btn.parentNode.replaceChild(newBtn, btn);
-
-        newBtn.addEventListener('click', function(event) {
-            event.stopPropagation(); // Prevent modal from opening
-
-            const productId = this.getAttribute('data-id');
-            console.log('Add to cart clicked for product ID:', productId);
-
-            // Find the product in our data
-            const productToAdd = products.find(item => item.id == productId);
-
-            if (productToAdd) {
-                console.log('Adding product to cart:', productToAdd.name);
-
-                // Handle the case where the product might already be in localStorage
-                // but using a different structure than expected by your header.js
-                let cart = JSON.parse(localStorage.getItem('cart')) || [];
-
-                // Check if product already exists in cart
-                const existingProductIndex = cart.findIndex(item => item.id == productId);
-
-                if (existingProductIndex >= 0) {
-                    // Update quantity if product exists
-                    cart[existingProductIndex].quantity = (cart[existingProductIndex].quantity || 1) + 1;
-                } else {
-                    // Add new product with quantity 1
-                    cart.push({...productToAdd, quantity: 1});
-                }
-
-                // Save updated cart to localStorage
-                localStorage.setItem('cart', JSON.stringify(cart));
-
-                // Update all matching button UI states
-                document.querySelectorAll(`.btn_add_cart[data-id="${productId}"]`).forEach(el => {
-                    el.classList.add('active');
-                    el.innerHTML = `<i class="fa-solid fa-cart-shopping"></i> Item in cart`;
-                });
-
-                // Call updateCart from header.js if it exists
-                if (typeof updateCart === 'function') {
-                    updateCart();
-                } else {
-                    console.log('updateCart function not found - cart UI may not update immediately');
-                }
-            } else {
-                console.error('Product not found for ID:', productId);
-            }
-        });
+    console.log('Attaching cart button listeners from product.js');
+    
+    // Store products globally so they can be accessed by cart handlers
+    window.productCatalog = window.productCatalog || {};
+    
+    // Add these products to the catalog
+    products.forEach(product => {
+        window.productCatalog[product.id] = product;
     });
-
-    // Attach wishlist button listeners
-    document.querySelectorAll('.btn_add_wishlist').forEach(btn => {
-        // Remove any existing listeners to prevent duplicates
-        const newBtn = btn.cloneNode(true);
-        btn.parentNode.replaceChild(newBtn, btn);
-
-        newBtn.addEventListener('click', function(event) {
-            event.stopPropagation(); // Prevent modal from opening
-
-            const productId = this.getAttribute('data-id');
-            console.log('Add to wishlist clicked for product ID:', productId);
-
-            // Toggle wishlist state
-            if (this.classList.contains('active')) {
-                // Remove from wishlist
-                if (removeFromWishlist(productId)) {
-                    // Update UI for all matching buttons
-                    document.querySelectorAll(`.btn_add_wishlist[data-id="${productId}"]`).forEach(el => {
-                        el.classList.remove('active');
-                        const icon = el.querySelector('i');
-                        if (icon) {
-                            icon.classList.remove('fa-solid');
-                            icon.classList.add('fa-regular');
-                        }
-                    });
-                }
+    
+    // Check if header.js already set up the event handlers
+    if (window.cartButtonsInitialized) {
+        console.log("Cart buttons already initialized by header.js");
+        return;
+    }
+    
+    // Set the flag to prevent duplicate initialization
+    window.cartButtonsInitialized = true;
+    
+    // Create the safeAddToCart function if it doesn't exist
+    window.safeAddToCart = window.safeAddToCart || function(productId, buttonElement) {
+        // Prevent adding if already in cart (button is active)
+        if (buttonElement && buttonElement.classList.contains('active')) {
+            console.log(`Product ${productId} already in cart, skipping addition`);
+            return false;
+        }
+        
+        // Get current cart
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+        
+        // Check if product already in cart
+        const existingItem = cart.find(item => item.id == productId);
+        if (existingItem) {
+            console.log(`Product ${productId} already in cart, updating quantity`);
+            existingItem.quantity = (existingItem.quantity || 1) + 1;
+            localStorage.setItem('cart', JSON.stringify(cart));
+            
+            // Update UI
+            updateAllCartButtons(productId);
+            
+            // Call updateCart from header.js if it exists
+            if (typeof updateCart === 'function') {
+                updateCart();
             } else {
-                // Get the product from original button's parent card
-                const productCard = newBtn.closest('.product_page_Card');
-                const productName = productCard.querySelector('.name_product a').textContent;
-                const productPrice = parseFloat(productCard.querySelector('.price span').textContent.replace('EGP ', ''));
-                const productImage = productCard.querySelector('.img_product img').src;
-
-                const productToAdd = {
-                    id: productId,
-                    name: productName,
-                    price: productPrice,
-                    image: productImage
-                };
-
-                // Add to wishlist
-                if (addToWishlist(productToAdd)) {
-                    // Update UI for all matching buttons
-                    document.querySelectorAll(`.btn_add_wishlist[data-id="${productId}"]`).forEach(el => {
-                        el.classList.add('active');
-                        const icon = el.querySelector('i');
-                        if (icon) {
-                            icon.classList.remove('fa-regular');
-                            icon.classList.add('fa-solid');
-                        }
-                    });
-                }
+                updateCartCount(cart.reduce((total, item) => total + (item.quantity || 1), 0));
             }
+            
+            return true;
+        }
+        
+        // Find the product in our catalog
+        const product = window.productCatalog[productId];
+        
+        if (product) {
+            console.log(`Adding product ${productId} to cart`);
+            // Add to cart with quantity 1
+            cart.push({...product, quantity: 1});
+            localStorage.setItem('cart', JSON.stringify(cart));
+            
+            // Update UI
+            updateAllCartButtons(productId);
+            
+            // Call updateCart from header.js if it exists
+            if (typeof updateCart === 'function') {
+                updateCart();
+            } else {
+                updateCartCount(cart.reduce((total, item) => total + (item.quantity || 1), 0));
+            }
+            
+            return true;
+        } else {
+            console.error(`Product ${productId} not found in catalog`);
+            return false;
+        }
+    };
+    
+    // Use event delegation to handle all cart button clicks
+    document.addEventListener('click', function(event) {
+        // Find closest cart button if there is one
+        const cartButton = event.target.closest('.btn_add_cart');
+        if (!cartButton) return; // Not a cart button click
+        
+        // Stop event propagation
+        event.preventDefault();
+        event.stopPropagation();
+        
+        // Check if button indicates item already in cart
+        if (cartButton.classList.contains('active')) {
+            console.log('Item already in cart, ignoring click');
+            return;
+        }
+        
+        // Get product ID and add to cart
+        const productId = cartButton.getAttribute('data-id');
+        if (!productId) {
+            console.error('No product ID found on cart button');
+            return;
+        }
+        
+        console.log(`Cart button clicked for product ${productId}`);
+        window.safeAddToCart(productId, cartButton);
+    }, true); // Use capture phase to ensure we get the event first
+}
 
-            // Make sure all buttons are synced
-            syncButtonStates(productId);
-        });
+// Function to update all cart buttons for a specific product
+function updateAllCartButtons(productId) {
+    const allButtons = document.querySelectorAll(`.btn_add_cart[data-id="${productId}"]`);
+    console.log(`Updating ${allButtons.length} cart buttons for product ${productId}`);
+    
+    allButtons.forEach(button => {
+        button.classList.add('active');
+        button.innerHTML = `<i class="fa-solid fa-cart-shopping"></i> Item in cart`;
     });
 }
 
@@ -404,15 +424,13 @@ function generateProductHTML(product, cart) {
     `;
 }
 
-
-
-
 // Create the modal structure when page loads
 function createProductModal() {
     // Check if modal already exists
     if (!document.querySelector('.product-modal-overlay2')) {
         const modalOverlay = document.createElement('div');
-        modalOverlay.className = 'product-modal-overlay2';
+        modalOverlay.className = 'product-modal-overlay';
+        // Set proper centering styles
         modalOverlay.style.display = 'none';
         modalOverlay.style.position = 'fixed';
         modalOverlay.style.top = '0';
@@ -420,40 +438,28 @@ function createProductModal() {
         modalOverlay.style.width = '100%';
         modalOverlay.style.height = '100%';
         modalOverlay.style.backgroundColor = 'rgba(0,0,0,0.7)';
-        modalOverlay.style.zIndex = '1000';
+        modalOverlay.style.zIndex = '9999';
+        // Important for centering
         modalOverlay.style.justifyContent = 'center';
         modalOverlay.style.alignItems = 'center';
-        modalOverlay.style.transition = 'opacity 0.3s ease';
 
         const modalContent = document.createElement('div');
-        modalContent.className = 'product-modal-content2';
-        modalContent.style.backgroundColor = 'white';
-        modalContent.style.padding = '20px';
-        modalContent.style.borderRadius = '8px';
-        modalContent.style.maxWidth = '80%';
-        modalContent.style.maxHeight = '80%';
-        modalContent.style.overflow = 'auto';
+        modalContent.className = 'product-modal-content';
+        // Center content styling
+        modalContent.style.display = 'flex';
+        modalContent.style.flexDirection = 'column';
+        modalContent.style.alignItems = 'center';
+        modalContent.style.justifyContent = 'center';
         modalContent.style.position = 'relative';
-        modalContent.style.transition = 'transform 0.3s ease';
-        modalContent.style.transform = 'scale(0.8)';
+        modalContent.style.maxWidth = '90%';
+        modalContent.style.margin = '0 auto';
 
-        const closeButton = document.createElement('button');
-        closeButton.className = 'product-modal-close2';
-        closeButton.innerHTML = '&times;';
-        closeButton.style.position = 'absolute';
-        closeButton.style.top = '10px';
-        closeButton.style.right = '10px';
-        closeButton.style.fontSize = '24px';
-        closeButton.style.background = 'none';
-        closeButton.style.border = 'none';
-        closeButton.style.cursor = 'pointer';
-
-        modalContent.appendChild(closeButton);
+        // No close button here since it's added directly to the card
+        
         modalOverlay.appendChild(modalContent);
         document.body.appendChild(modalOverlay);
 
         // Add event listeners for closing
-        closeButton.addEventListener('click', closeProductModal);
         modalOverlay.addEventListener('click', function(e) {
             if (e.target === modalOverlay) {
                 closeProductModal();
@@ -470,8 +476,8 @@ function createProductModal() {
 
 // Function to open product modal
 function openProductModal(card) {
-    const modalOverlay = document.querySelector('.product-modal-overlay2');
-    const modalContent = document.querySelector('.product-modal-content2');
+    const modalOverlay = document.querySelector('.product-modal-overlay');
+    const modalContent = document.querySelector('.product-modal-content');
 
     if (!modalOverlay || !modalContent) {
         console.error('Modal elements not found');
@@ -480,10 +486,14 @@ function openProductModal(card) {
 
     // Clone the clicked card
     const cardClone = card.cloneNode(true);
-    cardClone.classList.add('modal-product-card2');
-    cardClone.style.boxShadow = 'none';
+    cardClone.classList.add('modal-product-card');
+    
+    // Ensure the card is scaled up and centered
+    cardClone.style.transform = 'scale(1.5)';
     cardClone.style.margin = '0 auto';
-    cardClone.style.maxWidth = '400px';
+    cardClone.style.maxWidth = '90%';
+    cardClone.style.boxShadow = '0 5px 15px rgba(0,0,0,0.3)';
+    cardClone.style.position = 'relative'; // Ensure proper positioning for the close button
 
     // Get product ID from original card
     const productId = card.getAttribute('data-product-id') ||
@@ -579,23 +589,41 @@ function openProductModal(card) {
 
     // Clear previous content and add the cloned card
     modalContent.innerHTML = '';
+
+    // Create close button
     const closeButton = document.createElement('button');
     closeButton.className = 'product-modal-close2';
     closeButton.innerHTML = '&times;';
     closeButton.style.position = 'absolute';
-    closeButton.style.top = '10px';
+    closeButton.style.top = '39px'; // Position under sale badge
     closeButton.style.right = '10px';
-    closeButton.style.fontSize = '24px';
-    closeButton.style.background = 'none';
+    closeButton.style.zIndex = '10';
+    closeButton.style.width = '20px';
+    closeButton.style.height = '20px';
+    closeButton.style.fontSize = '14px';
+    closeButton.style.lineHeight = '1';
+    closeButton.style.padding = '0';
+    closeButton.style.textAlign = 'center';
+    closeButton.style.background = 'var(--main_color)';
+    closeButton.style.color = 'white';
     closeButton.style.border = 'none';
+    closeButton.style.borderRadius = '50%';
     closeButton.style.cursor = 'pointer';
+    closeButton.style.display = 'flex';
+    closeButton.style.alignItems = 'center';
+    closeButton.style.justifyContent = 'center';
     closeButton.addEventListener('click', closeProductModal);
-
-    modalContent.appendChild(closeButton);
+    
+    // Append close button directly to the card instead of the modal content
+    cardClone.appendChild(closeButton);
+    
+    // Add the product card to the modal content
     modalContent.appendChild(cardClone);
 
     // Show the modal with animation
     modalOverlay.style.display = 'flex';
+    modalOverlay.style.justifyContent = 'center';
+    modalOverlay.style.alignItems = 'center';
 
     // Trigger reflow for animation
     void modalOverlay.offsetWidth;
@@ -603,29 +631,29 @@ function openProductModal(card) {
     // Add active classes for animation
     modalOverlay.classList.add('active');
     modalContent.classList.add('active');
-    modalOverlay.style.opacity = '1';
-    modalContent.style.transform = 'scale(1)';
+
+    // Prevent body scrolling
+    document.body.style.overflow = 'hidden';
 }
 
 // Function to close product modal
 function closeProductModal() {
-    const modalOverlay = document.querySelector('.product-modal-overlay2');
-    const modalContent = document.querySelector('.product-modal-content2');
+    const modalOverlay = document.querySelector('.product-modal-overlay');
+    const modalContent = document.querySelector('.product-modal-content');
 
-    if (!modalOverlay || !modalContent) {
-        return;
-    }
+    if (!modalOverlay || !modalContent) return;
 
-    // Start close animation
-    modalOverlay.style.opacity = '0';
-    modalContent.style.transform = 'scale(0.8)';
+    // Remove active classes to trigger exit animation
+    modalOverlay.classList.remove('active');
+    modalContent.classList.remove('active');
 
-    // Hide modal after animation completes
+    // Wait for animation to complete before hiding
     setTimeout(() => {
         modalOverlay.style.display = 'none';
-        modalOverlay.classList.remove('active');
-        modalContent.classList.remove('active');
     }, 300);
+
+    // Re-enable body scrolling
+    document.body.style.overflow = '';
 }
 
 // Add click event listeners to product cards
@@ -695,4 +723,17 @@ function syncButtonStates(productId) {
             }
         });
     }
+}
+
+// Function to update cart count in the header
+function updateCartCount(count) {
+    const cartCountElements = document.querySelectorAll('.count_item_header');
+    
+    if (cartCountElements.length > 0) {
+        cartCountElements.forEach(element => {
+            element.textContent = count;
+        });
+    }
+    
+    console.log(`Updated cart count to ${count}`);
 }

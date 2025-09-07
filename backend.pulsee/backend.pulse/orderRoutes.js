@@ -1,3 +1,18 @@
+/**
+ * The provided JavaScript code defines an Express router for order management, including routes for
+ * creating, fetching, and canceling orders, with database interactions using MySQL and authentication
+ * using JWT.
+ * @param tableName - The `tableName` parameter refers to the name of a table in a MySQL database. In
+ * the provided code snippet, functions like `checkIfTableExists`, `checkIfColumnExists`, and
+ * `createOrderItemsTableIfNotExists` use the `tableName` parameter to perform operations related to
+ * checking the
+ * @returns The code provided is an Express router for order management in a Node.js application. It
+ * includes routes for creating a new order, getting all orders for the current user, getting a single
+ * order with items, and canceling an order. The router also includes functions to handle database
+ * operations such as creating tables, checking table/column existence, and managing transactions.
+ * Additionally, there is authentication middleware to verify JWT tokens for
+ */
+
 // orderRoutes.js - Express router for order management
 const express = require('express');
 const router = express.Router();

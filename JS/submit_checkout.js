@@ -1,4 +1,8 @@
 /**
+ * The JavaScript code defines a Checkout System that handles form submission, order creation, and
+ * updating the order summary based on cart items.
+ */
+/**
  * Checkout System
  * Handles the checkout process, form submission and order creation
  */

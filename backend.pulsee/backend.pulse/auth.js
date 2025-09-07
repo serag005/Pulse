@@ -1,3 +1,20 @@
+/**
+ * The provided code defines an Express router module for user authentication including registration,
+ * login, and a protected route for user profile with JWT token verification.
+ * @param req - `req` stands for the request object in Express.js. It represents the HTTP request and
+ * contains information about the request such as the URL, headers, parameters, body, etc. The request
+ * object is passed to route handlers and middleware functions in Express.js.
+ * @param res - `res` is the response object in Express.js. It is used to send a response back to the
+ * client making the request. In the context of the code you provided, `res` is used to send JSON
+ * responses with status codes and messages for user registration, login, and profile retrieval.
+ * @param next - The `next` parameter in the `authenticateToken` function is a callback function that
+ * is used to pass control to the next middleware function in the stack. When called, it will execute
+ * the next middleware function. If there are no more middleware functions in the stack, it will
+ * proceed to the route handler
+ * @returns The `auth.js` file contains an Express router module for user authentication. It includes
+ * routes for user registration, user login, and a protected route for user profile. The module also
+ * includes an authentication middleware function `authenticateToken` to verify JWT tokens.
+ */
 // auth.js - Converted to an Express router module
 const express = require('express');
 const router = express.Router();
