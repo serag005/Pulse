@@ -1,6 +1,6 @@
 # PULSE – Providing Users Life Support Everyday
 
-PULSE (Providing Users Life Support Everyday) is a web-based platform that makes prosthetic limbs affordable and accessible. It connects users, volunteers, and sponsors in one space, offering discounted products, financial aid, and support.
+PULSE is a web-based platform that makes prosthetic limbs affordable and accessible. It connects users, volunteers, and sponsors in one space, offering discounted products, financial aid, and support.
 
 
 https://github.com/user-attachments/assets/0696852d-52fd-474f-9271-89d8fcf1b4f9
